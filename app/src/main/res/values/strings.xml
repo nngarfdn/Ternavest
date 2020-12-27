@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Ternavest</string>
+
+    <string name="hint_select_province">Pilih provinsi</string>
+    <string name="hint_select_regency">Pilih kabupaten</string>
+    <string name="hint_select_district">Pilih kecamatan</string>
+
+
 </resources>
