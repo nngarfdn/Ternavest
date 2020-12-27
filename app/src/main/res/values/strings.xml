@@ -5,5 +5,11 @@
     <string name="hint_select_regency">Pilih kabupaten</string>
     <string name="hint_select_district">Pilih kecamatan</string>
 
-
+    <string name="kelola">Kelola</string>
+    <string name="peminat">Peminat</string>
+    <string name="profil">Profil</string>
+    <string name="favorite">Orders</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
