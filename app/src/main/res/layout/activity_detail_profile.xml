@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".DetailProfileActivity">
+
+    <TextView
+        style="@style/TextView.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textSize="@dimen/font_nm"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_profile"/>
+
+            <TextView
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textSize="@dimen/font_nm"
+                android:layout_marginStart="24dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_project_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

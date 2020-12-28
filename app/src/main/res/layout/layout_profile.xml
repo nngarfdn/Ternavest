@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="24dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@color/gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/tv_name_profile"
+                style="@style/TextView.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textSize="@dimen/font_nm"
+                app:drawableEndCompat="@drawable/ic_verified"
+                app:drawableTint="@color/green"
+                android:drawablePadding="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_level_profile"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textSize="@dimen/font_nm"
+                app:drawableStartCompat="@drawable/ic_person"
+                android:drawablePadding="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_address_profile"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textSize="@dimen/font_nm"
+                app:drawableStartCompat="@drawable/ic_location_on"
+                android:drawablePadding="8dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_phone_profile"
+        style="@style/Button.Menu.White"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        app:icon="@drawable/ic_phone"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_whatsapp_profile"
+        style="@style/Button.Menu.White"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        app:icon="@drawable/ic_whatsapp"/>
+</LinearLayout>

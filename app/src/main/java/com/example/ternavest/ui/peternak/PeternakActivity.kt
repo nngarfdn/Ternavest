@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.ternavest.R
 import com.example.ternavest.ui.peternak.kelola.KelolaFragment
 import com.example.ternavest.ui.peternak.peminat.PeminatFragment
+import com.example.ternavest.ui.peternak.profil.ProfileFragment
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import kotlinx.android.synthetic.main.activity_peternak.*
 
@@ -21,7 +22,7 @@ class PeternakActivity : AppCompatActivity() {
                 when (index){
                     0 -> loadFragment(KelolaFragment())
                     1 ->loadFragment(PeminatFragment())
-                    2 -> loadFragment(KelolaFragment())
+                    2 -> loadFragment(ProfileFragment())
                 }
             }
         })

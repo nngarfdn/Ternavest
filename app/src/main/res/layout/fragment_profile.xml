@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.peternak.profil.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile" />
+        style="@style/TextView.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profil"
+        android:textSize="@dimen/font_nm"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"/>
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_profile"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_verification_profile"
+                style="@style/Button.Menu.Red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mohon verifikasi email Anda"
+                app:icon="@drawable/ic_warning"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_settings_profile"
+                style="@style/Button.Menu.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pengaturan profil"
+                app:icon="@drawable/ic_settings"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reset_password_profile"
+                style="@style/Button.Menu.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ganti kata sandi"
+                app:icon="@drawable/ic_vpn_key"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_about_profile"
+                style="@style/Button.Menu.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tentang aplikasi"
+                app:icon="@drawable/ic_info"
+                android:layout_marginTop="24dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logout_profile"
+                style="@style/Button.Menu.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Keluar aplikasi"
+                app:icon="@drawable/ic_exit_to_app"
+                android:layout_marginBottom="24dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
