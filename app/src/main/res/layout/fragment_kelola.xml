@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.peternak.kelola.KelolaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Kelola" />
+    <ImageView
+        android:id="@+id/imgProyekKosong"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@android:color/holo_blue_dark"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="128dp"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/txtProyekKosong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgProyekKosong"
+        android:text="Kamu belum mempunyai proyek"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btnTambahProyek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_below="@id/txtProyekKosong"
+        android:layout_marginTop="16dp"
+        android:text="Tambahkan Proyek"
+        android:textColor="@android:color/white"
+        android:background="@color/purple_500"/>
+
+</RelativeLayout>
