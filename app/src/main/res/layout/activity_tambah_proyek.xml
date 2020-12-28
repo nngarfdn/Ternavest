@@ -88,7 +88,7 @@
 
     <EditText
         android:id="@+id/txtBiayaPengelolaan"
-        android:layout_below="@+id/txtWaktuMulai"
+        android:layout_below="@+id/txtWaktuSelesai"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
