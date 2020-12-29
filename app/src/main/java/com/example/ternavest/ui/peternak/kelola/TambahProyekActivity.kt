@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -22,10 +21,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
+import com.example.ternavest.model.Proyek
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
-import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -48,6 +49,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     private var dateFormatter: SimpleDateFormat? = null
     var objectStorageReference: StorageReference? = null
     var objectFirebaseFirestore: FirebaseFirestore? = null
+    private var firebaseUser: FirebaseUser? = null
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var lvm: LocationViewModel
@@ -71,14 +73,9 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         lvm = ViewModelProvider(this, NewInstanceFactory()).get(LocationViewModel::class.java)
         objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder")
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
+        firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        val namaProyek = txtNamaProyek.text.toString()
-        val deskripsiProyek = txtDeskripsiProyek.text.toString()
-        val jenisHewan = txtJenisHewan.text.toString()
-        val roi = txtRoi.text.toString()
-//        val roiInt = roi.toInt()
-        val waktuMulai = txtWaktuMulai.text.toString()
-        val waktuSelesai = txtWaktuSelesai.text.toString()
+        
 
         dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
         txtWaktuMulai.setInputType(InputType.TYPE_NULL)
@@ -89,6 +86,95 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         loadProvinces()
 
         btnUploadImage.setOnClickListener { selectImage() }
+
+        btnSimpan.setOnClickListener(View.OnClickListener { v: View? ->
+            val photo = ""
+            val namaProyek = txtNamaProyek.text.toString()
+            val deskripsiProyek = txtDeskripsiProyek.text.toString()
+            val jenisHewan = txtJenisHewan.text.toString()
+            val roi = txtRoi.text.toString()
+//            val roiInt = roi.toInt()
+            val waktuMulai = txtWaktuMulai.text.toString()
+            val waktuSelesai = txtWaktuSelesai.text.toString()
+            val biayaHewan = txtBiayaPengelolaan.text.toString()
+//            val biayaPengelolahan = biayaHewan.toInt()
+            val alamat: String = txtAlamatLengkap.getText().toString()
+            var kecamatan: String? = null
+            kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
+                spin_districts.getSelectedItem() as String
+            } else {
+                "-"
+            }
+            var kabupaten: String? = null
+            kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
+                spin_regencies.getSelectedItem() as String
+            } else {
+                "-"
+            }
+
+            var prov: String? = null
+            prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
+                spin_provinces.getSelectedItem() as String
+            } else {
+                "-"
+            }
+
+            var cek = true
+            if (namaProyek.length <= 0) {
+                txtNamaProyek.setError("Masukkan nama proyek")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(deskripsiProyek)) {
+                txtDeskripsiProyek.setError("Masukkan deskripsi proyek")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(jenisHewan)) {
+                txtJenisHewan.setError("Masukkan jenis hewan")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(roi)) {
+                txtRoi.setError("Masukkan ROI")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(waktuMulai)) {
+                txtWaktuMulai.setError("Masukkan tanggal mulai")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(waktuSelesai)) {
+                txtWaktuSelesai.setError("Masukkan tanggal selesai")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(biayaHewan)) {
+                txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(alamat)) {
+                txtAlamatLengkap.setError("Masukkan alamat lengkap proyek")
+                cek = false
+            }
+
+
+            if (TextUtils.isEmpty(photo)) {
+                Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
+                cek = false
+            }
+
+//            val p = Proyek(namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+//                    biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
+//
+//            if (cek) {
+//                proyekViewModel.insert(firebaseUser?.uid,p)
+//                Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
+//                finish()
+//            }
+        })
 
     }
 
@@ -257,93 +343,104 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
             val imageRef = objectStorageReference!!.child(nameOfimage)
             val objectUploadTask = imageRef.putFile(filePath!!)
-            objectUploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot?, Task<Uri>> { task: Task<UploadTask.TaskSnapshot?> ->
+            objectUploadTask.continueWithTask { task: Task<UploadTask.TaskSnapshot?> ->
                 if (!task.isSuccessful) {
                     throw Objects.requireNonNull(task.exception)!!
                 }
                 imageRef.downloadUrl
-            }).addOnCompleteListener { task: Task<Uri?> ->
+            }.addOnCompleteListener { task: Task<Uri?> ->
                 if (task.isSuccessful) {
 //                    txt_uploading.setVisibility(View.INVISIBLE)
                     btnUploadImage.visibility = View.INVISIBLE
                     Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
-//                    btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
-//                        val photo = Objects.requireNonNull(task.result).toString()
-//                        Log.d(TAG, "uploadImage: photoUrl : $photo")
-//                        val email = firebaseUser!!.email
-//                        val nama: String = edt_nama_produk.getText().toString()
-//                        val kategori: String = spinner_kategori.getSelectedItem().toString()
-//                        val alamat: String = edt_alamat_produk.getText().toString()
-//                        var kecamatan: String? = null
-//                        kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
-//                            spin_districts.getSelectedItem() as String
-//                        } else {
-//                            "-"
-//                        }
-//                        var kabupaten: String? = null
-//                        kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
-//                            spin_regencies.getSelectedItem() as String
-//                        } else {
-//                            "-"
-//                        }
-//
-//                        var prov: String? = null
-//                        prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
-//                            spin_provinces.getSelectedItem() as String
-//                        } else {
-//                            "-"
-//                        }
-//
-//                        val wa: String = edt_alamat_nowa.getText().toString()
-//                        val harga: String = edt_alamat_harga.getText().toString()
-//                        val hargaInt = harga.toInt()
-//                        val deskripsi: String = edt_alamat_deskripsi.getText().toString()
-//
-//                        var cek = true
-//                        if (nama.length <= 0) {
-//                            edt_nama_produk.setError("Masukkan nama produk/barang/jasa")
-//                            cek = false
-//                        }
-//
-//                        if (TextUtils.isEmpty(alamat)) {
-//                            edt_alamat_produk.setError("Masukkan alamat produk/barang/jasa")
-//                            cek = false
-//                        }
-//
-//                        if (TextUtils.isEmpty(wa)) {
-//                            edt_alamat_nowa.setError("Masukkan nomor WhatsApp")
-//                            cek = false
-//                        }
-//
-//                        if (!isValidPhone(wa)) {
-//                            edt_alamat_nowa.setError("Awali nomor dengan 628xxx")
-//                            cek = false
-//                        }
-//
-//                        if (TextUtils.isEmpty(harga)) {
-//                            edt_alamat_harga.setError("Masukkan harga")
-//                            cek = false
-//                        }
-//
-//                        if (TextUtils.isEmpty(deskripsi)) {
-//                            edt_alamat_deskripsi.setError("Masukkan deskripsi")
-//                            cek = false
-//                        }
-//
-//                        if (TextUtils.isEmpty(photo)) {
-//                            Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
-//                            cek = false
-//                        }
-//
-//                        val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
-//                                kabupaten, prov, wa, hargaInt, deskripsi, photo)
-//
-//                        if (cek) {
-//                            produkViewModel!!.updateProduk(p)
-//                            Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
-//                            finish()
-//                        }
-//                    })
+                    btnSimpan.setOnClickListener(View.OnClickListener { v: View? ->
+                        val photo = Objects.requireNonNull(task.result).toString()
+                        val namaProyek = txtNamaProyek.text.toString()
+                        val deskripsiProyek = txtDeskripsiProyek.text.toString()
+                        val jenisHewan = txtJenisHewan.text.toString()
+                        val roi = txtRoi.text.toString()
+                        val roiInt = roi.toInt()
+                        val waktuMulai = txtWaktuMulai.text.toString()
+                        val waktuSelesai = txtWaktuSelesai.text.toString()
+                        val biayaHewan = txtBiayaPengelolaan.text.toString()
+                        val biayaPengelolahan = biayaHewan.toInt()
+                        val alamat: String = txtAlamatLengkap.getText().toString()
+                        var kecamatan: String? = null
+                        kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
+                            spin_districts.getSelectedItem() as String
+                        } else {
+                            "-"
+                        }
+                        var kabupaten: String? = null
+                        kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
+                            spin_regencies.getSelectedItem() as String
+                        } else {
+                            "-"
+                        }
+
+                        var prov: String? = null
+                        prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
+                            spin_provinces.getSelectedItem() as String
+                        } else {
+                            "-"
+                        }
+
+                        var cek = true
+                        if (namaProyek.length <= 0) {
+                            txtNamaProyek.setError("Masukkan nama proyek")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(deskripsiProyek)) {
+                            txtDeskripsiProyek.setError("Masukkan deskripsi proyek")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(jenisHewan)) {
+                            txtJenisHewan.setError("Masukkan jenis hewan")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(roi)) {
+                            txtRoi.setError("Masukkan ROI")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(waktuMulai)) {
+                            txtWaktuMulai.setError("Masukkan tanggal mulai")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(waktuSelesai)) {
+                            txtWaktuSelesai.setError("Masukkan tanggal selesai")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(biayaHewan)) {
+                            txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(alamat)) {
+                            txtAlamatLengkap.setError("Masukkan alamat lengkap proyek")
+                            cek = false
+                        }
+
+
+                        if (TextUtils.isEmpty(photo)) {
+                            Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
+                            cek = false
+                        }
+
+                        val p = Proyek(namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                        biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
+
+                        if (cek) {
+                            proyekViewModel.insert(firebaseUser?.uid,p)
+                            Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                    })
                 } else if (!task.isSuccessful) {
                     Toast.makeText(this, Objects.requireNonNull(task.exception).toString(), Toast.LENGTH_SHORT).show()
                 }
