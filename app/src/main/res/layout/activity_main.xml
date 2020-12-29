@@ -22,4 +22,14 @@
         android:layout_height="wrap_content"
         android:text="Peternak Activity"/>
 
+    <Button
+        android:id="@+id/btn_google_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login Google"
+        android:textAllCaps="false"
+        android:layout_marginHorizontal="32dp"
+        android:layout_below="@id/btn_peternak"
+        android:fontFamily="@font/poppins_semibold"/>
+
 </RelativeLayout>
