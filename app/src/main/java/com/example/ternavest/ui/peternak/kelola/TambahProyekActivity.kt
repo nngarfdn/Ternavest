@@ -444,7 +444,6 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
 
     override fun onStart() {
-        proyekViewModel.loadData()
         super.onStart()
     }
 
