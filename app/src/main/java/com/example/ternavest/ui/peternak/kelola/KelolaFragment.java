@@ -24,6 +24,7 @@ import com.example.ternavest.R;
 import com.example.ternavest.adaper.ProyekAdaper;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.viewmodel.ProyekViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -36,6 +37,7 @@ public class KelolaFragment extends Fragment {
     ProyekViewModel proyekViewModel;
     FirebaseUser firebaseUser;
     RecyclerView  rvKelolaProyek;
+    FloatingActionButton floatingActionButton;
 
     public KelolaFragment() {
         // Required empty public constructor
@@ -59,6 +61,11 @@ public class KelolaFragment extends Fragment {
         txtProyekKosong= view.findViewById(R.id.txtProyekKosong);
         imgProyekKosong = view.findViewById(R.id.imgProyekKosong);
         rvKelolaProyek = view.findViewById(R.id.rv_kelola_proyek);
+        floatingActionButton= view.findViewById(R.id.floatingActionButton);
+
+        floatingActionButton.setOnClickListener(v->{
+            startActivity(new Intent(getContext(), TambahProyekActivity.class));
+        });
 
         btnTambahProyek.setOnClickListener(v-> {
             startActivity(new Intent(getContext(), TambahProyekActivity.class));
