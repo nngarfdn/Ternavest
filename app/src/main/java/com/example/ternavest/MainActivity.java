@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ternavest.testing.WilayahTest;
+import com.example.ternavest.ui.DetailProfileActivity;
+import com.example.ternavest.ui.SettingsActivity;
 import com.example.ternavest.ui.peternak.PeternakActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -55,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnGoogle = findViewById(R.id.btn_google_login);
         btnGoogle.setOnClickListener(v -> loginWithGoogle() );
+
+        Button btnCoba1 = findViewById(R.id.btn_coba1);
+        btnCoba1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DetailProfileActivity.class)));
+        Button btnCoba2 = findViewById(R.id.btn_coba2);
+        btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
     }
 
     private void loginWithGoogle(){

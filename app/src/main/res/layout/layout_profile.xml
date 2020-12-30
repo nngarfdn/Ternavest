@@ -15,6 +15,7 @@
         android:padding="24dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_photo_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@color/gray"/>

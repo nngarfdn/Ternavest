@@ -67,7 +67,7 @@
                 style="@style/Button.Menu.White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Keluar aplikasi"
+                android:text="Keluar akun"
                 app:icon="@drawable/ic_exit_to_app"
                 android:layout_marginBottom="24dp"/>
         </LinearLayout>
