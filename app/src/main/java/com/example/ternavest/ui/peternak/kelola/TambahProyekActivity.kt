@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -50,6 +51,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     var objectStorageReference: StorageReference? = null
     var objectFirebaseFirestore: FirebaseFirestore? = null
     private var firebaseUser: FirebaseUser? = null
+    private val listProyekId: MutableList<Int> = ArrayList()
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var lvm: LocationViewModel
@@ -166,14 +168,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 cek = false
             }
 
-//            val p = Proyek(namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-//                    biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
-//
-//            if (cek) {
-//                proyekViewModel.insert(firebaseUser?.uid,p)
-//                Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
+
         })
 
     }
@@ -337,7 +332,6 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     private fun uploadImage() {
         if (filePath != null) {
-//            txt_uploading.setVisibility(View.VISIBLE)
             btnUploadImage.setText("Mengupload..")
             val namaImage = UUID.randomUUID().toString() // diganti id produk di firebase
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
@@ -350,7 +344,6 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 imageRef.downloadUrl
             }.addOnCompleteListener { task: Task<Uri?> ->
                 if (task.isSuccessful) {
-//                    txt_uploading.setVisibility(View.INVISIBLE)
                     btnUploadImage.visibility = View.INVISIBLE
                     Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
                     btnSimpan.setOnClickListener(View.OnClickListener { v: View? ->
@@ -367,76 +360,56 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                         val alamat: String = txtAlamatLengkap.getText().toString()
                         var kecamatan: String? = null
                         kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
-                            spin_districts.getSelectedItem() as String
-                        } else {
-                            "-"
-                        }
+                            spin_districts.getSelectedItem() as String } else { "-" }
                         var kabupaten: String? = null
                         kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
                             spin_regencies.getSelectedItem() as String
-                        } else {
-                            "-"
-                        }
-
+                        } else { "-" }
                         var prov: String? = null
                         prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
-                            spin_provinces.getSelectedItem() as String
-                        } else {
-                            "-"
-                        }
-
+                            spin_provinces.getSelectedItem() as String } else { "-" }
                         var cek = true
                         if (namaProyek.length <= 0) {
                             txtNamaProyek.setError("Masukkan nama proyek")
                             cek = false
                         }
-
                         if (TextUtils.isEmpty(deskripsiProyek)) {
                             txtDeskripsiProyek.setError("Masukkan deskripsi proyek")
                             cek = false
                         }
-
                         if (TextUtils.isEmpty(jenisHewan)) {
                             txtJenisHewan.setError("Masukkan jenis hewan")
                             cek = false
                         }
-
                         if (TextUtils.isEmpty(roi)) {
                             txtRoi.setError("Masukkan ROI")
                             cek = false
                         }
-
                         if (TextUtils.isEmpty(waktuMulai)) {
                             txtWaktuMulai.setError("Masukkan tanggal mulai")
                             cek = false
                         }
-
                         if (TextUtils.isEmpty(waktuSelesai)) {
                             txtWaktuSelesai.setError("Masukkan tanggal selesai")
                             cek = false
                         }
-
                         if (TextUtils.isEmpty(biayaHewan)) {
                             txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
                             cek = false
                         }
-
                         if (TextUtils.isEmpty(alamat)) {
                             txtAlamatLengkap.setError("Masukkan alamat lengkap proyek")
                             cek = false
                         }
-
-
                         if (TextUtils.isEmpty(photo)) {
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             cek = false
                         }
-
-                        val p = Proyek(namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                        val p = Proyek("",firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
                         biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
 
                         if (cek) {
-                            proyekViewModel.insert(firebaseUser?.uid,p)
+                            proyekViewModel.insert(p)
                             Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
                             finish()
                         }
@@ -467,6 +440,12 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 e.printStackTrace()
             }
         }
+    }
+
+
+    override fun onStart() {
+        proyekViewModel.loadData()
+        super.onStart()
     }
 
 }

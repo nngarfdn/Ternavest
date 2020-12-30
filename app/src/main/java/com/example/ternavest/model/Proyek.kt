@@ -1,6 +1,8 @@
 package com.example.ternavest.model
 
 data class Proyek(
+        var id : String? = "",
+        val uuid : String? = "",
         var namaProyek : String? = "",
         var deskripsiProyek : String? = "",
         var jenisHewan : String? = "",
