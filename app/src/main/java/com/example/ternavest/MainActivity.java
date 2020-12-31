@@ -53,10 +53,12 @@ public class MainActivity extends AppCompatActivity {
         btnTestWilayah.setOnClickListener(v -> startActivity(new Intent(this, WilayahTest.class)));
 
         Button btnPeternak = findViewById(R.id.btn_peternak);
-        btnPeternak.setOnClickListener(v -> startActivity(new Intent(this, PeternakActivity.class)));
+        btnPeternak.setOnClickListener(v -> {
+            startActivity(new Intent(this, PeternakActivity.class));
+        });
 
         Button btnGoogle = findViewById(R.id.btn_google_login);
-        btnGoogle.setOnClickListener(v -> loginWithGoogle() );
+        btnGoogle.setOnClickListener(v -> loginWithGoogle());
 
         Button btnCoba1 = findViewById(R.id.btn_coba1);
         btnCoba1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DetailProfileActivity.class)));
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
     }
 
-    private void loginWithGoogle(){
+    private void loginWithGoogle() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -74,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-            } catch (ApiException e){
+            } catch (ApiException e) {
                 // Google Sign In failed or user press back button
                 Log.w(TAG, "Google sign in failed", e);
                 //showSnackbar(getActivity().findViewById(R.id.activity_login), "Email gagal diautentikasi.");
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account){
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
 //        loadingDialog.show();
 
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's informationZ
                             Log.d(TAG, "signInWithCredential: success");
                             launchMain();
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void launchMain(){
+    private void launchMain() {
         Intent intent = new Intent(MainActivity.this, PeternakActivity.class);
         startActivity(intent);
         this.finish();

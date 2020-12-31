@@ -1,11 +1,14 @@
 package com.example.ternavest.adaper
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ternavest.R
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.peternak.kelola.DetailFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_proyek.view.*
 
@@ -29,7 +32,11 @@ class ProyekAdaper (private val list: List<Proyek>) : RecyclerView.Adapter<Proye
         holder.itemView.txtNamaProyek.text = list[position].namaProyek
 
         holder.itemView.setOnClickListener {
-
+            val args = Bundle()
+            args.putParcelable("proyek",list.get(position))
+            val bottomSheet = DetailFragment()
+            bottomSheet.setArguments(args)
+            bottomSheet.show((holder.itemView.context as FragmentActivity).supportFragmentManager, bottomSheet.getTag())
         }
     }
 }

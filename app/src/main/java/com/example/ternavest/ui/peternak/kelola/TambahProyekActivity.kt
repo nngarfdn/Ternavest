@@ -9,7 +9,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
-import android.util.Log
+import android.transition.Fade
+import android.transition.TransitionInflater
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -172,6 +173,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         })
 
     }
+
 
     private fun initWilayah() {
         cb_provinces.setEnabled(true)

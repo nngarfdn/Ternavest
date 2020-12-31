@@ -1,7 +1,7 @@
 package com.example.ternavest.ui.peternak
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ternavest.R
 import com.example.ternavest.ui.peternak.kelola.KelolaFragment
@@ -10,12 +10,13 @@ import com.example.ternavest.ui.peternak.profil.ProfileFragment
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import kotlinx.android.synthetic.main.activity_peternak.*
 
+
 class PeternakActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_peternak)
-
         loadFragment(KelolaFragment())
+
 
         bn_main.setOnItemSelectListener( object : ReadableBottomBar.ItemSelectListener{
             override fun onItemSelected(index: Int) {
@@ -38,4 +39,6 @@ class PeternakActivity : AppCompatActivity() {
         }
         return false
     }
+
+
 }
