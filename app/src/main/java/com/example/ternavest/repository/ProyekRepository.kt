@@ -12,6 +12,7 @@ class ProyekRepository {
     private val TAG = javaClass.simpleName
     private val database = FirebaseFirestore.getInstance()
     private var resultProyekByUUID: MutableLiveData<List<Proyek>> = MutableLiveData()
+    val reference = database.collection("proyek")
 
     fun getResultsByUUID(): LiveData<List<Proyek>> = resultProyekByUUID
 
@@ -22,6 +23,35 @@ class ProyekRepository {
                 .addOnCompleteListener { task: Task<Void?> ->
                     if (task.isSuccessful) Log.d(TAG, "Document was added") else
                         Log.w(TAG, "Error adding document", task.exception) }
+    }
+
+    fun update(proyek: Proyek) {
+        val idProduk = proyek.id
+        val item = hashMapProfile(proyek)
+
+        if (idProduk != null) {
+            database.collection("proyek").document(idProduk)
+                    .set(item)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Succes update")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "Error adding document", e)
+                    }
+        }
+    }
+
+    fun delete(idProduk: String) {
+        if (idProduk != null) {
+            database.collection("proyek").document(idProduk)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error deleting document", e)
+                    }
+        }
     }
 
     fun getProyekByUUID(uuid: String) {

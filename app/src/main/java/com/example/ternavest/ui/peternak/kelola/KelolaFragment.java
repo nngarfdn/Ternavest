@@ -44,6 +44,7 @@ public class KelolaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         proyekViewModel   = ViewModelProviders.of(this).get(ProyekViewModel.class);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        proyekViewModel.loadResultByUUID(firebaseUser.getUid());
     }
 
     @Override
@@ -51,6 +52,7 @@ public class KelolaFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_kelola, container, false);
+        proyekViewModel.loadResultByUUID(firebaseUser.getUid());
 
         btnTambahProyek = view.findViewById(R.id.btnTambahProyek);
         txtProyekKosong= view.findViewById(R.id.txtProyekKosong);
@@ -82,5 +84,11 @@ public class KelolaFragment extends Fragment {
     public void onResume() {
         proyekViewModel.loadResultByUUID(firebaseUser.getUid());
         super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        proyekViewModel.loadResultByUUID(firebaseUser.getUid());
+        super.onStart();
     }
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:showIn="@layout/activity_tambah_proyek">
+
+    <EditText
+        android:id="@+id/txtNamaProyek"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Nama Proyek"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/toolbartambahpproyek"
+        android:paddingHorizontal="8dp" />
+
+    <EditText
+        android:id="@+id/txtDeskripsiProyek"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Deskripsi Proyek"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/txtNamaProyek"
+        android:paddingHorizontal="8dp" />
+
+    <EditText
+        android:id="@+id/txtJenisHewan"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Jenis Hewan"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/txtDeskripsiProyek"
+        android:paddingHorizontal="8dp" />
+
+    <EditText
+        android:id="@+id/txtRoi"
+        android:layout_below="@+id/txtJenisHewan"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="ROI berapa persen ?"
+        android:background="@android:color/darker_gray"
+        android:paddingHorizontal="8dp" />
+
+    <EditText
+        android:id="@+id/txtWaktuMulai"
+        android:layout_below="@+id/txtRoi"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Tanggal mulai proyek"
+        android:background="@android:color/darker_gray"
+        android:paddingHorizontal="8dp" />
+
+    <EditText
+        android:id="@+id/txtWaktuSelesai"
+        android:layout_below="@+id/txtWaktuMulai"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Tanggal selesai proyek"
+        android:background="@android:color/darker_gray"
+        android:paddingHorizontal="8dp" />
+
+    <EditText
+        android:id="@+id/txtBiayaPengelolaan"
+        android:layout_below="@+id/txtWaktuSelesai"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Biaya perhewan selama periode"
+        android:background="@android:color/darker_gray"
+        android:paddingHorizontal="8dp" />
+
+    <EditText
+        android:id="@+id/txtAlamatLengkap"
+        android:layout_below="@+id/wilayah"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Alamat lengkap proyek"
+        android:background="@android:color/darker_gray"
+        android:paddingHorizontal="8dp" />
+
+    <ImageView
+        android:id="@+id/imgUpload"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/txtAlamatLengkap"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/upload" />
+
+    <Button
+        android:id="@+id/btnUploadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgUpload"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:text="Pilih gambar" />
+
+    <Button
+        android:id="@+id/btnSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Simpan"
+        android:layout_below="@+id/btnUploadImage"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp" />
+
+    <LinearLayout android:id="@+id/wilayah"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        android:layout_height="match_parent"
+        tools:context=".testing.WilayahTest"
+        android:padding="16dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_below="@+id/txtBiayaPengelolaan"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/cb_provinces"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provinsi" />
+
+        <Spinner
+            android:id="@+id/spin_provinces"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:prompt="@string/hint_select_province"
+            android:spinnerMode="dialog" />
+
+        <CheckBox
+            android:id="@+id/cb_regencies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kabupaten" />
+
+        <Spinner
+            android:id="@+id/spin_regencies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:prompt="@string/hint_select_regency"
+            android:spinnerMode="dialog" />
+
+        <CheckBox
+            android:id="@+id/cb_districts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kecamatan" />
+
+        <Spinner
+            android:id="@+id/spin_districts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:prompt="@string/hint_select_district"
+            android:spinnerMode="dialog" />
+    </LinearLayout>
+</merge>

@@ -1,39 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.peternak.kelola.DetailFragment">
+    android:paddingHorizontal="@dimen/dimen_32"
+    android:layout_height="match_parent">
 
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
-        android:layout_width="@dimen/dimen_0"
+    <ImageView
+        android:id="@+id/pull"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_16"
-        android:layout_marginEnd="@dimen/dimen_16"
-        android:text="@string/tv_title"
-        android:textSize="@dimen/font_size_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_pull"
+        android:layout_centerHorizontal="true"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="@dimen/dimen_0"
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_16"
-        android:text="@string/tv_description"
-        android:textSize="@dimen/font_size_16"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/pull"
+        android:layout_marginEnd="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/imgLaporanProyek"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Ayam Pullet Bulan"
+        android:textSize="22sp" />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+    <ImageView
+        android:id="@+id/imgEditProyek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtTitle"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_edit" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+    <ImageView
+        android:id="@+id/imgLaporanProyek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_alignTop="@+id/imgEditProyek"
+        android:layout_toStartOf="@+id/imgEditProyek"
+        android:src="@drawable/ic_laporan" />
+
+    <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/txtTitle"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context=".ui.peternak.kelola.DetailFragment">
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="lorem ipsum"
+                android:textSize="@dimen/font_size_16"
+                android:fontFamily="@font/poppins_medium"
+                />
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

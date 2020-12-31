@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest">
-        <activity android:name=".ui.SettingsActivity"/>
-        <activity android:name=".ui.DetailProfileActivity"/>
+        <activity android:name=".ui.peternak.kelola.EditProyekActivity"></activity>
+        <activity android:name=".ui.peternak.kelola.LaporanActivity" />
+        <activity android:name=".ui.SettingsActivity" />
+        <activity android:name=".ui.DetailProfileActivity" />
         <activity android:name=".ui.peternak.PeternakActivity" />
         <activity android:name=".ui.invest.InvestorActivity" />
         <activity android:name=".testing.WilayahTest" />

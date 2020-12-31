@@ -7,4 +7,5 @@
     <dimen name="dimen_32">32dp</dimen>
     <dimen name="dimen_60">60dp</dimen>
     <dimen name="font_nm">14sp</dimen>
+    <dimen name="font_md">14sp</dimen>
 </resources>

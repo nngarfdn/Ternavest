@@ -1,12 +1,10 @@
 package com.example.ternavest.ui.peternak.kelola
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.ternavest.R
 import com.example.ternavest.model.Proyek
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -30,12 +28,16 @@ class DetailFragment : BottomSheetDialogFragment() {
         // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
-        val proyek : Proyek? = arguments?.getParcelable("proyek")
+        val p : Proyek? = arguments?.getParcelable("proyek")
 
-        Log.d(TAG, "onCreateView: $proyek")
+        view.txtTitle.setText(p?.namaProyek)
+        view.txtDescription.setText(p?.deskripsiProyek)
 
-        view.tvTitle.setText(proyek?.namaProyek)
-        Toast.makeText(context, "${proyek?.namaProyek}", Toast.LENGTH_SHORT).show()
+        view.imgEditProyek.setOnClickListener{
+            val intent = Intent(context,EditProyekActivity::class.java)
+            intent.putExtra("proyek",p)
+            startActivity(intent)}
+        view.imgLaporanProyek.setOnClickListener{startActivity(Intent(context,LaporanActivity::class.java))}
         return view
     }
 

@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_tambah_proyek.*
 import kotlinx.android.synthetic.main.layout_add_update_proyek.*
 import java.io.IOException
@@ -40,9 +41,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-@Suppress("UNREACHABLE_CODE")
-class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
     private val TAG = javaClass.simpleName
 
@@ -64,10 +63,13 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     private var idRegency = 0
     private var idDistrict = 0
     private var filePath: Uri? = null
+    private lateinit var p : Proyek
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_proyek)
+
+        p = intent.getParcelableExtra<Proyek>("proyek")!!
 
         setSupportActionBar(toolbartambahpproyek)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -79,7 +81,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        
+
 
         dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
         txtWaktuMulai.setInputType(InputType.TYPE_NULL)
@@ -88,11 +90,19 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         setDateTimeField()
         initWilayah()
         loadProvinces()
+        setEditText(p)
+
+        Picasso.get()
+                .load(p?.photoProyek)
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.upload)
+                .into(imgUpload)
 
         btnUploadImage.setOnClickListener { selectImage() }
 
         btnSimpan.setOnClickListener(View.OnClickListener { v: View? ->
-            val photo = ""
+            val photo = p.photoProyek
             val namaProyek = txtNamaProyek.text.toString()
             val deskripsiProyek = txtDeskripsiProyek.text.toString()
             val jenisHewan = txtJenisHewan.text.toString()
@@ -100,8 +110,6 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 //            val roiInt = roi.toInt()
             val waktuMulai = txtWaktuMulai.text.toString()
             val waktuSelesai = txtWaktuSelesai.text.toString()
-            val biayaHewan = txtBiayaPengelolaan.text.toString()
-//            val biayaPengelolahan = biayaHewan.toInt()
             val alamat: String = txtAlamatLengkap.getText().toString()
             var kecamatan: String? = null
             kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
@@ -154,6 +162,9 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 cek = false
             }
 
+            val biayaHewan = txtBiayaPengelolaan.text.toString()
+            val biayaPengelolahana = biayaHewan.toInt()
+
             if (TextUtils.isEmpty(biayaHewan)) {
                 txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
                 cek = false
@@ -170,8 +181,45 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 cek = false
             }
 
+            val roii = txtRoi.text.toString()
+            val roiInt = roii.toInt()
+
+            if (TextUtils.isEmpty(roi)) {
+                txtRoi.setError("Masukkan ROI")
+                cek = false
+            }
+
+
+            if (TextUtils.isEmpty(biayaHewan)) {
+                txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
+                cek = false
+            }
+
+            val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                    biayaPengelolahana,prov,kabupaten, kecamatan,alamat,photo)
+
+            if (cek) {
+                proyekViewModel.update(p)
+                Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
+                finish()
+            }
 
         })
+
+    }
+
+    private fun setEditText(p : Proyek?) {
+
+        txtNamaProyek.setText(p?.namaProyek)
+        txtDeskripsiProyek.setText(p?.deskripsiProyek)
+        txtJenisHewan.setText(p?.jenisHewan)
+        txtRoi.setText(p?.roi.toString())
+        txtWaktuMulai.setText(p?.waktuMulai)
+        txtWaktuSelesai.setText(p?.waktuSelesai)
+        txtBiayaPengelolaan.setText(p?.biayaHewan.toString())
+        txtAlamatLengkap.setText(p?.alamatLengkap)
+
+
 
     }
 
@@ -241,6 +289,9 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_provinces.setAdapter(adapter)
+                if (p?.provinsi != "-"){
+                    spin_provinces.setSelection(adapter.getPosition(p.provinsi))
+                }
             }
         })
     }
@@ -256,6 +307,9 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_regencies.setAdapter(adapter)
+                if (p.kabupaten != "-"){
+                    spin_regencies.setSelection(adapter.getPosition(p.kabupaten))
+                }
             }
         })
     }
@@ -271,6 +325,9 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_districts.setAdapter(adapter)
+                if (p.kecamatan != "-"){
+                    spin_districts.setSelection(adapter.getPosition(p.kecamatan))
+                }
             }
         })
     }
@@ -404,15 +461,15 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                             txtAlamatLengkap.setError("Masukkan alamat lengkap proyek")
                             cek = false
                         }
-                        if (TextUtils.isEmpty(photo)) {
+                        if (TextUtils.isEmpty(p.photoProyek)) {
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             cek = false
                         }
-                        val p = Proyek("",firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                        biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
+                        val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                                biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
 
                         if (cek) {
-                            proyekViewModel.insert(p)
+                            proyekViewModel.update(p)
                             Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
                             finish()
                         }
