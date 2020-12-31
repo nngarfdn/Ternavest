@@ -14,11 +14,40 @@
         android:gravity="center_vertical"
         android:padding="24dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_photo_profile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@color/gray"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_photo_profile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@color/gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_level_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/gray"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_level_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/loading"
+                    android:textColor="@color/white" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,19 +61,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
-                android:textSize="@dimen/font_nm"
-                app:drawableEndCompat="@drawable/ic_verified"
+                android:textSize="@dimen/font_md"
                 app:drawableTint="@color/green"
                 android:drawablePadding="8dp"/>
 
             <TextView
-                android:id="@+id/tv_level_profile"
+                android:id="@+id/tv_email_profile"
                 style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
                 android:textSize="@dimen/font_nm"
-                app:drawableStartCompat="@drawable/ic_person"
+                app:drawableStartCompat="@drawable/ic_email"
                 android:drawablePadding="8dp"/>
 
             <TextView
@@ -55,9 +83,18 @@
                 android:text="@string/loading"
                 android:textSize="@dimen/font_nm"
                 app:drawableStartCompat="@drawable/ic_location_on"
-                android:drawablePadding="8dp"/>
+                android:drawablePadding="8dp"
+                android:maxLines="2"/>
         </LinearLayout>
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ktp_profile"
+        style="@style/Button.Menu.Green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        app:icon="@drawable/ic_verified"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_phone_profile"

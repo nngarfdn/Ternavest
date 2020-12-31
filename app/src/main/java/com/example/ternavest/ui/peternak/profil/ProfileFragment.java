@@ -1,5 +1,6 @@
 package com.example.ternavest.ui.peternak.profil;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,89 +9,171 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.ternavest.MainActivity;
 import com.example.ternavest.R;
+import com.example.ternavest.model.Profile;
+import com.example.ternavest.ui.SettingsActivity;
+import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ProfileFragment extends Fragment {
+import de.hdodenhof.circleimageview.CircleImageView;
 
-    MaterialButton btnLogOut;
+import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
+import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
+import static com.example.ternavest.utils.AppUtils.VERIF_APPROVED;
+import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
+import static com.example.ternavest.utils.AppUtils.showToast;
 
+public class ProfileFragment extends Fragment implements View.OnClickListener {
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView tvLevel, tvAddress;
+    private Button btnKtp, btnPhone, btnWhatsApp;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public ProfileFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        btnLogOut = view.findViewById(R.id.btn_logout_profile);
-
-        btnLogOut.setOnClickListener(v-> {
-            new AlertDialog.Builder(getActivity())
-                    .setMessage("Apakah Anda yakin ingin keluar?")
-                    .setNegativeButton("Tidak", null)
-                    .setNeutralButton("Batal", null)
-                    .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                    .requestIdToken(getString(R.string.default_web_client_id))
-                                    .requestEmail()
-                                    .build();
-                            GoogleSignIn.getClient(getActivity(), gso).signOut();
-//                            firebaseAuth.signOut();
-                            startActivity(new Intent(getContext(), MainActivity.class));
-                            getActivity().finish();
-                        }
-                    })
-                    .create().show();
-        });
         super.onViewCreated(view, savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        CircleImageView imgPhoto = view.findViewById(R.id.img_photo_profile);
+        TextView tvName = view.findViewById(R.id.tv_name_profile);
+        tvLevel = view.findViewById(R.id.tv_level_profile);
+        TextView tvEmail = view.findViewById(R.id.tv_email_profile);
+        tvAddress = view.findViewById(R.id.tv_address_profile);
+
+        Button btnVerification = view.findViewById(R.id.btn_verification_profile);
+        btnVerification.setOnClickListener(this);
+        if (firebaseUser.isEmailVerified()) btnVerification.setVisibility(View.GONE);
+
+        btnKtp = view.findViewById(R.id.btn_ktp_profile);
+        btnPhone = view.findViewById(R.id.btn_phone_profile);
+        btnWhatsApp = view.findViewById(R.id.btn_whatsapp_profile);
+        Button btnSettings = view.findViewById(R.id.btn_settings_profile);
+        Button btnResetPassword = view.findViewById(R.id.btn_reset_password_profile);
+        Button btnAbout = view.findViewById(R.id.btn_about_profile);
+        Button btnLogOut = view.findViewById(R.id.btn_logout_profile);
+        btnKtp.setOnClickListener(this);
+        btnPhone.setEnabled(false);
+        btnWhatsApp.setEnabled(false);
+        btnSettings.setOnClickListener(this);
+        btnResetPassword.setOnClickListener(this);
+        btnAbout.setOnClickListener(this);
+        btnLogOut.setOnClickListener(this);
+
+        btnKtp.setVisibility(View.GONE);
+        loadImageFromUrl(imgPhoto, firebaseUser.getPhotoUrl().toString());
+        tvName.setText(firebaseUser.getDisplayName());
+        tvEmail.setText(firebaseUser.getEmail());
+
+        ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
+        profileViewModel.loadData();
+        profileViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Profile>() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onChanged(Profile profile) {
+                if (profile.getVerificationStatus().equals(VERIF_APPROVED)){
+                    btnKtp.setText("Akun terverifikasi");
+                    ((MaterialButton) btnKtp).setIcon(getResources().getDrawable(R.drawable.ic_verified));
+                    btnKtp.setBackground(getResources().getDrawable(R.drawable.bg_button_menu_green));
+                } else {
+                    btnKtp.setText("Akun belum diverifikasi");
+                    ((MaterialButton) btnKtp).setIcon(getResources().getDrawable(R.drawable.ic_warning));
+                    btnKtp.setBackground(getResources().getDrawable(R.drawable.bg_button_menu_red));
+                }
+                btnKtp.setVisibility(View.VISIBLE);
+
+                if (profile.getLevel().equals(LEVEL_PETERNAK)) tvLevel.setText("Peternak");
+                else if (profile.getLevel().equals(LEVEL_INVESTOR)) tvLevel.setText("Investor");
+
+                tvAddress.setText(profile.getAddress());
+                btnPhone.setText(profile.getPhone());
+                btnWhatsApp.setText(profile.getWhatsApp());
+            }
+        });
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_verification_profile:
+                new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                        .setTitle("Kirim tautan verifikasi")
+                        .setMessage("Email Anda belum diverifikasi. Kirim tautan verifikasi ke email Anda?")
+                        .setNegativeButton("Tidak", null)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                firebaseUser.sendEmailVerification();
+                                showToast(getContext(), "Tautan verifikasi berhasil dikirim ke " + firebaseUser.getEmail() + ".");
+                            }
+                        }).create().show();
+                break;
+
+            case R.id.btn_settings_profile:
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                break;
+
+            case R.id.btn_reset_password_profile:
+                new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                        .setTitle("Setel ulang kata sandi")
+                        .setMessage("Kirim tautan penyetelan ulang kata sandi ke email Anda?")
+                        .setNegativeButton("Tidak", null)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                firebaseAuth.sendPasswordResetEmail(firebaseUser.getEmail());
+                                showToast(getContext(), "Tautan penyetelan ulang kata sandi berhasil dikirim ke " + firebaseUser.getEmail() + ".");
+                            }
+                        }).create().show();
+                break;
+
+            case R.id.btn_about_profile:
+                break;
+
+            case R.id.btn_logout_profile:
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Keluar akun")
+                        .setMessage("Apakah Anda yakin ingin keluar?")
+                        .setNegativeButton("Tidak", null)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                        .requestIdToken(getString(R.string.default_web_client_id))
+                                        .requestEmail()
+                                        .build();
+                                GoogleSignIn.getClient(getActivity(), gso).signOut();
+                                firebaseAuth.signOut();
+                                startActivity(new Intent(getContext(), MainActivity.class));
+                                getActivity().finish();
+                            }
+                        })
+                        .create().show();
+                break;
+        }
     }
 }
