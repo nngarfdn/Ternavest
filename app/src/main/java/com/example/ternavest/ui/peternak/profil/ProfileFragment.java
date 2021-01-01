@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.ternavest.ui.SettingsActivity.EXTRA_PROFILE;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_APPROVED;
@@ -40,6 +41,7 @@ import static com.example.ternavest.utils.AppUtils.showToast;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private Profile profile;
 
     private TextView tvLevel, tvAddress;
     private Button btnKtp, btnPhone, btnWhatsApp;
@@ -93,7 +95,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         profileViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Profile>() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
-            public void onChanged(Profile profile) {
+            public void onChanged(Profile result) {
+                profile = result;
+
                 if (profile.getVerificationStatus().equals(VERIF_APPROVED)){
                     btnKtp.setText("Akun terverifikasi");
                     ((MaterialButton) btnKtp).setIcon(getResources().getDrawable(R.drawable.ic_verified));
@@ -134,7 +138,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_settings_profile:
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                intent.putExtra(EXTRA_PROFILE, profile);
+                startActivity(intent);
                 break;
 
             case R.id.btn_reset_password_profile:

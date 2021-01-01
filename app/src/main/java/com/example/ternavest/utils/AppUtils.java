@@ -20,6 +20,7 @@ public class AppUtils {
     }
 
     public static void loadImageFromUrl(ImageView imageView, String url){
+        if (url.isEmpty()) url = "null";
         Picasso.get()
                 .load(url)
                 .fit()

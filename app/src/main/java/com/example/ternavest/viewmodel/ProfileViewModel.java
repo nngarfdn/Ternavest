@@ -27,7 +27,7 @@ public class ProfileViewModel extends ViewModel {
     }
 
     public void update(Profile profile){
-        repository.insert(profile);
+        repository.update(profile);
     }
 
     public CollectionReference getReference(){
