@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +29,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.ternavest.ui.SettingsActivity.EXTRA_PROFILE;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_APPROVED;
@@ -39,6 +42,8 @@ import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = ProfileFragment.class.getSimpleName();
+
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private Profile profile;
@@ -117,6 +122,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 btnWhatsApp.setText(profile.getWhatsApp());
             }
         });
+        profileViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) Log.w(TAG, "Listen failed", error);
+                else if (value != null && !value.isEmpty()){
+                    profileViewModel.loadData();
+                    Log.d(TAG, "Changes detected");
+                }
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -139,7 +154,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             case R.id.btn_settings_profile:
                 Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                intent.putExtra(EXTRA_PROFILE, profile);
                 startActivity(intent);
                 break;
 
