@@ -9,6 +9,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -22,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.peternak.PeternakActivity
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.gms.tasks.Task
@@ -72,6 +76,18 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         setSupportActionBar(toolbartambahpproyek)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbartambahpproyek.setOnMenuItemClickListener {item ->
+                when (item.getItemId()) {
+                    R.id.action_delete -> {
+                        proyekViewModel.delete(p.id!!)
+                        startActivity(Intent(this, PeternakActivity::class.java))
+                        true
+
+                    }
+                    else -> super.onOptionsItemSelected(item)
+                }
+        }
 
         proyekViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProyekViewModel::class.java)
         lvm = ViewModelProvider(this, NewInstanceFactory()).get(LocationViewModel::class.java)
@@ -499,8 +515,12 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_delete, menu)
+        return true
     }
+
+
 
 }
