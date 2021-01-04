@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
-import android.transition.Fade
-import android.transition.TransitionInflater
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -408,8 +406,9 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             cek = false
                         }
+
                         val p = Proyek("",firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                        biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
+                        biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo,null)
 
                         if (cek) {
                             proyekViewModel.insert(p)

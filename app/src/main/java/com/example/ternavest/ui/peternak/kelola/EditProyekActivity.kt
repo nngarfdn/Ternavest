@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
-import android.transition.Fade
-import android.transition.TransitionInflater
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -196,7 +194,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
 
             val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                    biayaPengelolahana,prov,kabupaten, kecamatan,alamat,photo)
+                    biayaPengelolahana,prov,kabupaten, kecamatan,alamat,photo,p.peminat)
 
             if (cek) {
                 proyekViewModel.update(p)
@@ -218,8 +216,6 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         txtWaktuSelesai.setText(p?.waktuSelesai)
         txtBiayaPengelolaan.setText(p?.biayaHewan.toString())
         txtAlamatLengkap.setText(p?.alamatLengkap)
-
-
 
     }
 
@@ -466,7 +462,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             cek = false
                         }
                         val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                                biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo)
+                                biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo,p.peminat)
 
                         if (cek) {
                             proyekViewModel.update(p)

@@ -94,6 +94,7 @@ class ProyekRepository {
         document["kecamatan"] = proyek.kecamatan
         document["alamatLengkap"] = proyek.alamatLengkap
         document["photoProyek"] = proyek.photoProyek
+        document["peminat"] = proyek.peminat
         return document
     }
 }
