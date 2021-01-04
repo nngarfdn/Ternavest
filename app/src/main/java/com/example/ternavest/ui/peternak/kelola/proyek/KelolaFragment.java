@@ -1,11 +1,9 @@
-package com.example.ternavest.ui.peternak.kelola;
+package com.example.ternavest.ui.peternak.kelola.proyek;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;

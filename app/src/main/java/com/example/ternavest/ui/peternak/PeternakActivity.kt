@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ternavest.R
-import com.example.ternavest.ui.peternak.kelola.KelolaFragment
+import com.example.ternavest.ui.peternak.kelola.proyek.KelolaFragment
 import com.example.ternavest.ui.peternak.peminat.PeminatFragment
 import com.example.ternavest.ui.peternak.profil.ProfileFragment
 import com.iammert.library.readablebottombar.ReadableBottomBar

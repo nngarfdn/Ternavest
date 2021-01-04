@@ -7,7 +7,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.peternak.kelola.TambahProyekActivity">
+    tools:context=".ui.peternak.kelola.proyek.TambahProyekActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbartambahpproyek"

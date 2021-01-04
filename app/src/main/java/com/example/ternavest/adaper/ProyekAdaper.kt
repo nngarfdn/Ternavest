@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ternavest.R
 import com.example.ternavest.model.Proyek
-import com.example.ternavest.ui.peternak.kelola.DetailFragment
+import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_proyek.view.*
 

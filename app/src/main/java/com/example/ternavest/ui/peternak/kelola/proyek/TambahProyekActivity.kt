@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.peternak.kelola
+package com.example.ternavest.ui.peternak.kelola.proyek
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -9,9 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -25,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
 import com.example.ternavest.model.Proyek
-import com.example.ternavest.ui.peternak.PeternakActivity
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.gms.tasks.Task
@@ -35,7 +31,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_tambah_proyek.*
 import kotlinx.android.synthetic.main.layout_add_update_proyek.*
 import java.io.IOException
@@ -43,7 +38,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+
+@Suppress("UNREACHABLE_CODE")
+class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
     private val TAG = javaClass.simpleName
 
@@ -54,7 +51,6 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     var objectStorageReference: StorageReference? = null
     var objectFirebaseFirestore: FirebaseFirestore? = null
     private var firebaseUser: FirebaseUser? = null
-    private val listProyekId: MutableList<Int> = ArrayList()
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var lvm: LocationViewModel
@@ -65,29 +61,14 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     private var idRegency = 0
     private var idDistrict = 0
     private var filePath: Uri? = null
-    private lateinit var p : Proyek
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_proyek)
 
-        p = intent.getParcelableExtra<Proyek>("proyek")!!
-
         setSupportActionBar(toolbartambahpproyek)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        toolbartambahpproyek.setOnMenuItemClickListener {item ->
-                when (item.getItemId()) {
-                    R.id.action_delete -> {
-                        proyekViewModel.delete(p.id!!)
-                        startActivity(Intent(this, PeternakActivity::class.java))
-                        true
-
-                    }
-                    else -> super.onOptionsItemSelected(item)
-                }
-        }
 
         proyekViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProyekViewModel::class.java)
         lvm = ViewModelProvider(this, NewInstanceFactory()).get(LocationViewModel::class.java)
@@ -95,7 +76,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-
+        
 
         dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
         txtWaktuMulai.setInputType(InputType.TYPE_NULL)
@@ -104,26 +85,18 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         setDateTimeField()
         initWilayah()
         loadProvinces()
-        setEditText(p)
-
-        Picasso.get()
-                .load(p?.photoProyek)
-                .fit()
-                .centerCrop()
-                .placeholder(R.drawable.upload)
-                .into(imgUpload)
 
         btnUploadImage.setOnClickListener { selectImage() }
 
         btnSimpan.setOnClickListener(View.OnClickListener { v: View? ->
-            val photo = p.photoProyek
+            val photo = ""
             val namaProyek = txtNamaProyek.text.toString()
             val deskripsiProyek = txtDeskripsiProyek.text.toString()
             val jenisHewan = txtJenisHewan.text.toString()
             val roi = txtRoi.text.toString()
-//            val roiInt = roi.toInt()
             val waktuMulai = txtWaktuMulai.text.toString()
             val waktuSelesai = txtWaktuSelesai.text.toString()
+            val biayaHewan = txtBiayaPengelolaan.text.toString()
             val alamat: String = txtAlamatLengkap.getText().toString()
             var kecamatan: String? = null
             kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
@@ -176,9 +149,6 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 cek = false
             }
 
-            val biayaHewan = txtBiayaPengelolaan.text.toString()
-            val biayaPengelolahana = biayaHewan.toInt()
-
             if (TextUtils.isEmpty(biayaHewan)) {
                 txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
                 cek = false
@@ -195,45 +165,12 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 cek = false
             }
 
-            val roii = txtRoi.text.toString()
-            val roiInt = roii.toInt()
-
-            if (TextUtils.isEmpty(roi)) {
-                txtRoi.setError("Masukkan ROI")
-                cek = false
-            }
-
-
-            if (TextUtils.isEmpty(biayaHewan)) {
-                txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
-                cek = false
-            }
-
-            val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                    biayaPengelolahana,prov,kabupaten, kecamatan,alamat,photo,p.peminat)
-
-            if (cek) {
-                proyekViewModel.update(p)
-                Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
-                finish()
-            }
 
         })
 
     }
 
-    private fun setEditText(p : Proyek?) {
 
-        txtNamaProyek.setText(p?.namaProyek)
-        txtDeskripsiProyek.setText(p?.deskripsiProyek)
-        txtJenisHewan.setText(p?.jenisHewan)
-        txtRoi.setText(p?.roi.toString())
-        txtWaktuMulai.setText(p?.waktuMulai)
-        txtWaktuSelesai.setText(p?.waktuSelesai)
-        txtBiayaPengelolaan.setText(p?.biayaHewan.toString())
-        txtAlamatLengkap.setText(p?.alamatLengkap)
-
-    }
 
 
     private fun initWilayah() {
@@ -301,9 +238,6 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_provinces.setAdapter(adapter)
-                if (p?.provinsi != "-"){
-                    spin_provinces.setSelection(adapter.getPosition(p.provinsi))
-                }
             }
         })
     }
@@ -319,9 +253,6 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_regencies.setAdapter(adapter)
-                if (p.kabupaten != "-"){
-                    spin_regencies.setSelection(adapter.getPosition(p.kabupaten))
-                }
             }
         })
     }
@@ -337,9 +268,6 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_districts.setAdapter(adapter)
-                if (p.kecamatan != "-"){
-                    spin_districts.setSelection(adapter.getPosition(p.kecamatan))
-                }
             }
         })
     }
@@ -473,15 +401,16 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             txtAlamatLengkap.setError("Masukkan alamat lengkap proyek")
                             cek = false
                         }
-                        if (TextUtils.isEmpty(p.photoProyek)) {
+                        if (TextUtils.isEmpty(photo)) {
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             cek = false
                         }
-                        val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                                biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo,p.peminat)
+
+                        val p = Proyek("",firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                        biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo,null)
 
                         if (cek) {
-                            proyekViewModel.update(p)
+                            proyekViewModel.insert(p)
                             Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
                             finish()
                         }
@@ -515,12 +444,8 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_delete, menu)
-        return true
+    override fun onStart() {
+        super.onStart()
     }
-
-
 
 }

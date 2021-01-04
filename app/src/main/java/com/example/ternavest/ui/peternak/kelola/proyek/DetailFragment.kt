@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.peternak.kelola
+package com.example.ternavest.ui.peternak.kelola.proyek
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ternavest.R
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 
@@ -34,10 +35,14 @@ class DetailFragment : BottomSheetDialogFragment() {
         view.txtDescription.setText(p?.deskripsiProyek)
 
         view.imgEditProyek.setOnClickListener{
-            val intent = Intent(context,EditProyekActivity::class.java)
+            val intent = Intent(context, EditProyekActivity::class.java)
             intent.putExtra("proyek",p)
             startActivity(intent)}
-        view.imgLaporanProyek.setOnClickListener{startActivity(Intent(context,LaporanActivity::class.java))}
+        view.imgLaporanProyek.setOnClickListener{
+            val intent = Intent(context, LaporanActivity::class.java)
+            intent.putExtra("proyek",p)
+            startActivity(intent)}
+
         return view
     }
 
