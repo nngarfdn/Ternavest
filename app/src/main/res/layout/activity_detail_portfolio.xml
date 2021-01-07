@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.both.portfolio.DetailPortfolioActivity"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ib_back_dpf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_backspace"
+            android:background="@android:color/transparent"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/tv_title_dpf"
+            style="@style/TextView.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:layout_toEndOf="@+id/ib_back_dpf"
+            android:layout_marginStart="16dp"/>
+
+        <ImageButton
+            android:id="@+id/ib_delete_dpf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <include layout="@layout/item_portfolio"/>
+
+    <TextView
+        style="@style/TextView.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Peternak"/>
+
+    <include layout="@layout/item_profile"/>
+
+    <TextView
+        style="@style/TextView.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"/>
+
+    <TextView
+        android:id="@+id/tv_status_dpf"
+        style="@style/TextView.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textColor="@color/blue"/>
+
+    <TextView
+        style="@style/TextView.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Riwayat pembayaran"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_payment_dpf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_update_dpf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Informasi"/>
+
+    <Button
+        android:id="@+id/btn_payment_dpf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lanjut Pembayaran"/>
+</LinearLayout>

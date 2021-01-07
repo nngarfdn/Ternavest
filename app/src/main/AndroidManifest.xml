@@ -9,12 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest">
-        <activity android:name=".ui.peternak.kelola.laporan.EditLaporanActivity"></activity>
+        <activity android:name=".ui.both.portfolio.AddUpdatePortfolioActivity"/>
+        <activity android:name=".ui.both.portfolio.DetailPortfolioActivity" />
+        <activity android:name=".ui.peternak.kelola.laporan.EditLaporanActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.TambahLaporanActivity" />
         <activity android:name=".ui.peternak.kelola.proyek.EditProyekActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.LaporanActivity" />
-        <activity android:name=".ui.SettingsActivity" />
-        <activity android:name=".ui.DetailProfileActivity" />
+        <activity android:name=".ui.both.profile.SettingsActivity" />
+        <activity android:name=".ui.both.profile.DetailProfileActivity" />
         <activity android:name=".ui.peternak.PeternakActivity" />
         <activity android:name=".ui.invest.InvestorActivity" />
         <activity android:name=".testing.WilayahTest" />

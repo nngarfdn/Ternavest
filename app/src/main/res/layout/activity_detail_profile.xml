@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ui.DetailProfileActivity">
+    tools:context=".ui.both.profile.DetailProfileActivity">
 
     <TextView
         style="@style/TextView.Medium"

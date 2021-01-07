@@ -1,4 +1,4 @@
-package com.example.ternavest.ui;
+package com.example.ternavest.ui.both.profile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

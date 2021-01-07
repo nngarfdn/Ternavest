@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ternavest.testing.WilayahTest;
-import com.example.ternavest.ui.DetailProfileActivity;
-import com.example.ternavest.ui.SettingsActivity;
+import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity;
+import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
 import com.example.ternavest.ui.peternak.PeternakActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
         btnGoogle.setOnClickListener(v -> loginWithGoogle());
 
         Button btnCoba1 = findViewById(R.id.btn_coba1);
-        btnCoba1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DetailProfileActivity.class)));
+        btnCoba1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DetailPortfolioActivity.class)));
         Button btnCoba2 = findViewById(R.id.btn_coba2);
-        btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
+        btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddUpdatePortfolioActivity.class)));
     }
 
     private void loginWithGoogle() {

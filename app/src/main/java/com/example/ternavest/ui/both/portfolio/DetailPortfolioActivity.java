@@ -1,4 +1,4 @@
-package com.example.ternavest.ui;
+package com.example.ternavest.ui.both.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.ternavest.R;
 
-public class DetailProfileActivity extends AppCompatActivity {
+public class DetailPortfolioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_profile);
+        setContentView(R.layout.activity_detail_portfolio);
     }
 }

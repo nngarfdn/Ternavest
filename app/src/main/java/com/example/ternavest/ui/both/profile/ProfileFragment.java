@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.peternak.profil;
+package com.example.ternavest.ui.both.profile;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.example.ternavest.MainActivity;
 import com.example.ternavest.R;
 import com.example.ternavest.model.Profile;
-import com.example.ternavest.ui.SettingsActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

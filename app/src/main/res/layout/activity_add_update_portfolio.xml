@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.both.portfolio.AddUpdatePortfolioActivity"
+    android:orientation="vertical"
+    android:padding="16dp">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ib_back_aup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_backspace"
+            android:background="@android:color/transparent"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/tv_title_aup"
+            style="@style/TextView.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:layout_toEndOf="@+id/ib_back_aup"
+            android:layout_marginStart="16dp"/>
+    </RelativeLayout>
+    
+    <include layout="@layout/item_proyek"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_icon_cost_aup"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/kambing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/green" />
+
+            <TextView
+                android:id="@+id/tv_title_cost_aup"
+                style="@style/TextView.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Biaya per ekor ternak"
+                app:layout_constraintStart_toEndOf="@+id/img_icon_cost_aup"
+                app:layout_constraintTop_toTopOf="@+id/img_icon_cost_aup" />
+
+            <TextView
+                android:id="@+id/tv_cost_aup"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/loading_rupiah"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_cost_aup" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        style="@style/TextView.Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp 50.000 adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan."/>
+
+    <EditText
+        android:id="@+id/edt_count_aup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Jumlah ekor ternak"
+        android:layout_marginVertical="4dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_icon_total_cost_aup"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/peminat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/green" />
+
+            <TextView
+                android:id="@+id/tv_title_total_cost_aup"
+                style="@style/TextView.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Total biaya yang dibayar"
+                app:layout_constraintStart_toEndOf="@+id/img_icon_total_cost_aup"
+                app:layout_constraintTop_toTopOf="@+id/img_icon_total_cost_aup" />
+
+            <TextView
+                android:id="@+id/tv_total_cost_aup"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/loading_rupiah"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_total_cost_aup" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btn_payment_aup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lanjut Pembayaran"/>
+</LinearLayout>

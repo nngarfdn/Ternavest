@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ternavest.R
 import com.example.ternavest.ui.peternak.kelola.proyek.KelolaFragment
-import com.example.ternavest.ui.peternak.peminat.PeminatFragment
-import com.example.ternavest.ui.peternak.profil.ProfileFragment
+import com.example.ternavest.ui.both.portfolio.PortfolioFragment
+import com.example.ternavest.ui.both.profile.ProfileFragment
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import kotlinx.android.synthetic.main.activity_peternak.*
 
@@ -22,7 +22,7 @@ class PeternakActivity : AppCompatActivity() {
             override fun onItemSelected(index: Int) {
                 when (index){
                     0 -> loadFragment(KelolaFragment())
-                    1 ->loadFragment(PeminatFragment())
+                    1 ->loadFragment(PortfolioFragment())
                     2 -> loadFragment(ProfileFragment())
                 }
             }
