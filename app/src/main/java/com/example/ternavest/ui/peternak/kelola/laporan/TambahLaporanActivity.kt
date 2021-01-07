@@ -26,7 +26,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_tambah_laporan.*
-import kotlinx.android.synthetic.main.layout_add_update_proyek.*
+import kotlinx.android.synthetic.main.add_edit_laporan.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,7 +44,7 @@ class TambahLaporanActivity : AppCompatActivity() {
 
     private lateinit var laporanViewModel: LaporanViewModel
     private var filePath: Uri? = null
-    private lateinit var p : Proyek
+    private var p : String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class TambahLaporanActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        p = intent.getParcelableExtra<Proyek>("proyek")!!
+        p = intent.getStringExtra("id")
 
         laporanViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(LaporanViewModel::class.java)
         objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder")
@@ -115,7 +115,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                         val tanggal = txtTanggalLaporan.text.toString()
                         val pemasukan = txtPemasukan.text.toString()
                         val pemasukanInt = pemasukan.toInt()
-                        val pengeluaran = txtPemasukan.text.toString()
+                        val pengeluaran = txtPengeluaran.text.toString()
                         val pengeluaranInt = pengeluaran.toInt()
                         val vJudul = validasiStringEditText(judul, "Masukan judul laporan", txtJudulLaporan)
                         val vDeskripsi = validasiStringEditText(deskripsi, "Masukan deskripsi laporan", txtDeskripsiLaporan)
@@ -130,7 +130,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                         }
 
 
-                        val laporan = Laporan("", p.id,judul,deskripsi,tanggal,pemasukanInt, pengeluaranInt,photo)
+                        val laporan = Laporan("", p ,judul,deskripsi,tanggal,pemasukanInt, pengeluaranInt,photo)
                         if (vJudul && vDeskripsi && vPemasukan && vPengeluaran && vTgl && vPhoto) {
                             laporanViewModel.insert(laporan)
                             Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()

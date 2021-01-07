@@ -40,7 +40,7 @@ class DetailFragment : BottomSheetDialogFragment() {
             startActivity(intent)}
         view.imgLaporanProyek.setOnClickListener{
             val intent = Intent(context, LaporanActivity::class.java)
-            intent.putExtra("proyek",p)
+            intent.putExtra("id", p?.id)
             startActivity(intent)}
 
         return view

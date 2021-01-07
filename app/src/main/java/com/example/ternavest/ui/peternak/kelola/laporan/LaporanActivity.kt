@@ -14,43 +14,74 @@ import com.example.ternavest.adaper.ProyekAdaper
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.viewmodel.LaporanViewModel
+import com.example.ternavest.viewmodel.ProyekViewModel
 import kotlinx.android.synthetic.main.activity_laporan.*
 
 class LaporanActivity : AppCompatActivity() {
 
 
-    private  val TAG = "LaporanActivity"
-    private lateinit var laporanViewModel : LaporanViewModel
-    private lateinit var p : Proyek
-
+    private val TAG = "LaporanActivity"
+    private lateinit var laporanViewModel: LaporanViewModel
+    private lateinit var proyekViewModel: ProyekViewModel
+    private var p: Proyek? = null
+    private var id: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_laporan)
 
-        p = intent?.getParcelableExtra<Proyek>("proyek")!!
-        laporanViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(LaporanViewModel::class.java)
+        p = intent?.getParcelableExtra<Proyek>("proyek")
 
-        laporanViewModel.getResultByProyekID().observe(this, Observer<List<Laporan>> { result ->
+        id = intent?.getStringExtra("id")
+
+
+
+        laporanViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(LaporanViewModel::class.java)
+        proyekViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel::class.java)
+
+        proyekViewModel.getResultByID().observe(this, Observer<List<Proyek>> { result ->
             Log.d(TAG, "onCreate: $result")
-            imgLaporanKosong.visibility = View.INVISIBLE
-            val layoutManager = LinearLayoutManager(this)
-            rv_laporan.setLayoutManager(layoutManager)
-            val adapter = LaporanAdaper(result)
-            rv_laporan.setAdapter(adapter)
+            result.forEach { p ->
+                run {
+                    laporanViewModel.loadResultByProyekID(p.id!!)
+                    laporanViewModel.getResultByProyekID().observe(this, Observer<List<Laporan>> { result ->
+                        Log.d(TAG, "onCreate: $result")
+                        imgLaporanKosong.visibility = View.INVISIBLE
+                        val layoutManager = LinearLayoutManager(this)
+                        rv_laporan.setLayoutManager(layoutManager)
+                        val adapter = LaporanAdaper(result)
+                        rv_laporan.setAdapter(adapter)
+
+                    })
+                }
+            }
+
         })
+
         floatingActionButton2.setOnClickListener {
             val intent = Intent(this, TambahLaporanActivity::class.java)
-            intent.putExtra("proyek",p)
-            startActivity(intent) }
+            intent.putExtra("id", id)
+            startActivity(intent)
+
+            laporanViewModel.getResultByProyekID().observe(this, Observer<List<Laporan>> { result ->
+                Log.d(TAG, "onCreate: $result")
+                imgLaporanKosong.visibility = View.INVISIBLE
+                val layoutManager = LinearLayoutManager(this)
+                rv_laporan.setLayoutManager(layoutManager)
+                val adapter = LaporanAdaper(result)
+                rv_laporan.setAdapter(adapter)
+            })
+
+        }
     }
 
     override fun onStart() {
-        laporanViewModel.loadResultByProyekID(p.id!!)
+        p?.id?.let { laporanViewModel.loadResultByProyekID(it) }
+        id?.let { proyekViewModel.loadResultByID(it) }
         super.onStart()
     }
 
     override fun onResume() {
-        laporanViewModel.loadResultByProyekID(p.id!!)
+        p?.id?.let { laporanViewModel.loadResultByProyekID(it) }
         super.onResume()
     }
 }
