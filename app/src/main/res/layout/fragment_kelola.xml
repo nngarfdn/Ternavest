@@ -49,7 +49,7 @@
         android:layout_marginTop="16dp"
         android:text="Tambahkan Proyek"
         android:textColor="@android:color/white"
-        android:background="@color/purple_500"/>
+        android:background="@color/green_dark"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

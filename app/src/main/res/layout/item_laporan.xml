@@ -12,8 +12,8 @@
         android:layout_height="match_parent"
         app:markerSize="20dp"
         app:lineWidth="3dp"
-        app:startLineColor="@color/purple_200"
-        app:endLineColor="@color/purple_200"
+        app:startLineColor="@color/green_dark"
+        app:endLineColor="@color/green_dark"
         app:lineStyle="dash"/>
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,12 +22,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
-    android:background="@color/purple_200">
+    android:background="@color/green_dark">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple_200"
+        android:background="@color/green_dark"
         >
 
         <TextView
