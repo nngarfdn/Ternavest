@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.ternavest.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class DetailLaporanDialogFragment : Fragment() {
+class DetailLaporanDialogFragment : BottomSheetDialogFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

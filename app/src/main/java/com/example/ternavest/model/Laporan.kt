@@ -1,5 +1,9 @@
 package com.example.ternavest.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Laporan(
         var id : String? = "",
         var idProyek : String? = "",
@@ -9,4 +13,4 @@ data class Laporan(
         var pemasukan  : Int? = 0,
         var pengeluaran : Int? = 0,
         var photoLaporan : String? = ""
-)
+) : Parcelable

@@ -15,6 +15,17 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_laporan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_32"
+        app:markerSize="100dp"
+        app:lineWidth="2dp"
+        app:startLineColor="@color/gray"
+        app:endLineColor="@color/gray"
+        app:linePadding="5dp"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"

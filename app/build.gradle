@@ -70,6 +70,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //timelineview
+    implementation 'com.github.vipulasri:timelineview:1.1.5'
+
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

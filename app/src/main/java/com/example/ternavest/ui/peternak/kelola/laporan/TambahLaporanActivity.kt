@@ -36,7 +36,6 @@ class TambahLaporanActivity : AppCompatActivity() {
     private val TAG = javaClass.simpleName
 
     private var fromDatePickerDialog: DatePickerDialog? = null
-    private var toDatePickerDialog: DatePickerDialog? = null
     private val PICK_IMAGE_REQUEST = 22
     private var dateFormatter: SimpleDateFormat? = null
     var objectStorageReference: StorageReference? = null
