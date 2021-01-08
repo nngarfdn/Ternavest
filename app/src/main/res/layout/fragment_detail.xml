@@ -44,22 +44,39 @@
         android:layout_toStartOf="@+id/imgEditProyek"
         android:src="@drawable/ic_laporan" />
 
-    <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
-        android:layout_below="@id/txtTitle"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_below="@id/txtTitle">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:context=".ui.peternak.kelola.proyek.DetailFragment">
 
+
+            <ImageView
+                android:id="@+id/ic_alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location_red"/>
+
+            <TextView
+                android:id="@+id/txtAlamatLengkap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@+id/ic_alamat"
+                android:textColor="@color/textDescription"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Kukap poncosari srandakan"
+                android:textSize="@dimen/font_size_16" />
+
             <TextView
                 android:id="@+id/txtDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/txtAlamatLengkap"
                 android:text="lorem ipsum"
                 android:textSize="@dimen/font_size_16"
                 android:fontFamily="@font/poppins_medium"

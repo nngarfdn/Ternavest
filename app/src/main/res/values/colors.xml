@@ -19,4 +19,6 @@
     <color name="white_transparent">#A6FFFFFF</color>
     <color name="black_transparent">#A6282828</color>
     <color name="gray_light_transparent">#A6EBEBEB</color>
+    <color name="shimmer">#dddddd</color>
+    <color name="textDescription">#3F3F3F</color>
 </resources>

@@ -10,14 +10,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/green"
+        android:background="@color/white"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imgProyek"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_photo_camera_24" />
+            android:src="@color/shimmer" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,35 +28,36 @@
 
             <TextView
                 android:id="@+id/txtNamaProyek"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="2dp"
                 android:textColor="@color/white"
+                android:background="@color/shimmer"
+                android:paddingEnd="16dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Nama Proyek"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtJenisHewan"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtNamaProyek"
                 android:layout_marginVertical="2dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_regular"
+                android:background="@color/shimmer"
                 android:textColor="@color/white"
-                android:text="Jenis hewan"
                 android:textSize="16sp" />
             <TextView
                 android:id="@+id/txtROI"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtNamaProyek"
                 android:layout_marginVertical="2dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="20%"
+                android:background="@color/shimmer"
                 android:textColor="@color/white"
                 android:layout_alignParentEnd="true"
                 android:textSize="16sp" />

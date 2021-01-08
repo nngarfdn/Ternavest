@@ -73,6 +73,9 @@ dependencies {
     //timelineview
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 
+    // Facebook shimmer effect dependency
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

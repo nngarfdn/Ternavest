@@ -4,8 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="@layout/activity_tambah_proyek">
 
-
-
     <EditText
         android:id="@+id/txtNamaProyek"
         android:layout_width="match_parent"
@@ -45,6 +43,7 @@
         android:id="@+id/txtRoi"
         android:layout_below="@+id/txtJenisHewan"
         android:layout_width="match_parent"
+        android:inputType="number"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"

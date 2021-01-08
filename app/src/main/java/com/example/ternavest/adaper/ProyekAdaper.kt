@@ -26,10 +26,12 @@ class ProyekAdaper (private val list: List<Proyek>) : RecyclerView.Adapter<Proye
                 .load(list?.get(position)?.photoProyek)
                 .resize(100, 100) // resizes the image to these dimensions (in pixel)
                 .centerCrop()
-                .placeholder(R.drawable.upload)
+                .placeholder(R.drawable.ic_baseline_autorenew_24)
                 .into(holder.itemView.imgProyek)
 
         holder.itemView.txtNamaProyek.text = list[position].namaProyek
+        holder.itemView.txtJenisHewan.text = list[position].jenisHewan
+        holder.itemView.txtROI.text = "${list[position].roi} %"
 
         holder.itemView.setOnClickListener {
             val args = Bundle()

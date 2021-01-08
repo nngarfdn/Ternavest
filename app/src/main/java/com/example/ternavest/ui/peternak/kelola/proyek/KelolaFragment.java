@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.ternavest.R;
 import com.example.ternavest.adaper.ProyekAdaper;
 import com.example.ternavest.viewmodel.ProyekViewModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +32,7 @@ public class KelolaFragment extends Fragment {
     FirebaseUser firebaseUser;
     RecyclerView  rvKelolaProyek;
     FloatingActionButton floatingActionButton;
+    ShimmerFrameLayout shimmerKelola;
 
     public KelolaFragment() {
         // Required empty public constructor
@@ -43,6 +45,7 @@ public class KelolaFragment extends Fragment {
         proyekViewModel   = ViewModelProviders.of(this).get(ProyekViewModel.class);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         proyekViewModel.loadResultByUUID(firebaseUser.getUid());
+
     }
 
     @Override
@@ -58,6 +61,13 @@ public class KelolaFragment extends Fragment {
         rvKelolaProyek = view.findViewById(R.id.rv_kelola_proyek);
         floatingActionButton= view.findViewById(R.id.floatingActionButton);
 
+        shimmerKelola = view.findViewById(R.id.shimmerKelola);
+
+        shimmerKelola.startShimmerAnimation();
+        txtProyekKosong.setVisibility(View.INVISIBLE);
+        imgProyekKosong.setVisibility(View.INVISIBLE);
+        btnTambahProyek.setVisibility(View.INVISIBLE);
+
         floatingActionButton.setOnClickListener(v->{
             startActivity(new Intent(getContext(), TambahProyekActivity.class));
         });
@@ -67,13 +77,26 @@ public class KelolaFragment extends Fragment {
         });
 
         proyekViewModel.getResultByUUID().observe(getViewLifecycleOwner(), result ->{
-            txtProyekKosong.setVisibility(View.INVISIBLE);
-            imgProyekKosong.setVisibility(View.INVISIBLE);
-            btnTambahProyek.setVisibility(View.INVISIBLE);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            rvKelolaProyek.setLayoutManager(layoutManager);
-            ProyekAdaper adapter = new ProyekAdaper(result);
-            rvKelolaProyek.setAdapter(adapter);
+
+            if (result.isEmpty()){
+                txtProyekKosong.setVisibility(View.VISIBLE);
+                imgProyekKosong.setVisibility(View.VISIBLE);
+                btnTambahProyek.setVisibility(View.VISIBLE);
+                floatingActionButton.setVisibility(View.INVISIBLE);
+                shimmerKelola.setVisibility(View.INVISIBLE);
+                shimmerKelola.stopShimmerAnimation();
+            }else{
+                txtProyekKosong.setVisibility(View.INVISIBLE);
+                imgProyekKosong.setVisibility(View.INVISIBLE);
+                btnTambahProyek.setVisibility(View.INVISIBLE);
+                shimmerKelola.setVisibility(View.INVISIBLE);
+                shimmerKelola.stopShimmerAnimation();
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                rvKelolaProyek.setLayoutManager(layoutManager);
+                ProyekAdaper adapter = new ProyekAdaper(result);
+                rvKelolaProyek.setAdapter(adapter);
+            }
+
         });
         return view;
     }

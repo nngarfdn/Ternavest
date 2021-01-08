@@ -115,6 +115,7 @@ class ProyekRepository {
         document["biayaHewan"] = proyek.biayaHewan
         document["provinsi"] = proyek.provinsi
         document["kabupaten"] = proyek.kabupaten
+        document["roi"] = proyek.roi
         document["kecamatan"] = proyek.kecamatan
         document["alamatLengkap"] = proyek.alamatLengkap
         document["photoProyek"] = proyek.photoProyek

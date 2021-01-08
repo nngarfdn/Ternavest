@@ -34,7 +34,6 @@ class LaporanActivity : AppCompatActivity() {
         id = intent?.getStringExtra("id")
 
 
-
         laporanViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(LaporanViewModel::class.java)
         proyekViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel::class.java)
 
