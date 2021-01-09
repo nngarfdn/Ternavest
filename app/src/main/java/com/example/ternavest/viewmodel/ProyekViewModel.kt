@@ -14,4 +14,8 @@ class ProyekViewModel : ViewModel() {
     fun insert(proyek: Proyek?) { repository.insert(proyek!!) }
     fun update(proyek: Proyek?){ repository.update(proyek!!) }
     fun delete(idProyek : String){ repository.delete(idProyek)}
+
+    // Tambah
+    fun getResult()  = repository.getResults()
+    fun loadResult() = repository.getProyek()
 }

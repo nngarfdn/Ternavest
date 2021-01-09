@@ -51,4 +51,14 @@
         android:layout_marginHorizontal="32dp"
         android:layout_below="@id/btn_coba1"
         android:fontFamily="@font/poppins_semibold"/>
+
+    <Button
+        android:id="@+id/btn_coba3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Coba dasbor investor"
+        android:textAllCaps="false"
+        android:layout_marginHorizontal="32dp"
+        android:layout_below="@id/btn_coba2"
+        android:fontFamily="@font/poppins_semibold"/>
 </RelativeLayout>

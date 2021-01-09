@@ -7,44 +7,52 @@ import java.util.List;
 
 public class Portfolio implements Parcelable {
     private String id;
-    private String userId;
+    private String investorId;
+    private String breederId;
     private String projectId;
     private List<String> paymentId;
     private int count;
     private long cost;
     private long totalCost;
+    private String status;
 
     public Portfolio() {}
 
-    public Portfolio(String id, String userId, String projectId, List<String> paymentId, int count, long cost, long totalCost) {
+    public Portfolio(String id, String investorId, String breederId, String projectId, List<String> paymentId, int count, long cost, long totalCost, String status) {
         this.id = id;
-        this.userId = userId;
+        this.investorId = investorId;
+        this.breederId = breederId;
         this.projectId = projectId;
         this.paymentId = paymentId;
         this.count = count;
         this.cost = cost;
         this.totalCost = totalCost;
+        this.status = status;
     }
 
     protected Portfolio(Parcel in) {
         id = in.readString();
-        userId = in.readString();
+        investorId = in.readString();
+        breederId = in.readString();
         projectId = in.readString();
         paymentId = in.createStringArrayList();
         count = in.readInt();
         cost = in.readLong();
         totalCost = in.readLong();
+        status = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
-        dest.writeString(userId);
+        dest.writeString(investorId);
+        dest.writeString(breederId);
         dest.writeString(projectId);
         dest.writeStringList(paymentId);
         dest.writeInt(count);
         dest.writeLong(cost);
         dest.writeLong(totalCost);
+        dest.writeString(status);
     }
 
     @Override
@@ -72,12 +80,20 @@ public class Portfolio implements Parcelable {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getInvestorId() {
+        return investorId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setInvestorId(String investorId) {
+        this.investorId = investorId;
+    }
+
+    public String getBreederId() {
+        return breederId;
+    }
+
+    public void setBreederId(String breederId) {
+        this.breederId = breederId;
     }
 
     public String getProjectId() {
@@ -118,5 +134,13 @@ public class Portfolio implements Parcelable {
 
     public void setTotalCost(long totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -3,6 +3,8 @@ package com.example.ternavest;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +12,14 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ternavest.model.Profile;
+import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.testing.WilayahTest;
+import com.example.ternavest.testing.portfolio.DashboardInvestorActivity;
 import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity;
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
 import com.example.ternavest.ui.peternak.PeternakActivity;
+import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -27,13 +33,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
-
-
     private final String TAG = getClass().getSimpleName();
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
+    private UserPreference userPreference;
 
     private EditText edtEmail, edtPassword;
 
@@ -48,6 +53,18 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        userPreference = new UserPreference(this);
+        if (userPreference.getUserLevel() == null){
+            ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
+            profileViewModel.loadData();
+            profileViewModel.getData().observe(this, new Observer<Profile>() {
+                @Override
+                public void onChanged(Profile profile) {
+                    userPreference.setUserLevel(profile.getLevel());
+                }
+            });
+        }
 
         Button btnTestWilayah = findViewById(R.id.btn_testwilayah);
         btnTestWilayah.setOnClickListener(v -> startActivity(new Intent(this, WilayahTest.class)));
@@ -64,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         btnCoba1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DetailPortfolioActivity.class)));
         Button btnCoba2 = findViewById(R.id.btn_coba2);
         btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddUpdatePortfolioActivity.class)));
+        Button btnCoba3 = findViewById(R.id.btn_coba3);
+        btnCoba3.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DashboardInvestorActivity.class)));
     }
 
     private void loginWithGoogle() {

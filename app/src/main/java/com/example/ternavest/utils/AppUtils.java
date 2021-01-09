@@ -22,6 +22,10 @@ public class AppUtils {
     public static final String LEVEL_PETERNAK = "peternak";
     public static final String LEVEL_INVESTOR = "investor";
 
+    public static final String PAY_APPROVED = "setuju";
+    public static final String PAY_REJECT = "tolak";
+    public static final String PAY_PENDING = "pending";
+
     public static void showToast(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }

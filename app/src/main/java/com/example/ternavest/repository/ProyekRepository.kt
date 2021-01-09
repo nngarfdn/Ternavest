@@ -13,9 +13,11 @@ class ProyekRepository {
     private val database = FirebaseFirestore.getInstance()
     private var resultProyekByUUID: MutableLiveData<List<Proyek>> = MutableLiveData()
     private var resultProyekByID: MutableLiveData<List<Proyek>> = MutableLiveData()
+    private var resultProyek: MutableLiveData<List<Proyek>> = MutableLiveData()
 
     fun getResultsByUUID(): LiveData<List<Proyek>> = resultProyekByUUID
     fun getResultsByID(): LiveData<List<Proyek>> = resultProyekByID
+    fun getResults(): LiveData<List<Proyek>> = resultProyek
 
     fun insert(proyek: Proyek) {
         val ref = database.collection("proyek").document()
@@ -97,6 +99,28 @@ class ProyekRepository {
                     }
                     resultProyekByUUID.value = produkData
                     Log.d(TAG, "readProduk size final getDataByUUID : ${savedProdukList.size}")
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error getting documents.", exception)
+                }
+    }
+
+    fun getProyek() {
+        val produkData: MutableList<Proyek> = ArrayList()
+        val db = FirebaseFirestore.getInstance()
+        val savedProdukList = ArrayList<Proyek>()
+        db.collection("proyek")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val pp = document.toObject(Proyek::class.java)
+                        pp.id = document.id
+                        savedProdukList.add(pp)
+                        produkData.add(pp)
+                        Log.d(TAG, "getData size : ${savedProdukList.size} getData: $pp")
+                    }
+                    resultProyek.value = produkData
+                    Log.d(TAG, "readProduk size final getData : ${savedProdukList.size}")
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Error getting documents.", exception)
