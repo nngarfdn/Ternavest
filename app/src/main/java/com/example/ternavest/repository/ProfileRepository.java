@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -72,6 +73,12 @@ public class ProfileRepository {
 
                             if (!task.getResult().exists()) { // Kalau belum ada profil di Firestore
                                 profile = new Profile();
+
+                                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                profile.setId(firebaseUser.getUid());
+                                profile.setName(firebaseUser.getDisplayName());
+                                profile.setEmail(firebaseUser.getEmail());
+
                                 profile.setLevel("peternak");
                                 profile.setVerificationStatus("pending");
                                 insert(profile);
@@ -191,6 +198,9 @@ public class ProfileRepository {
 
     private Map<String, Object> objectToHashMap(Profile profile){
         Map<String, Object> document = new HashMap<>();
+        document.put("id", profile.getId());
+        document.put("name", profile.getName());
+        document.put("email", profile.getEmail());
         document.put("level", profile.getLevel());
         document.put("foto", profile.getPhoto());
         document.put("ktp", profile.getKtp());
@@ -206,6 +216,9 @@ public class ProfileRepository {
 
     private Profile snapshotToObject(DocumentSnapshot document){
         return new Profile(
+                document.getString("id"),
+                document.getString("name"),
+                document.getString("email"),
                 document.getString("level"),
                 document.getString("foto"),
                 document.getString("ktp"),

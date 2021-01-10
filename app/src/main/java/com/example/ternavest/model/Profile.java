@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Profile implements Parcelable {
+    private String id;
+    private String name;
+    private String email;
     private String level;
     private String photo;
     private String ktp;
@@ -17,7 +20,10 @@ public class Profile implements Parcelable {
 
     public Profile() {}
 
-    public Profile(String level, String photo, String ktp, String address, String phone, String whatsApp, String accountBank, String accountName, String accountNumber, String verificationStatus) {
+    public Profile(String id, String name, String email, String level, String photo, String ktp, String address, String phone, String whatsApp, String accountBank, String accountName, String accountNumber, String verificationStatus) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
         this.level = level;
         this.photo = photo;
         this.ktp = ktp;
@@ -31,6 +37,9 @@ public class Profile implements Parcelable {
     }
 
     protected Profile(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        email = in.readString();
         level = in.readString();
         photo = in.readString();
         ktp = in.readString();
@@ -45,6 +54,9 @@ public class Profile implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(email);
         dest.writeString(level);
         dest.writeString(photo);
         dest.writeString(ktp);
@@ -73,6 +85,30 @@ public class Profile implements Parcelable {
             return new Profile[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getLevel() {
         return level;

@@ -62,6 +62,30 @@ public class PortfolioRepository {
         });
     }
 
+    public void query(String userId, String userLevel){ // Investor
+        Query query = reference;
+        if (userLevel.equals(LEVEL_PETERNAK)) query = query.whereEqualTo("idPeternak", userId);
+        else if (userLevel.equals(LEVEL_INVESTOR)) query = query.whereEqualTo("idInvestor", userId);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    ArrayList<Portfolio> portfolioList = new ArrayList<>();
+
+                    for (DocumentSnapshot snapshot : task.getResult()){
+                        Portfolio portfolio = new Portfolio();
+                        portfolio = snapshotToObject(snapshot);
+                        portfolioList.add(portfolio);
+                    }
+
+                    resultData.postValue(portfolioList);
+                    Log.d(TAG, "Document was queried");
+                } else Log.w(TAG, "Error querying document", task.getException());
+            }
+        });
+    }
+
     // Jangan simpan biaya dulu karena ada kemungkinan biaya diedit oleh peternak, hanya lakukan pembayaran dengan biaya ter-update
     public void insert(Portfolio portfolio){  // Investor
         reference.document(portfolio.getId())

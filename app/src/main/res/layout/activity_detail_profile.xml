@@ -29,6 +29,7 @@
             <include layout="@layout/layout_profile"/>
 
             <TextView
+                android:id="@+id/tv_project_profile"
                 style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

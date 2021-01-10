@@ -172,6 +172,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     return;
                 }
 
+                profile.setName(name);
                 profile.setAddress(address);
                 profile.setPhone(phone);
                 profile.setWhatsApp(whatsApp);
@@ -192,6 +193,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     profile.setAccountNumber(accountNumber);
                     profile.setAccountName(accountName);
                 }
+
+                // Ambil dari Firebase Auth
+                profile.setId(firebaseUser.getUid());
+                profile.setEmail(firebaseUser.getEmail());
 
                 // Simpan nama ke Authentication
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()

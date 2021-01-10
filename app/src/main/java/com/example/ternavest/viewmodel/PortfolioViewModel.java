@@ -20,6 +20,10 @@ public class PortfolioViewModel extends ViewModel {
         repository.query(userLevel);
     }
 
+    public void loadData(String userId, String userLevel){
+        repository.query(userId, userLevel);
+    }
+
     public void insert(Portfolio portfolio){
         repository.insert(portfolio);
     }

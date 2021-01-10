@@ -137,6 +137,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.btn_ktp_profile:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+
+                if (profile.getVerificationStatus().equals(VERIF_APPROVED)){
+                    dialog.setTitle("Akun terverifikasi");
+                    dialog.setMessage("Akunmu telah diverifikasi oleh Tim Ternavest.");
+                } else {
+                    dialog.setTitle("Akun belum diverifikasi");
+                    dialog.setMessage("Kamu bisa mengajukan verifikasi melalui pengaturan profil dengan cara mengunggah foto KTP.");
+                }
+
+                dialog.setNeutralButton("Tutup", null);
+                dialog.create().show();
+                break;
+
             case R.id.btn_verification_profile:
                 new androidx.appcompat.app.AlertDialog.Builder(getContext())
                         .setTitle("Kirim tautan verifikasi")

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -18,6 +19,7 @@ import com.example.ternavest.testing.WilayahTest;
 import com.example.ternavest.testing.portfolio.DashboardInvestorActivity;
 import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity;
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
+import com.example.ternavest.ui.both.profile.DetailProfileActivity;
 import com.example.ternavest.ui.peternak.PeternakActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -32,12 +34,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import static com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE;
+
 public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
+    private Profile profile;
     private UserPreference userPreference;
 
     private EditText edtEmail, edtPassword;
@@ -83,6 +88,26 @@ public class MainActivity extends AppCompatActivity {
         btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddUpdatePortfolioActivity.class)));
         Button btnCoba3 = findViewById(R.id.btn_coba3);
         btnCoba3.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DashboardInvestorActivity.class)));
+
+        if (firebaseAuth.getCurrentUser() != null){
+            ProfileViewModel profileViewModel = new ViewModelProvider(MainActivity.this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
+            profileViewModel.loadData();
+            profileViewModel.getData().observe(MainActivity.this, new Observer<Profile>() {
+                @Override
+                public void onChanged(Profile result) {
+                    profile = result;
+                }
+            });
+        }
+        Button btnCoba4 = findViewById(R.id.btn_coba4);
+        btnCoba4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, DetailProfileActivity.class);
+                intent.putExtra(EXTRA_PROFILE, profile);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loginWithGoogle() {
