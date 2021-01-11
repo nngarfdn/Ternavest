@@ -13,6 +13,10 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AppUtils {
     public static final String VERIF_APPROVED = "setuju";
@@ -26,6 +30,8 @@ public class AppUtils {
     public static final String PAY_REJECT = "tolak";
     public static final String PAY_PENDING = "pending";
 
+    public static Locale locale = new Locale("in", "ID");
+
     public static void showToast(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
@@ -37,6 +43,26 @@ public class AppUtils {
                 .centerCrop()
                 //.placeholder(R.drawable.image_empty)
                 .into(imageView);
+    }
+
+    public static byte[] convertBitmapToByteArray(Context context, Bitmap bitmap){
+        ByteArrayOutputStream stream = null;
+
+        try {
+            // Convert bitmap to byte[]
+            stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return stream.toByteArray();
     }
 
     public static byte[] convertUriToByteArray(Context context, Uri uri){
@@ -91,5 +117,19 @@ public class AppUtils {
         }
 
         return stream.toByteArray();
+    }
+
+    public static String createIdFromCurrentDate(){
+        String currentDate, currentTime;
+
+        DateFormat timeFormat = new SimpleDateFormat("HHmmssSSS", locale);
+        Date time = new Date();
+        currentTime = timeFormat.format(time);
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", locale);
+        Date date = new Date();
+        currentDate = dateFormat.format(date);
+
+        return currentDate + currentTime;
     }
 }

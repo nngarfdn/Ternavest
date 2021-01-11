@@ -118,6 +118,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/img_payment_payment"
                 android:layout_width="124dp"
                 android:layout_height="124dp"
                 android:src="@color/gray"/>

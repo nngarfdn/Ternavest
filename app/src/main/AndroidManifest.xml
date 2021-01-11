@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.invest.PaymentActivity"></activity>
+        <activity android:name=".ui.invest.PaymentActivity"/>
         <activity android:name=".testing.portfolio.DashboardInvestorActivity" />
         <activity android:name=".ui.both.portfolio.AddUpdatePortfolioActivity" />
         <activity android:name=".ui.both.portfolio.DetailPortfolioActivity" />
