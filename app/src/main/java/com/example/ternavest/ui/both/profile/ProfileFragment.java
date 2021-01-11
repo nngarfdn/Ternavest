@@ -105,7 +105,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (profile.getVerificationStatus().equals(VERIF_APPROVED)){
                     btnKtp.setText("Akun terverifikasi");
                     ((MaterialButton) btnKtp).setIcon(getResources().getDrawable(R.drawable.ic_verified));
-                    btnKtp.setBackground(getResources().getDrawable(R.drawable.bg_button_menu_green));
+                    btnKtp.setBackground(getResources().getDrawable(R.drawable.bg_button_menu_blue));
                 } else {
                     btnKtp.setText("Akun belum diverifikasi");
                     ((MaterialButton) btnKtp).setIcon(getResources().getDrawable(R.drawable.ic_warning));

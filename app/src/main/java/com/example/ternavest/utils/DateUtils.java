@@ -54,6 +54,24 @@ public class DateUtils {
         } else return null;
     }
 
+    // Mencari selisih antara 2 tanggal
+    public static int differenceOfDates(String newerDate, String olderDate){
+        if (isValidDateFormat(newerDate) && isValidDateFormat(olderDate)){
+            try{
+                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, locale);
+                Date finalDate = dateFormat.parse(newerDate);
+                Date currentDate = dateFormat.parse(olderDate);
+
+                // Bagi 100rb karena aslinya long
+                double difference = (double) ((finalDate.getTime()-currentDate.getTime())/100000);
+                return (int) ((difference / (24*60*60*1000))*100000);
+            }catch (ParseException e){
+                e.printStackTrace();
+            }
+        }
+        return -1;
+    }
+
     /*
      * Fungsi private
      * */

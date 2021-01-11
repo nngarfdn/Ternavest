@@ -114,7 +114,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 switch (profile.getVerificationStatus()) {
                     case VERIF_APPROVED:
                         tvVerification.setText("Terverifikasi");
-                        cvVerification.setCardBackgroundColor(getResources().getColor(R.color.green));
+                        cvVerification.setCardBackgroundColor(getResources().getColor(R.color.blue));
                         btnKtp.setEnabled(false);
                         break;
                     case VERIF_PENDING:

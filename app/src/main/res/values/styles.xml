@@ -17,8 +17,8 @@
         <item name="android:paddingEnd">24dp</item>
     </style>
 
-    <style name="Button.Menu.Green">
-        <item name="android:background">@drawable/bg_button_menu_green</item>
+    <style name="Button.Menu.Blue">
+        <item name="android:background">@drawable/bg_button_menu_blue</item>
         <item name="android:textColor">@color/white</item>
         <item name="iconTint">@color/white</item>
     </style>

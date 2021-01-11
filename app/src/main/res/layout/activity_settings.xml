@@ -112,7 +112,7 @@
                         android:id="@+id/tv_verification_settings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="menunggu verifikasi"
+                        android:text="@string/loading"
                         android:paddingHorizontal="8dp"
                         android:textColor="@color/white"/>
                 </androidx.cardview.widget.CardView>

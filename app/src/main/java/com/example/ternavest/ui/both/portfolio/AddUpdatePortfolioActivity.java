@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.ternavest.R;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Proyek;
+import com.example.ternavest.ui.invest.PaymentActivity;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -129,6 +130,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             if (isUpdate){
                 portfolioViewModel.update(portfolio.getId(), portfolio.getCount());
                 showToast(this, "Informasi berhasil diedit");
+                onBackPressed();
             } else {
                 portfolio.setId(project.getId() + "-" + firebaseUser.getUid());
                 portfolio.setProjectId(project.getId());
@@ -138,10 +140,14 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                 portfolio.setCost(0);
                 portfolio.setTotalCost(0);
                 portfolio.setStatus(PAY_PENDING);
-                showToast(this, "Proyek telah ditambah ke portfolio");
-            }
 
-            onBackPressed();
+                portfolioViewModel.insert(portfolio);
+                showToast(this, "Proyek telah ditambah ke portfolio");
+
+                Intent intent = new Intent(this, PaymentActivity.class);
+                intent.putExtra(EXTRA_PORTFOLIO, portfolio);
+                startActivity(intent);
+            }
         }
     }
 }

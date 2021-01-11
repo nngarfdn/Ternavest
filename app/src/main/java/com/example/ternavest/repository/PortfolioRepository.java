@@ -113,6 +113,7 @@ public class PortfolioRepository {
     }
 
     // Update ketika pembayaran disetujui -> ganti status dan simpan biaya karena ada kemungkinan biaya per ekor diedit
+    // Jika pembayaran terakhir ditolak, status tetap pending (tidak melakukan update)
     public void update(String portfolioId, String cost, String totalCost, String status){  // Investor
         reference.document(portfolioId)
                 .update("biaya", cost, "totalBiaya", totalCost, "status", status)
