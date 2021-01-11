@@ -12,8 +12,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +33,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.ternavest.repository.ProfileRepository.FOLDER_KTP;
 import static com.example.ternavest.repository.ProfileRepository.FOLDER_PROFILE;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
@@ -114,6 +115,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     case VERIF_APPROVED:
                         tvVerification.setText("Terverifikasi");
                         cvVerification.setCardBackgroundColor(getResources().getColor(R.color.green));
+                        btnKtp.setEnabled(false);
                         break;
                     case VERIF_PENDING:
                         tvVerification.setText("Menunggu verifikasi");
@@ -151,9 +153,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intentKtp = new Intent(Intent.ACTION_PICK);
-                                intentKtp.setType("image/*");
-                                startActivityForResult(Intent.createChooser(intentKtp, "Pilih foto ktp:"), RC_KTP_IMAGE);
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(Intent.createChooser(intent, "Ambil foto ktp:"), RC_KTP_IMAGE);
                             }
                         }).create().show();
                 break;
@@ -243,14 +244,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             }
         } else if (requestCode == RC_KTP_IMAGE){
             if (resultCode == Activity.RESULT_OK){
-                if (data != null) if (data.getData() != null){
-                    Uri uriKtpImage = data.getData();
-                    loadImageFromUrl(imgKtp, uriKtpImage.toString());
+                if (data != null) if (data.hasExtra("data")){
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    imgKtp.setImageBitmap(bitmap);
 
                     showToast(getApplicationContext(), "Mengajukan verifikasi KTP...");
 
                     String fileName = firebaseUser.getUid() + ".jpeg";
-                    profileViewModel.uploadImage(this, uriKtpImage, FOLDER_KTP, fileName, new OnImageUploadCallback() {
+                    profileViewModel.uploadKTP(this, bitmap, fileName, new OnImageUploadCallback() {
                         @Override
                         public void onSuccess(String imageUrl) {
                             profileViewModel.sendVerification(imageUrl);

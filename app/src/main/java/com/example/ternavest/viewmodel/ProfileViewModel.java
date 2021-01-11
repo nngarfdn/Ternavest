@@ -1,6 +1,7 @@
 package com.example.ternavest.viewmodel;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
@@ -52,5 +53,9 @@ public class ProfileViewModel extends ViewModel {
 
     public void deleteImage(String imageUrl){
         repository.deleteImage(imageUrl);
+    }
+
+    public void uploadKTP(Context context, Bitmap bitmap, String fileName, OnImageUploadCallback callback){
+        repository.uploadKTP(context, bitmap, fileName, callback);
     }
 }

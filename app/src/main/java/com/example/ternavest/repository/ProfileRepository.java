@@ -1,6 +1,7 @@
 package com.example.ternavest.repository;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
@@ -27,6 +28,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.ternavest.utils.AppUtils.convertBitmapToByteArray;
 import static com.example.ternavest.utils.AppUtils.convertUriToByteArray;
 import static com.example.ternavest.utils.AppUtils.getCompressedByteArray;
 
@@ -160,6 +162,30 @@ public class ProfileRepository {
         image = getCompressedByteArray(image, folderName.equals(FOLDER_PROFILE)); // Jika foto profil, perkecil ukuran
 
         StorageReference reference = storage.getReference().child(folderName + "/" + fileName);
+        UploadTask uploadTask = reference.putBytes(image);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        callback.onSuccess(uri.toString());
+                        Log.d(TAG, "Image was uploaded");
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error uploading image", e);
+            }
+        });
+    }
+
+    public void uploadKTP(Context context, Bitmap bitmap, String fileName, OnImageUploadCallback callback){
+        byte[] image = convertBitmapToByteArray(context, bitmap);
+
+        StorageReference reference = storage.getReference().child(FOLDER_KTP + "/" + fileName);
         UploadTask uploadTask = reference.putBytes(image);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
