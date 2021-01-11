@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        drawable="@drawable/kambing"
+        text="@string/home" />
+
+    <tab
+        drawable="@drawable/peminat"
+        text="@string/portfolio" />
+
+    <tab
+        drawable="@drawable/person"
+        text="@string/profil" />
+</tabs>

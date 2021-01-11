@@ -11,7 +11,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Nama Proyek"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:layout_below="@+id/toolbartambahpproyek"
         android:paddingHorizontal="8dp" />
 
@@ -24,7 +24,7 @@
         android:hint="Deskripsi Proyek"
         android:inputType="textMultiLine"
         android:scrollbars="vertical"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:layout_below="@+id/txtNamaProyek"
         android:paddingHorizontal="8dp" />
 
@@ -35,7 +35,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Jenis Hewan"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:layout_below="@+id/txtDeskripsiProyek"
         android:paddingHorizontal="8dp" />
 
@@ -48,7 +48,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="ROI berapa persen ?"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
@@ -59,7 +59,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Tanggal mulai proyek"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
@@ -70,7 +70,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Tanggal selesai proyek"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
@@ -81,7 +81,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Biaya perhewan selama periode"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
@@ -92,7 +92,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Alamat lengkap proyek"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <ImageView
@@ -110,6 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imgUpload"
         android:layout_marginTop="8dp"
+        android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:text="Pilih gambar" />
 
@@ -118,6 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Simpan"
+        android:textColor="@color/white"
         android:layout_below="@+id/btnUploadImage"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
@@ -128,7 +130,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/gray_light"
         android:layout_height="match_parent"
         tools:context=".testing.WilayahTest"
         android:padding="16dp"

@@ -1,57 +1,48 @@
-package com.example.ternavest.ui.peternak.kelola.proyek
+package com.example.ternavest.ui.invest.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
-import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
-import com.example.ternavest.viewmodel.ProyekViewModel
+import com.example.ternavest.ui.peternak.kelola.proyek.EditProyekActivity
+import com.example.ternavest.utils.AppUtils
+import com.example.ternavest.viewmodel.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_detail.view.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.*
 
-class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
+class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
     // TODO: Rename and change types of parameters
-    private val TAG = "DetailFragment"
     private var param1: String? = null
     private var param2: String? = null
-    private var database: FirebaseFirestore? = null
 
-
-    private lateinit var proyekViewModel: ProyekViewModel
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        database = FirebaseFirestore.getInstance()
         arguments?.let {
-
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_detail_proyek_investasi, container, false)
+    }
 
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        profileViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProfileViewModel::class.java)
         val p: Proyek? = arguments?.getParcelable("proyek")
-
-
-        proyekViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProyekViewModel::class.java)
-
-
-        var listProfile: MutableList<String?>? = mutableListOf()
-
-        val listProductId = p?.peminat
-
-        view.txtPeminat.setText(listProfile.toString())
 
         view.txtTitle.setText(p?.namaProyek)
         view.txtDeskripsi.setText(p?.deskripsiProyek)
@@ -59,13 +50,24 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
         view.txtRoiDetail.setText("${p?.roi}%")
         view.txtTanggalDetail.setText("${p?.waktuMulai} - ${p?.waktuSelesai}")
 
-
         Picasso.get()
                 .load(p?.photoProyek)
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.load_image)
                 .into(view.imgDeskripsiLaporan)
+
+
+        profileViewModel.loadData(p?.uuid)
+        profileViewModel.data.observe(viewLifecycleOwner, Observer { result ->
+            Log.d("DetailInvestor", "onViewCreated: ${result.photo} ")
+            Picasso.get()
+                    .load(result.photo)
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.load_image)
+                    .into(view.imgProfile)
+        })
 
         view.imgProfile.setOnClickListener {
             val intent = Intent(context, EditProyekActivity::class.java)
@@ -77,21 +79,6 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
             intent.putExtra("id", p?.id)
             startActivity(intent)
         }
-
-        return view
     }
-
-
-    override fun onFinish(listItem: ArrayList<Profile>?) {
-        val listNama: ArrayList<String> = ArrayList<String>()
-
-        if (listItem != null) {
-            for (profil in listItem) {
-                listNama
-            }
-        }
-
-    }
-
 
 }

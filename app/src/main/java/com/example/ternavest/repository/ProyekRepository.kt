@@ -3,6 +3,7 @@ package com.example.ternavest.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,10 +15,12 @@ class ProyekRepository {
     private var resultProyekByUUID: MutableLiveData<List<Proyek>> = MutableLiveData()
     private var resultProyekByID: MutableLiveData<List<Proyek>> = MutableLiveData()
     private var resultProyek: MutableLiveData<List<Proyek>> = MutableLiveData()
+    private var resultPeminat: MutableLiveData<List<Profile>> = MutableLiveData()
 
     fun getResultsByUUID(): LiveData<List<Proyek>> = resultProyekByUUID
     fun getResultsByID(): LiveData<List<Proyek>> = resultProyekByID
     fun getResults(): LiveData<List<Proyek>> = resultProyek
+    fun getResultsPeminat(): LiveData<List<Profile>> = resultPeminat
 
     fun insert(proyek: Proyek) {
         val ref = database.collection("proyek").document()
@@ -125,6 +128,26 @@ class ProyekRepository {
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Error getting documents.", exception)
                 }
+    }
+
+    fun getPeminat(listPeminat : List<String>) {
+        val iterator: Iterator<String> = listPeminat.iterator()
+        Log.d(TAG, "getPeminat iterator: ${iterator.next()}")
+        val produkData: MutableList<Profile> = ArrayList()
+        val db = FirebaseFirestore.getInstance()
+        val savedProdukList = ArrayList<Profile>()
+        while (iterator.hasNext()) {
+            db.collection("profil").document(iterator.next())
+                    .get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val product: Profile? = task.result!!.toObject(Profile::class.java)
+                            Log.d(TAG, "getPeminat: ${product?.accountName}")
+                            if (product != null) produkData.add(product)
+                            if (!iterator.hasNext()) resultPeminat.value = produkData // Pemuatan id terakhir
+                        }
+                    }
+        }
     }
 
     private fun hashMapProfile(proyek: Proyek): Map<String, Any?> {

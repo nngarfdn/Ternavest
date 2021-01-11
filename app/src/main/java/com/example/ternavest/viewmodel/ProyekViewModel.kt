@@ -9,6 +9,10 @@ class ProyekViewModel : ViewModel() {
 
     fun getResultByUUID()  = repository.getResultsByUUID()
     fun loadResultByUUID(uuid : String) = repository.getProyekByUUID(uuid)
+
+    fun getResultPeminat()  = repository.getResultsPeminat()
+    fun loadResultPeminat(listPeminat : List<String>) = repository.getPeminat(listPeminat)
+
     fun getResultByID()  = repository.getResultsByID()
     fun loadResultByID(id : String) = repository.getProyekByID(id)
     fun insert(proyek: Proyek?) { repository.insert(proyek!!) }

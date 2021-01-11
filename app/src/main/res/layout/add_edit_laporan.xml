@@ -39,7 +39,7 @@
         android:paddingHorizontal="8dp" />
 
     <EditText
-        android:id="@+id/txtPemasukan"
+        android:id="@+id/txtJenisHewanDetail"
         android:layout_below="@+id/txtTanggalLaporan"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -51,8 +51,8 @@
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/txtPengeluaran"
-        android:layout_below="@+id/txtPemasukan"
+        android:id="@+id/txtRoiDetail"
+        android:layout_below="@+id/txtJenisHewanDetail"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
@@ -66,7 +66,7 @@
         android:id="@+id/imgUploadLaporan"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_below="@id/txtPengeluaran"
+        android:layout_below="@id/txtRoiDetail"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/upload" />

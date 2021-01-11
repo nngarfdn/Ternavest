@@ -23,13 +23,13 @@
         android:layout_below="@id/pull"
         android:layout_marginEnd="8dp"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/imgEditProyek"
+        android:layout_toLeftOf="@+id/imgProfile"
         android:fontFamily="@font/poppins_medium"
         android:text="Ayam Pullet Bulan"
         android:textSize="22sp" />
 
     <ImageView
-        android:id="@+id/imgEditProyek"
+        android:id="@+id/imgProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/txtTitle"
@@ -47,7 +47,7 @@
             tools:context=".ui.peternak.kelola.proyek.DetailFragment">
 
             <TextView
-                android:id="@+id/txtTitlePemasukan"
+                android:id="@+id/txtTitleJenisHewan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iconPemasukan"
@@ -57,11 +57,11 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/txtPemasukan"
+                android:id="@+id/txtJenisHewanDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTitlePemasukan"
-                android:layout_alignStart="@+id/txtTitlePemasukan"
+                android:layout_below="@+id/txtTitleJenisHewan"
+                android:layout_alignStart="@+id/txtTitleJenisHewan"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Rp 0"
@@ -71,8 +71,8 @@
                 android:id="@+id/iconPemasukan"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignTop="@+id/txtTitlePemasukan"
-                android:layout_alignBottom="@+id/txtPemasukan"
+                android:layout_alignTop="@+id/txtTitleJenisHewan"
+                android:layout_alignBottom="@+id/txtJenisHewanDetail"
                 android:src="@drawable/ic_pemasukan" />
 
 
@@ -87,7 +87,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/txtPengeluaran"
+                android:id="@+id/txtRoiDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtTitlePengeluaran"
@@ -103,7 +103,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignTop="@+id/txtTitlePengeluaran"
-                android:layout_alignBottom="@+id/txtPengeluaran"
+                android:layout_alignBottom="@+id/txtRoiDetail"
                 android:layout_toStartOf="@+id/txtTitlePengeluaran"
                 android:src="@drawable/ic_pengeluaran" />
 
@@ -111,7 +111,7 @@
                 android:id="@+id/rel_tanggal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtPengeluaran"
+                android:layout_below="@id/txtRoiDetail"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_tanggal">
                 <ImageView

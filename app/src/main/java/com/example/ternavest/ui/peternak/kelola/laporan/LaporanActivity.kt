@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ternavest.MainActivity
 import com.example.ternavest.R
 import com.example.ternavest.adaper.LaporanAdaper
 import com.example.ternavest.adaper.ProyekAdaper
@@ -83,4 +84,5 @@ class LaporanActivity : AppCompatActivity() {
         p?.id?.let { laporanViewModel.loadResultByProyekID(it) }
         super.onResume()
     }
+
 }

@@ -27,13 +27,13 @@
         android:text="Ayam Pullet Bulan"
         android:textSize="22sp" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
         android:layout_alignTop="@+id/txtTitle"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_edit" />
+        android:src="@drawable/ic_person" />
 
     <ImageView
         android:id="@+id/imgLaporanProyek"

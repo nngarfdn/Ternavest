@@ -109,7 +109,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 .load(p?.photoProyek)
                 .fit()
                 .centerCrop()
-                .placeholder(R.drawable.upload)
+                .placeholder(R.drawable.load_image)
                 .into(imgUpload)
 
         btnUploadImage.setOnClickListener { selectImage() }

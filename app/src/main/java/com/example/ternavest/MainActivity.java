@@ -20,6 +20,7 @@ import com.example.ternavest.testing.portfolio.DashboardInvestorActivity;
 import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity;
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
 import com.example.ternavest.ui.both.profile.DetailProfileActivity;
+import com.example.ternavest.ui.invest.InvestorActivity;
 import com.example.ternavest.ui.peternak.PeternakActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddUpdatePortfolioActivity.class)));
         Button btnCoba3 = findViewById(R.id.btn_coba3);
         btnCoba3.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DashboardInvestorActivity.class)));
+        Button btnInvestor = findViewById(R.id.btn_investor);
+        btnInvestor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, InvestorActivity.class)));
 
         if (firebaseAuth.getCurrentUser() != null){
             ProfileViewModel profileViewModel = new ViewModelProvider(MainActivity.this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);

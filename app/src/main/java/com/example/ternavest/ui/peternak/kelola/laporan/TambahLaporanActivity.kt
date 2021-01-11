@@ -16,7 +16,6 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
-import com.example.ternavest.model.Proyek
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -67,23 +66,23 @@ class TambahLaporanActivity : AppCompatActivity() {
         txtTanggalLaporan.requestFocus()
         setDateTimeField()
 
-        txtPemasukan.setText("0")
-        txtPengeluaran.setText("0")
+        txtJenisHewanDetail.setText("0")
+        txtRoiDetail.setText("0")
 
         btnSimpanLaporan.setOnClickListener {
             val photo = ""
             val judul = txtJudulLaporan.text.toString()
             val deskripsi = txtDeskripsiLaporan.text.toString()
             val tanggal = txtTanggalLaporan.text.toString()
-            val pemasukan = txtPemasukan.text.toString()
-            val pengeluaran = txtPemasukan.text.toString()
+            val pemasukan = txtJenisHewanDetail.text.toString()
+            val pengeluaran = txtJenisHewanDetail.text.toString()
 
 
             validasiStringEditText(judul, "Masukan judul laporan", txtJudulLaporan)
             validasiStringEditText(deskripsi, "Masukan deskripsi laporan", txtDeskripsiLaporan)
             validasiStringEditText(tanggal, "Masukan tanggal", txtTanggalLaporan)
-            validasiStringEditText(pemasukan, "Masukan pemasukan", txtPemasukan)
-            validasiStringEditText(pengeluaran, "Masukan Pengeluaran", txtPengeluaran)
+            validasiStringEditText(pemasukan, "Masukan pemasukan", txtJenisHewanDetail)
+            validasiStringEditText(pengeluaran, "Masukan Pengeluaran", txtRoiDetail)
             if (photo.equals("")) {
                 Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
             }
@@ -113,15 +112,15 @@ class TambahLaporanActivity : AppCompatActivity() {
                         val judul = txtJudulLaporan.text.toString()
                         val deskripsi = txtDeskripsiLaporan.text.toString()
                         val tanggal = txtTanggalLaporan.text.toString()
-                        val pemasukan = txtPemasukan.text.toString()
+                        val pemasukan = txtJenisHewanDetail.text.toString()
                         val pemasukanInt = pemasukan.toInt()
-                        val pengeluaran = txtPengeluaran.text.toString()
+                        val pengeluaran = txtRoiDetail.text.toString()
                         val pengeluaranInt = pengeluaran.toInt()
                         val vJudul = validasiStringEditText(judul, "Masukan judul laporan", txtJudulLaporan)
                         val vDeskripsi = validasiStringEditText(deskripsi, "Masukan deskripsi laporan", txtDeskripsiLaporan)
                         val vTgl = validasiStringEditText(tanggal, "Masukan tanggal", txtTanggalLaporan)
-                        val vPemasukan = validasiStringEditText(pemasukan, "Masukan pemasukan", txtPemasukan)
-                        val vPengeluaran = validasiStringEditText(pengeluaran, "Masukan Pengeluaran", txtPengeluaran)
+                        val vPemasukan = validasiStringEditText(pemasukan, "Masukan pemasukan", txtJenisHewanDetail)
+                        val vPengeluaran = validasiStringEditText(pengeluaran, "Masukan Pengeluaran", txtRoiDetail)
 
                         var vPhoto : Boolean = true
                         if (TextUtils.isEmpty(photo)) {

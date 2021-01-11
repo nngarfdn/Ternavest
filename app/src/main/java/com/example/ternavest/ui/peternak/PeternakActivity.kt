@@ -1,8 +1,10 @@
 package com.example.ternavest.ui.peternak
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.ternavest.MainActivity
 import com.example.ternavest.R
 import com.example.ternavest.ui.peternak.kelola.proyek.KelolaFragment
 import com.example.ternavest.ui.both.portfolio.PortfolioFragment
@@ -38,6 +40,11 @@ class PeternakActivity : AppCompatActivity() {
             return true
         }
         return false
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
 

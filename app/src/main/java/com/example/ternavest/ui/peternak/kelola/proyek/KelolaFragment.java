@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ternavest.MainActivity;
 import com.example.ternavest.R;
 import com.example.ternavest.adaper.ProyekAdaper;
 import com.example.ternavest.viewmodel.ProyekViewModel;
@@ -30,7 +32,7 @@ public class KelolaFragment extends Fragment {
     Button btnTambahProyek;
     ProyekViewModel proyekViewModel;
     FirebaseUser firebaseUser;
-    RecyclerView  rvKelolaProyek;
+    RecyclerView rvKelolaProyek;
     FloatingActionButton floatingActionButton;
     ShimmerFrameLayout shimmerKelola;
 
@@ -42,7 +44,7 @@ public class KelolaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        proyekViewModel   = ViewModelProviders.of(this).get(ProyekViewModel.class);
+        proyekViewModel = ViewModelProviders.of(this).get(ProyekViewModel.class);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         proyekViewModel.loadResultByUUID(firebaseUser.getUid());
 
@@ -56,10 +58,10 @@ public class KelolaFragment extends Fragment {
         proyekViewModel.loadResultByUUID(firebaseUser.getUid());
 
         btnTambahProyek = view.findViewById(R.id.btnTambahProyek);
-        txtProyekKosong= view.findViewById(R.id.txtProyekKosong);
+        txtProyekKosong = view.findViewById(R.id.txtProyekKosong);
         imgProyekKosong = view.findViewById(R.id.imgProyekKosong);
         rvKelolaProyek = view.findViewById(R.id.rv_kelola_proyek);
-        floatingActionButton= view.findViewById(R.id.floatingActionButton);
+        floatingActionButton = view.findViewById(R.id.floatingActionButton);
 
         shimmerKelola = view.findViewById(R.id.shimmerKelola);
 
@@ -68,24 +70,24 @@ public class KelolaFragment extends Fragment {
         imgProyekKosong.setVisibility(View.INVISIBLE);
         btnTambahProyek.setVisibility(View.INVISIBLE);
 
-        floatingActionButton.setOnClickListener(v->{
+        floatingActionButton.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), TambahProyekActivity.class));
         });
 
-        btnTambahProyek.setOnClickListener(v-> {
+        btnTambahProyek.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), TambahProyekActivity.class));
         });
 
-        proyekViewModel.getResultByUUID().observe(getViewLifecycleOwner(), result ->{
+        proyekViewModel.getResultByUUID().observe(getViewLifecycleOwner(), result -> {
 
-            if (result.isEmpty()){
+            if (result.isEmpty()) {
                 txtProyekKosong.setVisibility(View.VISIBLE);
                 imgProyekKosong.setVisibility(View.VISIBLE);
                 btnTambahProyek.setVisibility(View.VISIBLE);
                 floatingActionButton.setVisibility(View.INVISIBLE);
                 shimmerKelola.setVisibility(View.INVISIBLE);
                 shimmerKelola.stopShimmerAnimation();
-            }else{
+            } else {
                 txtProyekKosong.setVisibility(View.INVISIBLE);
                 imgProyekKosong.setVisibility(View.INVISIBLE);
                 btnTambahProyek.setVisibility(View.INVISIBLE);
