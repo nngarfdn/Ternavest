@@ -38,67 +38,79 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <include layout="@layout/item_portfolio"/>
-
-    <TextView
-        android:id="@+id/tv_level_dpf"
-        style="@style/TextView.Regular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Peternak"/>
-
-    <include layout="@layout/item_profile"/>
-
-    <TextView
-        style="@style/TextView.Regular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status"/>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:overScrollMode="never">
 
-        <TextView
-            android:id="@+id/tv_status_payment_dpf"
-            style="@style/TextView.Regular"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/blue"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_status_project_dpf"
-            style="@style/TextView.Regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/blue"
-            android:visibility="invisible"/>
-    </LinearLayout>
+            <include layout="@layout/item_portfolio"/>
 
-    <TextView
-        android:id="@+id/tv_payment_dpf"
-        style="@style/TextView.Regular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Riwayat pembayaran"/>
+            <TextView
+                android:id="@+id/tv_level_dpf"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peternak"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_payment_dpf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <include layout="@layout/item_profile"/>
 
-    <Button
-        android:id="@+id/btn_update_dpf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Edit Informasi"/>
+            <TextView
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"/>
 
-    <Button
-        android:id="@+id/btn_payment_dpf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lanjut Pembayaran"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_status_payment_dpf"
+                    style="@style/TextView.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/blue"/>
+
+                <TextView
+                    android:id="@+id/tv_status_project_dpf"
+                    style="@style/TextView.Regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/blue"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_payment_dpf"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Riwayat pembayaran"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_payment_dpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btn_update_dpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Informasi"/>
+
+            <Button
+                android:id="@+id/btn_payment_dpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lanjut Pembayaran"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
