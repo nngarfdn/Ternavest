@@ -228,7 +228,7 @@ public class ProfileRepository {
     private Map<String, Object> objectToHashMap(Profile profile){
         Map<String, Object> document = new HashMap<>();
         document.put("id", profile.getId());
-        document.put("name", profile.getName());
+        document.put("nama", profile.getName());
         document.put("email", profile.getEmail());
         document.put("level", profile.getLevel());
         document.put("foto", profile.getPhoto());
@@ -246,7 +246,7 @@ public class ProfileRepository {
     private Profile snapshotToObject(DocumentSnapshot document){
         return new Profile(
                 document.getString("id"),
-                document.getString("name"),
+                document.getString("nama"),
                 document.getString("email"),
                 document.getString("level"),
                 document.getString("foto"),
