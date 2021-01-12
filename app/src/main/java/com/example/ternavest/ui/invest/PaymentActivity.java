@@ -2,6 +2,7 @@ package com.example.ternavest.ui.invest;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -21,12 +22,12 @@ import com.example.ternavest.model.Payment;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;
+import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
-import com.example.ternavest.viewmodel.ProyekViewModel;
 
-import java.util.List;
-
+import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
+import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.createIdFromCurrentDate;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
@@ -36,14 +37,14 @@ import static com.example.ternavest.utils.DateUtils.getCurrentTime;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int RC_PAYMENT_IMAGE = 100;
-    public static final String EXTRA_PORTFOLIO = "extra_portfolio";
 
+    private CardView cvPortfolio;
     private TextView tvProject, tvTotalCost, tvCount, tvStatus, tvAccountName, tvAccountBank, tvAccountNumber, tvNominal;
     private ImageView imgPayment;
     private Button btnUpload, btnSend;
 
+    private Proyek project;
     private PaymentViewModel paymentViewModel;
-    private ProyekViewModel projectViewModel;
     private ProfileViewModel profileViewModel;
     private Portfolio portfolio;
 
@@ -64,21 +65,14 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         tvNominal = findViewById(R.id.tv_total_cost_payment);
         imgPayment = findViewById(R.id.img_payment_payment);
 
+        cvPortfolio = findViewById(R.id.cv_portfolio_portfolio);
         btnUpload = findViewById(R.id.btn_upload_payment);
         btnSend = findViewById(R.id.btn_send_payment);
+        cvPortfolio.setOnClickListener(this);
         btnUpload.setOnClickListener(this);
         btnSend.setOnClickListener(this);
 
-        projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
-        projectViewModel.getResultByID().observe(this, new Observer<List<Proyek>>() {
-            @Override
-            public void onChanged(List<Proyek> projectList) {
-                Proyek project = projectList.get(0);
-                tvProject.setText(project.getNamaProyek());
-                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
-                tvNominal.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
-            }
-        });
+        btnSend.setEnabled(false);
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(this, new Observer<Profile>() {
@@ -95,9 +89,15 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
             tvCount.setText(" / " + portfolio.getCount() + " ekor");
-            tvStatus.setText(portfolio.getStatus());
+            tvStatus.setText("Pending"); // Kalau bisa ke pembayaran, pasti statusnya pending
 
-            projectViewModel.loadResultByID(portfolio.getProjectId());
+            if (intent.hasExtra(EXTRA_PROJECT)){
+                project = intent.getParcelableExtra(EXTRA_PROJECT);
+                tvProject.setText(project.getNamaProyek());
+                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+                tvNominal.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+            }
+
             profileViewModel.loadData(portfolio.getBreederId());
         }
 
@@ -108,6 +108,14 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.cv_portfolio_portfolio:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("proyek", project);
+                DetailFragment bottomSheet = new DetailFragment();
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+                break;
+
             case R.id.btn_upload_payment:
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
@@ -135,6 +143,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                         payment.setImage(imageUrl);
                         paymentViewModel.insert(portfolio.getId(), payment);
                         showToast(getApplicationContext(), "Pembayaran berhasil diajukan.");
+                        onBackPressed();  // BUG -> Informasi sebelumnya belum diupdate (riwayat pembayaran)
                     }
                 });
                 break;
@@ -149,6 +158,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 if (data != null) if (data.getData() != null){
                     uriPaymentImage = data.getData();
                     loadImageFromUrl(imgPayment, uriPaymentImage.toString());
+                    btnSend.setEnabled(true);
                 }
             }
         }

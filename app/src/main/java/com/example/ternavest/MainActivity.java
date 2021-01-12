@@ -60,17 +60,25 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        /**/
         userPreference = new UserPreference(this);
-        if (userPreference.getUserLevel() == null){
+
+        if (firebaseAuth.getCurrentUser() != null){
             ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
             profileViewModel.loadData();
             profileViewModel.getData().observe(this, new Observer<Profile>() {
                 @Override
-                public void onChanged(Profile profile) {
+                public void onChanged(Profile result) {
+                    profile = result;
                     userPreference.setUserLevel(profile.getLevel());
                 }
             });
         }
+
+        if (userPreference.getUserLevel() == null){ // Nanti taro kode ini saat selesai buat akun
+            // Isinya simpan level user ke preference
+        }
+        /**/
 
         Button btnTestWilayah = findViewById(R.id.btn_testwilayah);
         btnTestWilayah.setOnClickListener(v -> startActivity(new Intent(this, WilayahTest.class)));
@@ -91,17 +99,6 @@ public class MainActivity extends AppCompatActivity {
         btnCoba3.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DashboardInvestorActivity.class)));
         Button btnInvestor = findViewById(R.id.btn_investor);
         btnInvestor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, InvestorActivity.class)));
-
-        if (firebaseAuth.getCurrentUser() != null){
-            ProfileViewModel profileViewModel = new ViewModelProvider(MainActivity.this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
-            profileViewModel.loadData();
-            profileViewModel.getData().observe(MainActivity.this, new Observer<Profile>() {
-                @Override
-                public void onChanged(Profile result) {
-                    profile = result;
-                }
-            });
-        }
         Button btnCoba4 = findViewById(R.id.btn_coba4);
         btnCoba4.setOnClickListener(new View.OnClickListener() {
             @Override

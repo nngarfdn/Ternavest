@@ -26,13 +26,12 @@ import com.example.ternavest.model.Proyek;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.both.profile.DetailProfileActivity;
 import com.example.ternavest.ui.invest.PaymentActivity;
+import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
-import com.example.ternavest.viewmodel.ProyekViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,24 +47,23 @@ import static com.example.ternavest.utils.DateUtils.getCurrentDate;
 
 public class DetailPortfolioActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_PORTFOLIO = "extra_portfolio";
+    public static final String EXTRA_PROJECT = "extra_project";
 
     private ImageButton ibDelete;
     private CircleImageView civProfile;
     private TextView tvTitle, tvProject, tvTotalCost, tvCount, tvAction, tvProfile, tvStatusProject, tvStatusPayment, tvLevel, tvPayment;
     private Button btnUpdate, btnPayment;
-    private CardView cvProfile;
+    private CardView cvProfile, cvPortfolio;
 
     private Profile profile;
     private Proyek project;
     private PaymentAdapter adapter;
     private Portfolio portfolio;
     private PaymentViewModel paymentViewModel;
-    private ProyekViewModel projectViewModel;
     private ProfileViewModel profileViewModel;
     private PortfolioViewModel portfolioViewModel;
     private UserPreference userPreference;
 
-    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +77,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         adapter = new PaymentAdapter();
         recyclerView.setAdapter(adapter);
 
-        tvTitle = findViewById(R.id.tv_title_portfolio);
+        tvTitle = findViewById(R.id.tv_title_dpf);
         tvProject = findViewById(R.id.tv_project_portfolio);
         tvTotalCost = findViewById(R.id.tv_total_cost_portfolio);
         tvCount = findViewById(R.id.tv_count_portfolio);
@@ -91,44 +89,24 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         tvProfile = findViewById(R.id.tv_name_profile);
         civProfile = findViewById(R.id.civ_photo_profile);
 
+        cvPortfolio = findViewById(R.id.cv_portfolio_portfolio);
         cvProfile = findViewById(R.id.cv_profile_profile);
         ibDelete = findViewById(R.id.ib_delete_dpf);
         btnUpdate = findViewById(R.id.btn_update_dpf);
         btnPayment = findViewById(R.id.btn_payment_dpf);
+        cvPortfolio.setOnClickListener(this);
         cvProfile.setOnClickListener(this);
         ibDelete.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
 
         tvAction.setText("Lihat proyek");
-        if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)){
+        if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
             ibDelete.setVisibility(View.INVISIBLE);
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
         }
         cvProfile.setEnabled(false);
-
-        projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
-        projectViewModel.getResultByID().observe(this, new Observer<List<Proyek>>() {
-            @Override
-            public void onChanged(List<Proyek> projectList) {
-                project = projectList.get(0);
-
-                // Atur informasi proyek dan portfolio
-                tvTitle.setText(project.getNamaProyek());
-                tvProject.setText(project.getNamaProyek());
-                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
-
-                // Atur status proyek
-                if (differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0){
-                    tvStatusProject.setText(", proyek belum dimulai");
-                } else if (project.getWaktuSelesai().equals(getCurrentDate())){
-                    tvStatusProject.setText(", proyek sudah selesai");
-                } else {
-                    tvStatusProject.setText(", proyek sedang berjalan");
-                }
-            }
-        });
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(this, new Observer<Profile>() {
@@ -154,7 +132,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                     String lastStatus = adapter.getData().get(adapter.getItemCount()-1).getStatus();
                     if (lastStatus.equals(PAY_APPROVED)){
                         tvStatusPayment.setText("Disetujui");
-                        tvStatusPayment.setTextColor(R.color.blue);
+                        tvStatusPayment.setTextColor(getResources().getColor(R.color.blue));
                         tvStatusProject.setVisibility(View.VISIBLE);
 
                         ibDelete.setVisibility(View.INVISIBLE);
@@ -162,18 +140,18 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                         btnPayment.setVisibility(View.INVISIBLE);
                     } else if (lastStatus.equals(PAY_PENDING)){
                         tvStatusPayment.setText("Menunggu persetujuan");
-                        tvStatusPayment.setTextColor(R.color.orange);
+                        tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
 
                         ibDelete.setVisibility(View.INVISIBLE);
                         btnUpdate.setVisibility(View.INVISIBLE);
                         btnPayment.setVisibility(View.INVISIBLE);
                     } else if (lastStatus.equals(PAY_REJECT)){
                         tvStatusPayment.setText("Belum bayar");
-                        tvStatusPayment.setTextColor(R.color.orange);
+                        tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
                     }
-                } else {
+                } else { // BUG -> Fungsi ini tidak dipanggil jika getData size == 0
                     tvStatusPayment.setText("Belum bayar");
-                    tvStatusPayment.setTextColor(R.color.orange);
+                    tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
 
                     tvPayment.setVisibility(View.INVISIBLE);
                 }
@@ -186,7 +164,24 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
             tvCount.setText(" / " + portfolio.getCount() + " ekor");
 
-            projectViewModel.loadResultByID(portfolio.getProjectId());
+            if (intent.hasExtra(EXTRA_PROJECT)){
+                project = intent.getParcelableExtra(EXTRA_PROJECT);
+
+                // Atur informasi proyek dan portfolio
+                tvTitle.setText(project.getNamaProyek());
+                tvProject.setText(project.getNamaProyek());
+                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+
+                // Atur status proyek
+                if (differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0){
+                    tvStatusProject.setText(", proyek belum dimulai");
+                } else if (project.getWaktuSelesai().equals(getCurrentDate())){
+                    tvStatusProject.setText(", proyek sudah selesai");
+                } else {
+                    tvStatusProject.setText(", proyek sedang berjalan");
+                }
+            }
+
             paymentViewModel.loadData(portfolio.getId());
 
             if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)){ // Tampilan untuk investor
@@ -213,10 +208,18 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                portfolioViewModel.delete(portfolio);
+                                portfolioViewModel.delete(portfolio); // BUG -> Kalau hapus, foto bukti pembayaran belum terhapus juga
                                 onBackPressed();
                             }
                         }).create().show();
+                break;
+
+            case R.id.cv_portfolio_portfolio:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("proyek", project);
+                DetailFragment bottomSheet = new DetailFragment();
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
                 break;
 
             case R.id.cv_profile_profile:
@@ -228,6 +231,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
             case R.id.btn_update_dpf:
                 Intent intentUpdate = new Intent(this, AddUpdatePortfolioActivity.class);
                 intentUpdate.putExtra(EXTRA_PORTFOLIO, portfolio);
+                intentUpdate.putExtra(EXTRA_PROJECT, project);
                 startActivity(intentUpdate);
                 break;
 
@@ -235,6 +239,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 if (differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0){ // Proyek masih belum mulai
                     Intent intentPayment = new Intent(this, PaymentActivity.class);
                     intentPayment.putExtra(EXTRA_PORTFOLIO, portfolio);
+                    intentPayment.putExtra(EXTRA_PROJECT, project);
                     startActivity(intentPayment);
                 } else { // Proyek sudah mulai atau selesai
                     new AlertDialog.Builder(this)

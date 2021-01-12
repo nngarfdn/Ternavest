@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adaper.PortfolioAdapter;
@@ -21,6 +22,9 @@ import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 
 import java.util.ArrayList;
+
+import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
+import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 
 public class PortfolioFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -46,6 +50,10 @@ public class PortfolioFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         adapter = new PortfolioAdapter();
         recyclerView.setAdapter(adapter);
+
+        TextView tvTitle = view.findViewById(R.id.tv_title_portfolio);
+        if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) tvTitle.setText("Portofolio");
+        else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) tvTitle.setText("Peminat");
 
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
         portfolioViewModel.loadData(userPreference.getUserLevel());

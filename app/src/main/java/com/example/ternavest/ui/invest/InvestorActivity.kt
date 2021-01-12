@@ -9,8 +9,6 @@ import com.example.ternavest.R
 import com.example.ternavest.ui.both.portfolio.PortfolioFragment
 import com.example.ternavest.ui.both.profile.ProfileFragment
 import com.example.ternavest.ui.invest.home.HomeFragment
-import com.example.ternavest.ui.invest.porfoliio.PortofolioFragment
-import com.example.ternavest.ui.peternak.kelola.proyek.KelolaFragment
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import kotlinx.android.synthetic.main.activity_peternak.*
 
@@ -26,7 +24,7 @@ class InvestorActivity : AppCompatActivity() {
             override fun onItemSelected(index: Int) {
                 when (index){
                     0 -> loadFragment(HomeFragment())
-                    1 ->loadFragment(PortofolioFragment())
+                    1 ->loadFragment(PortfolioFragment())
                     2 -> loadFragment(ProfileFragment())
                 }
             }

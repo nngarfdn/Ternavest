@@ -121,7 +121,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 btnWhatsApp.setText(profile.getWhatsApp());
             }
         });
-        profileViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
+        /*profileViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) Log.w(TAG, "Listen failed", error);
@@ -130,7 +130,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "Changes detected");
                 }
             }
-        });
+        });*/
     }
 
     @SuppressLint("NonConstantResourceId")

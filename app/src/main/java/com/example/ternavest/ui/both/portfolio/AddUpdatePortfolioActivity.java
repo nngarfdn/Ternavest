@@ -1,8 +1,10 @@
 package com.example.ternavest.ui.both.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,12 +19,15 @@ import com.example.ternavest.R;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.ui.invest.PaymentActivity;
+import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
+import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
@@ -30,14 +35,12 @@ import static com.example.ternavest.utils.EditTextUtils.getFixText;
 import static com.example.ternavest.utils.EditTextUtils.isNull;
 
 public class AddUpdatePortfolioActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String EXTRA_PROJECT = "extra_project";
-    public static final String EXTRA_PORTFOLIO = "extra_portfolio";
-
     private FirebaseUser firebaseUser;
     private Proyek project;
     private Portfolio portfolio;
     private PortfolioViewModel portfolioViewModel;
 
+    private CardView cvProject;
     private TextView tvTitle, tvProjectName, tvProjectLivestock, tvProjectROI, tvCost, tvTotalCost, tvHelper;
     private ImageView imgProject;
     private Button btnPayment;
@@ -62,12 +65,14 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
         tvHelper = findViewById(R.id.tv_helper_aup);
         edtCount = findViewById(R.id.edt_count_aup);
 
+        cvProject = findViewById(R.id.cv_project_project);
         btnPayment = findViewById(R.id.btn_payment_aup);
+        cvProject.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
 
-        Intent intentProject = getIntent();
-        if (intentProject.hasExtra(EXTRA_PROJECT)){
-            project = intentProject.getParcelableExtra(EXTRA_PROJECT);
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_PROJECT)){
+            project = intent.getParcelableExtra(EXTRA_PROJECT);
 
             loadImageFromUrl(imgProject, project.getPhotoProyek());
             tvProjectName.setText(project.getNamaProyek());
@@ -76,24 +81,23 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             tvCost.setText("Rp" + project.getBiayaHewan());
             tvHelper.setText("Rp" + project.getBiayaHewan() + " adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan.");
 
-            Intent intentPortfolio = getIntent();
-            isUpdate = intentPortfolio.hasExtra(EXTRA_PORTFOLIO);
+            isUpdate = intent.hasExtra(EXTRA_PORTFOLIO);
             if (isUpdate){
-                portfolio = intentPortfolio.getParcelableExtra(EXTRA_PORTFOLIO);
+                portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
                 tvTitle.setText("Edit Informasi Investasi");
                 tvTotalCost.setText("Rp" + (
                         portfolio.getCount() * project.getBiayaHewan()
                 ));
                 edtCount.setText(String.valueOf(portfolio.getCount()));
-                btnPayment.setText("Lanjut Pembayaran");
+                btnPayment.setText("Simpan");
             } else {
                 portfolio = new Portfolio();
 
                 tvTitle.setText("Mulai Investasi");
-                tvTotalCost.setText("Rp" + (1 * project.getBiayaHewan()));
+                tvTotalCost.setText("Rp" + project.getBiayaHewan());
                 edtCount.setText("1");
-                btnPayment.setText("Simpan");
+                btnPayment.setText("Lanjut Pembayaran");
             }
         }
 
@@ -103,51 +107,70 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                tvTotalCost.setText("Rp" + (
-                        Integer.parseInt(getFixText(edtCount)) * project.getBiayaHewan()
-                ));
+                if (charSequence.length() > 0){ // Masih BUG -> belum fix
+                    tvTotalCost.setText("Rp" + (
+                            Integer.parseInt(getFixText(edtCount)) * project.getBiayaHewan()
+                    ));
+                } else {
+                    tvTotalCost.setText("Rp0");
+                }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+                if (isNull(getFixText(edtCount))){
+                    edtCount.setText("1");
+                }
+            }
         });
 
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_payment_aup){
-            String count = getFixText(edtCount);
+        switch (view.getId()){
+            case R.id.cv_project_project:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("proyek", project);
+                DetailFragment bottomSheet = new DetailFragment();
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+                break;
 
-            if (isNull(count)){
-                showToast(this, "Harap isi berapa ekor yang akan diinvestasikan");
-                return;
-            }
+            case R.id.btn_payment_aup:
+                String count = getFixText(edtCount);
 
-            portfolio.setCount(Integer.parseInt(count));
+                if (isNull(count)){
+                    showToast(this, "Harap isi berapa ekor yang akan diinvestasikan");
+                    return;
+                }
 
-            if (isUpdate){
-                portfolioViewModel.update(portfolio.getId(), portfolio.getCount());
-                showToast(this, "Informasi berhasil diedit");
-                onBackPressed();
-            } else {
-                portfolio.setId(project.getId() + "-" + firebaseUser.getUid());
-                portfolio.setProjectId(project.getId());
-                portfolio.setInvestorId(firebaseUser.getUid());
-                portfolio.setBreederId(project.getUuid());
-                portfolio.setPaymentId(new ArrayList<>());
-                portfolio.setCost(0);
-                portfolio.setTotalCost(0);
-                portfolio.setStatus(PAY_PENDING);
+                portfolio.setCount(Integer.parseInt(count));
 
-                portfolioViewModel.insert(portfolio);
-                showToast(this, "Proyek telah ditambah ke portfolio");
+                if (isUpdate){
+                    portfolioViewModel.update(portfolio.getId(), portfolio.getCount());
+                    showToast(this, "Informasi berhasil diedit");
+                    onBackPressed(); // BUG -> Informasi sebelumnya belum diupdate (jumlah ekor)
+                } else {
+                    portfolio.setId(project.getId() + "-" + firebaseUser.getUid());
+                    portfolio.setProjectId(project.getId());
+                    portfolio.setInvestorId(firebaseUser.getUid());
+                    portfolio.setBreederId(project.getUuid());
+                    portfolio.setPaymentId(new ArrayList<>());
+                    portfolio.setCost(0);
+                    portfolio.setTotalCost(0);
+                    portfolio.setStatus(PAY_PENDING);
 
-                Intent intent = new Intent(this, PaymentActivity.class);
-                intent.putExtra(EXTRA_PORTFOLIO, portfolio);
-                startActivity(intent);
-            }
+                    portfolioViewModel.insert(portfolio);
+                    showToast(this, "Proyek telah ditambah ke portfolio");
+
+                    Intent intent = new Intent(this, PaymentActivity.class);
+                    intent.putExtra(EXTRA_PORTFOLIO, portfolio);
+                    startActivity(intent);
+                }
+                break;
         }
     }
 }

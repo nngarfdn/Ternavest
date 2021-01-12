@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -67,11 +69,13 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         btnPhone = findViewById(R.id.btn_phone_profile);
         btnWhatsApp = findViewById(R.id.btn_whatsapp_profile);
         btnKtp.setOnClickListener(this);
+        btnPhone.setOnClickListener(this);
+        btnWhatsApp.setOnClickListener(this);
 
         btnKtp.setVisibility(View.GONE);
 
         ProyekViewModel projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
-        projectViewModel.getResultByUUID().observe(this, new Observer<List<Proyek>>() {
+        projectViewModel.getResultByUUID().observe(this, new Observer<List<Proyek>>() { // Buat peternak
             @Override
             public void onChanged(List<Proyek> proyeks) {
                 projectList.clear();
@@ -85,11 +89,11 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onChanged(ArrayList<Portfolio> portfolioList) {
                 for (Portfolio portfolio : portfolioList){
-                    projectViewModel.loadResultByID(portfolio.getProjectId());
+                    projectViewModel.loadResultByID(portfolio.getProjectId()); // Buat investor
                 }
             }
         });
-        projectViewModel.getResultByID().observe(this, new Observer<List<Proyek>>() {
+        projectViewModel.getResultByID().observe(this, new Observer<List<Proyek>>() { // Buat investor
             @Override
             public void onChanged(List<Proyek> proyeks) {
                 projectList.addAll(proyeks);
@@ -137,9 +141,33 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_phone_profile:
+                new  AlertDialog.Builder(this)
+                        .setTitle("Panggil nomor telepon")
+                        .setMessage("Pilih ya untuk memanggil nomor pengguna ini.")
+                        .setNegativeButton("Tidak", null)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String phone = "tel:" + profile.getPhone();
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(phone));
+                                startActivity(intent);
+                            }
+                        }).create().show();
                 break;
 
             case R.id.btn_whatsapp_profile:
+                new  AlertDialog.Builder(this)
+                        .setTitle("Buka WhatsApp")
+                        .setMessage("Pilih ya untuk membuka akun WhatsApp pengguna ini.")
+                        .setNegativeButton("Tidak", null)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String url = "https://wa.me/" + profile.getWhatsApp();
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                startActivity(intent);
+                            }
+                        }).create().show();
                 break;
 
             case R.id.btn_ktp_profile:

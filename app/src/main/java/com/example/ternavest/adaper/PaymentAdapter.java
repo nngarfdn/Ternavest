@@ -52,8 +52,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private Context context = itemView.getContext();
-        private TextView tvDate, tvStatus;
+        private final Context context = itemView.getContext();
+        private final TextView tvDate, tvStatus;
         
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -68,15 +68,25 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             switch (status) {
                 case PAY_APPROVED:
                     status = "Disetujui";
+                    tvStatus.setTextColor(context.getResources().getColor(R.color.blue));
                     break;
                 case PAY_REJECT:
                     status = "Ditolak";
+                    tvStatus.setTextColor(context.getResources().getColor(R.color.red));
                     break;
                 case PAY_PENDING:
                     status = "Pending";
+                    tvStatus.setTextColor(context.getResources().getColor(R.color.orange));
                     break;
             }
             tvStatus.setText(status);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
 }
