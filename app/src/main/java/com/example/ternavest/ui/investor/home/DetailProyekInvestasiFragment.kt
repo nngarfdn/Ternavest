@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.both.profile.DetailProfileActivity
+import com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
 import com.example.ternavest.ui.peternak.kelola.proyek.EditProyekActivity
 import com.example.ternavest.viewmodel.ProfileViewModel
@@ -69,12 +71,17 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
         })
 
         view.imgProfile.setOnClickListener {
-            val intent = Intent(context, EditProyekActivity::class.java)
-            intent.putExtra("proyek", p)
-            startActivity(intent)
+            profileViewModel.data.observe(viewLifecycleOwner, Observer { result ->
+                Log.d("DetailInvestor", "onViewCreated: ${result.photo} ")
+                val intent = Intent(context, DetailProfileActivity::class.java)
+                intent.putExtra(EXTRA_PROFILE, result)
+                startActivity(intent)
+            })
+
         }
         view.imgLaporanProyek.setOnClickListener {
-            val intent = Intent(context, LaporanActivity::class.java)
+            val intent = Intent(context, LaporanHomeActivity::class.java)
+            intent.putExtra("level", "investor")
             intent.putExtra("id", p?.id)
             startActivity(intent)
         }

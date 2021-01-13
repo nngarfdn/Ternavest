@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adaper.ProyekAdaper;
@@ -134,6 +135,16 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
             tvName.setText(profile.getName());
             tvEmail.setText(profile.getEmail());
         }
+    }
+
+    private void setSupportActionBar(Toolbar toolbar) {
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @SuppressLint("NonConstantResourceId")

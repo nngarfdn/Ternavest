@@ -20,6 +20,7 @@
         <activity android:name=".ui.peternak.kelola.proyek.EditProyekActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.LaporanActivity" />
         <activity android:name=".ui.both.profile.SettingsActivity" />
+        <activity android:name=".ui.investor.home.LaporanHomeActivity"/>
         <activity android:name=".ui.both.profile.DetailProfileActivity" />
         <activity android:name=".ui.peternak.PeternakActivity" />
         <activity android:name=".ui.investor.InvestorActivity" />

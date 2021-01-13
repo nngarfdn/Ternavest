@@ -7,32 +7,36 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.example.ternavest.MainActivity;
 import com.example.ternavest.R;
 import com.example.ternavest.adaper.ProyekInvestorAdaper;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.viewmodel.ProyekViewModel;
+import com.example.ternavest.viewmodel.SearchViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProyekViewModel projectViewModel;
     private ProyekInvestorAdaper adapter;
-    ShimmerFrameLayout shimmerKelola;
+    private ShimmerFrameLayout shimmerKelola;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private SearchViewModel searchViewModel;
+    SearchView searchView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -47,6 +51,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
+        searchViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(SearchViewModel.class);
         if (getArguments() != null) {
 
         }
@@ -64,20 +71,51 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.rv_investor);
         shimmerKelola = view.findViewById(R.id.shimmerKelola);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+        searchView = view.findViewById(R.id.search_proyek);
+
+        CharSequence query = searchView.getQuery();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchViewModel.loadData(query);
+                shimmerKelola.startShimmerAnimation();
+                searchViewModel.getData().observe(getViewLifecycleOwner(), result -> {
+                    shimmerKelola.setVisibility(View.INVISIBLE);
+                    shimmerKelola.stopShimmerAnimation();
+                    adapter = new ProyekInvestorAdaper(result);
+                    recyclerView.setAdapter(adapter);
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //    adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        projectViewModel.loadResult();
         shimmerKelola.startShimmerAnimation();
+        getData();
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            getData();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
+    }
+
+    private void getData() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
-        projectViewModel.loadResult();
-        projectViewModel.getResult().observe(this, new Observer<List<Proyek>>() {
-            @Override
-            public void onChanged(List<Proyek> proyeks) {
-                shimmerKelola.setVisibility(View.INVISIBLE);
-                shimmerKelola.stopShimmerAnimation();
-                adapter = new ProyekInvestorAdaper(proyeks);
-                recyclerView.setAdapter(adapter);
-            }
+        projectViewModel.getResult().observe(this, proyeks -> {
+            shimmerKelola.setVisibility(View.INVISIBLE);
+            shimmerKelola.stopShimmerAnimation();
+            adapter = new ProyekInvestorAdaper(proyeks);
+            recyclerView.setAdapter(adapter);
         });
     }
 }

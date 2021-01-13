@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.peternak.kelola.laporan
+package com.example.ternavest.ui.investor.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,14 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.MainActivity
 import com.example.ternavest.R
 import com.example.ternavest.adaper.LaporanAdaper
+import com.example.ternavest.adaper.LaporanHomeAdaper
 import com.example.ternavest.adaper.ProyekAdaper
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.peternak.kelola.laporan.TambahLaporanActivity
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import kotlinx.android.synthetic.main.activity_laporan.*
 
-class LaporanActivity : AppCompatActivity() {
+class LaporanHomeActivity : AppCompatActivity() {
 
 
     private val TAG = "LaporanActivity"
@@ -61,7 +63,7 @@ class LaporanActivity : AppCompatActivity() {
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
                             rv_laporan.setLayoutManager(layoutManager)
-                            val adapter = LaporanAdaper(result)
+                            val adapter = LaporanHomeAdaper(result)
                             rv_laporan.setAdapter(adapter)
                         } else {
                             imgLaporanKosong.visibility = View.VISIBLE
@@ -70,7 +72,7 @@ class LaporanActivity : AppCompatActivity() {
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
                             rv_laporan.setLayoutManager(layoutManager)
-                            val adapter = LaporanAdaper(result)
+                            val adapter = LaporanHomeAdaper(result)
                             rv_laporan.setAdapter(adapter)
 
                         }
@@ -92,7 +94,7 @@ class LaporanActivity : AppCompatActivity() {
                 imgLaporanKosong.visibility = View.INVISIBLE
                 val layoutManager = LinearLayoutManager(this)
                 rv_laporan.setLayoutManager(layoutManager)
-                val adapter = LaporanAdaper(result)
+                val adapter = LaporanHomeAdaper(result)
                 rv_laporan.setAdapter(adapter)
             })
 

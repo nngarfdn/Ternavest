@@ -68,7 +68,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tambah_proyek)
+        setContentView(R.layout.activity_edit_proyek)
 
         p = intent.getParcelableExtra<Proyek>("proyek")!!
 
