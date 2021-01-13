@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.invest.home;
+package com.example.ternavest.ui.investor.home;
 
 import android.os.Bundle;
 
@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adaper.ProyekAdaper;
 import com.example.ternavest.adaper.ProyekInvestorAdaper;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.viewmodel.ProyekViewModel;

@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.invest;
+package com.example.ternavest.ui.investor.portfolio;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.invest.PaymentActivity"/>
+        <activity android:name=".ui.investor.portfolio.PaymentActivity"/>
         <activity android:name=".testing.portfolio.DashboardInvestorActivity" />
         <activity android:name=".ui.both.portfolio.AddUpdatePortfolioActivity" />
         <activity android:name=".ui.both.portfolio.DetailPortfolioActivity" />
@@ -22,7 +22,7 @@
         <activity android:name=".ui.both.profile.SettingsActivity" />
         <activity android:name=".ui.both.profile.DetailProfileActivity" />
         <activity android:name=".ui.peternak.PeternakActivity" />
-        <activity android:name=".ui.invest.InvestorActivity" />
+        <activity android:name=".ui.investor.InvestorActivity" />
         <activity android:name=".testing.WilayahTest" />
         <activity android:name=".ui.peternak.kelola.proyek.TambahProyekActivity" />
         <activity android:name=".MainActivity">

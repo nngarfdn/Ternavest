@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.invest.home
+package com.example.ternavest.ui.investor.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,6 @@ import com.example.ternavest.R
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
 import com.example.ternavest.ui.peternak.kelola.proyek.EditProyekActivity
-import com.example.ternavest.utils.AppUtils
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso

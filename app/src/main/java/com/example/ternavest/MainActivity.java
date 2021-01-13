@@ -20,7 +20,7 @@ import com.example.ternavest.testing.portfolio.DashboardInvestorActivity;
 import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity;
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
 import com.example.ternavest.ui.both.profile.DetailProfileActivity;
-import com.example.ternavest.ui.invest.InvestorActivity;
+import com.example.ternavest.ui.investor.InvestorActivity;
 import com.example.ternavest.ui.peternak.PeternakActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        if (userPreference.getUserLevel() == null){ // Nanti taro kode ini saat selesai buat akun
+        if (userPreference.getUserLevel() == null){ // Nanti taro kode ini saat selesai buat akun/masuk
             // Isinya simpan level user ke preference
         }
         /**/

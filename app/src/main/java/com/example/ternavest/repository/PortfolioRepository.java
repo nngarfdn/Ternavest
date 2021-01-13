@@ -28,7 +28,6 @@ public class PortfolioRepository {
     private final String TAG = getClass().getSimpleName();
     private final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
-    private final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public final CollectionReference reference = database.collection("portofolio");
 
     private final MutableLiveData<ArrayList<Portfolio>> resultData = new MutableLiveData<>();
@@ -99,7 +98,7 @@ public class PortfolioRepository {
                 });
     }
 
-    // Update ketika belum bayar/pembayaran ditolak -> hanya bisa edit jumlah ekor
+    // Update ketika belum bayar/setelah pembayaran ditolak -> hanya bisa edit jumlah ekor
     public void update(String portfolioId, int count){  // Peternak
         reference.document(portfolioId)
                 .update("jumlahEkor", count)
@@ -114,7 +113,7 @@ public class PortfolioRepository {
 
     // Update ketika pembayaran disetujui -> ganti status dan simpan biaya karena ada kemungkinan biaya per ekor diedit
     // Jika pembayaran terakhir ditolak, status tetap pending (tidak melakukan update)
-    public void update(String portfolioId, String cost, String totalCost, String status){  // Investor
+    public void update(String portfolioId, long cost, long totalCost, String status){  // Investor
         reference.document(portfolioId)
                 .update("biaya", cost, "totalBiaya", totalCost, "status", status)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -144,7 +143,6 @@ public class PortfolioRepository {
         document.put("idInvestor", portfolio.getInvestorId());
         document.put("idPeternak", portfolio.getBreederId());
         document.put("idProyek", portfolio.getProjectId());
-        document.put("idPembayaran", portfolio.getPaymentId());
         document.put("jumlahEkor", portfolio.getCount());
         document.put("biaya", portfolio.getCost());
         document.put("totalBiaya", portfolio.getTotalCost());
@@ -158,7 +156,6 @@ public class PortfolioRepository {
                 document.getString("idInvestor"),
                 document.getString("idPeternak"),
                 document.getString("idProyek"),
-                (List<String>) document.get("idPembayaran"),
                 document.getLong("jumlahEkor").intValue(),
                 document.getLong("biaya"),
                 document.getLong("totalBiaya"),

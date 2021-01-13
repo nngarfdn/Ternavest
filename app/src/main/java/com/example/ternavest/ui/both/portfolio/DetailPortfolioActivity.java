@@ -27,7 +27,7 @@ import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.both.profile.DetailProfileActivity;
-import com.example.ternavest.ui.invest.PaymentActivity;
+import com.example.ternavest.ui.investor.portfolio.PaymentActivity;
 import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
@@ -39,17 +39,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity.RC_UPDATE_PORTFOLIO;
 import static com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE;
-import static com.example.ternavest.ui.invest.PaymentActivity.RC_ADD_PAYMENT;
+import static com.example.ternavest.ui.investor.portfolio.PaymentActivity.RC_ADD_PAYMENT;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.PAY_REJECT;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
+import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.DateUtils.differenceOfDates;
 import static com.example.ternavest.utils.DateUtils.getCurrentDate;
 
-public class DetailPortfolioActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetailPortfolioActivity extends AppCompatActivity implements View.OnClickListener, DetailPaymentFragment.DetailPaymentListener {
     public static final String EXTRA_PAYMENT = "extra_payment";
     public static final String EXTRA_PORTFOLIO = "extra_portfolio";
     public static final String EXTRA_PROJECT = "extra_project";
@@ -63,6 +64,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     private LoadingDialog loadingDialog;
     private Profile profile;
     private Proyek project;
+    private Payment payment;
     private PaymentAdapter adapter;
     private Portfolio portfolio;
     private PaymentViewModel paymentViewModel;
@@ -70,7 +72,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     private PortfolioViewModel portfolioViewModel;
     private UserPreference userPreference;
 
-    private ArrayList<Payment> paymentList;
+    private ArrayList<Payment> paymentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 tvProfile.setText(profile.getName());
                 loadImageFromUrl(civProfile, profile.getPhoto());
                 cvProfile.setEnabled(true);
+
+                loadingDialog.dismiss();
             }
         });
 
@@ -145,6 +149,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
                 // Atur status pembayaran terakhir
                 if (adapter.getItemCount() > 0){
+                    tvPayment.setVisibility(View.VISIBLE);
                     String lastStatus = adapter.getData().get(adapter.getItemCount()-1).getStatus();
                     if (lastStatus.equals(PAY_APPROVED)){
                         tvStatusPayment.setText("Disetujui");
@@ -166,8 +171,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                         tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
                     }
                 } // Saat 0, sudah diatur di atas
-
-                loadingDialog.dismiss();
             }
         });
 
@@ -278,7 +281,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 tvCount.setText(" / " + portfolio.getCount() + " ekor");
                 tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
             } else if (requestCode == RC_ADD_PAYMENT && resultCode == RC_ADD_PAYMENT){
-                Payment payment = data.getParcelableExtra(EXTRA_PAYMENT);
+                payment = data.getParcelableExtra(EXTRA_PAYMENT);
                 paymentList.add(payment);
                 adapter.setData(paymentList);
 
@@ -290,5 +293,21 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 btnPayment.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    @Override
+    public void receiveData(String statusPayment, String rejectionNote) {
+        if (statusPayment.equals(PAY_APPROVED)){
+            portfolio.setCost((long) project.getBiayaHewan());
+            portfolio.setTotalCost((portfolio.getCount() * project.getBiayaHewan()));
+            portfolio.setStatus(statusPayment);
+
+            portfolioViewModel.update(portfolio.getId(), portfolio.getCost(), portfolio.getTotalCost(), portfolio.getStatus());
+            showToast(getApplicationContext(), "Pembayaran berhasil disetujui");
+        } else if (statusPayment.equals(PAY_REJECT)){
+            showToast(getApplicationContext(), "Pembayaran berhasil ditolak");
+        }
+
+        paymentViewModel.update(portfolio.getId(), payment.getId(), payment.getStatus(), rejectionNote);
     }
 }

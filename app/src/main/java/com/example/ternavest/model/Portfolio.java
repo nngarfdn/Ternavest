@@ -10,7 +10,6 @@ public class Portfolio implements Parcelable {
     private String investorId;
     private String breederId;
     private String projectId;
-    private List<String> paymentId;
     private int count;
     private long cost;
     private long totalCost;
@@ -18,12 +17,11 @@ public class Portfolio implements Parcelable {
 
     public Portfolio() {}
 
-    public Portfolio(String id, String investorId, String breederId, String projectId, List<String> paymentId, int count, long cost, long totalCost, String status) {
+    public Portfolio(String id, String investorId, String breederId, String projectId, int count, long cost, long totalCost, String status) {
         this.id = id;
         this.investorId = investorId;
         this.breederId = breederId;
         this.projectId = projectId;
-        this.paymentId = paymentId;
         this.count = count;
         this.cost = cost;
         this.totalCost = totalCost;
@@ -35,7 +33,6 @@ public class Portfolio implements Parcelable {
         investorId = in.readString();
         breederId = in.readString();
         projectId = in.readString();
-        paymentId = in.createStringArrayList();
         count = in.readInt();
         cost = in.readLong();
         totalCost = in.readLong();
@@ -48,7 +45,6 @@ public class Portfolio implements Parcelable {
         dest.writeString(investorId);
         dest.writeString(breederId);
         dest.writeString(projectId);
-        dest.writeStringList(paymentId);
         dest.writeInt(count);
         dest.writeLong(cost);
         dest.writeLong(totalCost);
@@ -102,14 +98,6 @@ public class Portfolio implements Parcelable {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
-    }
-
-    public List<String> getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(List<String> paymentId) {
-        this.paymentId = paymentId;
     }
 
     public int getCount() {

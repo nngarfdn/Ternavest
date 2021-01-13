@@ -18,13 +18,11 @@ import android.widget.TextView;
 import com.example.ternavest.R;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Proyek;
-import com.example.ternavest.ui.invest.PaymentActivity;
+import com.example.ternavest.ui.investor.portfolio.PaymentActivity;
 import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
 
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
@@ -165,7 +163,6 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                     portfolio.setProjectId(project.getId());
                     portfolio.setInvestorId(firebaseUser.getUid());
                     portfolio.setBreederId(project.getUuid());
-                    portfolio.setPaymentId(new ArrayList<>());
                     portfolio.setCost(0);
                     portfolio.setTotalCost(0);
                     portfolio.setStatus(PAY_PENDING);

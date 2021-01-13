@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.invest
+package com.example.ternavest.ui.investor
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,7 @@ import com.example.ternavest.MainActivity
 import com.example.ternavest.R
 import com.example.ternavest.ui.both.portfolio.PortfolioFragment
 import com.example.ternavest.ui.both.profile.ProfileFragment
-import com.example.ternavest.ui.invest.home.HomeFragment
+import com.example.ternavest.ui.investor.home.HomeFragment
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import kotlinx.android.synthetic.main.activity_peternak.*
 

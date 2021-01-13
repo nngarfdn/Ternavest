@@ -32,7 +32,7 @@ public class PortfolioViewModel extends ViewModel {
         repository.update(portfolioId, count);
     }
 
-    public void update(String portfolioId, String cost, String totalCost, String status){
+    public void update(String portfolioId, long cost, long totalCost, String status){
         repository.update(portfolioId, cost, totalCost, status);
     }
 

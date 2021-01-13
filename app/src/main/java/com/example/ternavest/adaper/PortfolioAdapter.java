@@ -27,6 +27,7 @@ import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EX
 import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.PAY_REJECT;
+import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.ViewHolder> {
     private final ArrayList<Portfolio> portfolioList = new ArrayList<>();
@@ -114,7 +115,11 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (project == null) return;
+                    if (project == null){
+                        showToast(context, "Mohon tunggu...");
+                        return;
+                    }
+
                     Intent intent = new Intent(context, DetailPortfolioActivity.class);
                     intent.putExtra(EXTRA_PORTFOLIO, portfolio);
                     intent.putExtra(EXTRA_PROJECT, project);

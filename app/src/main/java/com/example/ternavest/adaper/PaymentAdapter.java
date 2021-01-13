@@ -1,6 +1,7 @@
 package com.example.ternavest.adaper;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.model.Payment;
+import com.example.ternavest.ui.both.portfolio.DetailPaymentFragment;
+import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
 
 import java.util.ArrayList;
 
+import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PAYMENT;
 import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.PAY_REJECT;
@@ -52,7 +56,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
         return paymentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context = itemView.getContext();
         private final TextView tvDate, tvStatus;
         
@@ -85,7 +89,11 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(EXTRA_PAYMENT, payment);
+                    DetailPaymentFragment bottomSheet = new DetailPaymentFragment();
+                    bottomSheet.setArguments(bundle);
+                    bottomSheet.show(((DetailPortfolioActivity) context).getSupportFragmentManager(), bottomSheet.getTag());
                 }
             });
         }
