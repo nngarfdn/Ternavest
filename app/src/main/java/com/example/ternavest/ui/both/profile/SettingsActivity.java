@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.callback.OnImageUploadCallback;
+import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private static final int RC_KTP_IMAGE = 200;
 
     private FirebaseUser firebaseUser;
-    private ProgressDialog progressDialog;
+    private LoadingDialog loadingDialog;
     private Profile profile;
     private ProfileViewModel profileViewModel;
 
@@ -65,9 +65,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
 
         Button btnPhoto = findViewById(R.id.btn_photo_settings);
         Button btnKtp = findViewById(R.id.btn_ktp_settings);
@@ -129,7 +128,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                 if (profile.getLevel().equals(LEVEL_INVESTOR)) layoutAccount.setVisibility(View.GONE);
 
-                progressDialog.dismiss();
+                loadingDialog.dismiss();
             }
         });
     }
@@ -220,7 +219,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         if (requestCode == RC_PROFILE_IMAGE){
             if (resultCode == Activity.RESULT_OK){
                 if (data != null) if (data.getData() != null){
-                    progressDialog.show();
+                    loadingDialog.show();
 
                     Uri uriProfileImage = data.getData();
                     loadImageFromUrl(imgPhoto, uriProfileImage.toString());
@@ -237,7 +236,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                                     .build();
                             firebaseUser.updateProfile(profileUpdates);
 
-                            progressDialog.dismiss();
+                            loadingDialog.dismiss();
                         }
                     });
                 }

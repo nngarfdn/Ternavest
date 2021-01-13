@@ -1,5 +1,6 @@
 package com.example.ternavest.ui.both.portfolio;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adaper.PaymentAdapter;
+import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Payment;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
@@ -35,7 +37,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity.RC_UPDATE_PORTFOLIO;
 import static com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE;
+import static com.example.ternavest.ui.invest.PaymentActivity.RC_ADD_PAYMENT;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
@@ -46,6 +50,7 @@ import static com.example.ternavest.utils.DateUtils.differenceOfDates;
 import static com.example.ternavest.utils.DateUtils.getCurrentDate;
 
 public class DetailPortfolioActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String EXTRA_PAYMENT = "extra_payment";
     public static final String EXTRA_PORTFOLIO = "extra_portfolio";
     public static final String EXTRA_PROJECT = "extra_project";
 
@@ -55,6 +60,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     private Button btnUpdate, btnPayment;
     private CardView cvProfile, cvPortfolio;
 
+    private LoadingDialog loadingDialog;
     private Profile profile;
     private Proyek project;
     private PaymentAdapter adapter;
@@ -64,12 +70,16 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     private PortfolioViewModel portfolioViewModel;
     private UserPreference userPreference;
 
+    private ArrayList<Payment> paymentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_portfolio);
 
         userPreference = new UserPreference(this);
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
 
         RecyclerView recyclerView = findViewById(R.id.rv_payment_dpf);
         recyclerView.setHasFixedSize(true);
@@ -108,6 +118,11 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         }
         cvProfile.setEnabled(false);
 
+        // Default riwayat pembayaran -> size 0
+        tvStatusPayment.setText("Belum bayar");
+        tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+        tvPayment.setVisibility(View.INVISIBLE);
+
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(this, new Observer<Profile>() {
             @Override
@@ -124,7 +139,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         paymentViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PaymentViewModel.class);
         paymentViewModel.getData().observe(this, new Observer<ArrayList<Payment>>() {
             @Override
-            public void onChanged(ArrayList<Payment> paymentList) {
+            public void onChanged(ArrayList<Payment> result) {
+                paymentList = result;
                 adapter.setData(paymentList);
 
                 // Atur status pembayaran terakhir
@@ -149,12 +165,9 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                         tvStatusPayment.setText("Belum bayar");
                         tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
                     }
-                } else { // BUG -> Fungsi ini tidak dipanggil jika getData size == 0
-                    tvStatusPayment.setText("Belum bayar");
-                    tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+                } // Saat 0, sudah diatur di atas
 
-                    tvPayment.setVisibility(View.INVISIBLE);
-                }
+                loadingDialog.dismiss();
             }
         });
 
@@ -208,7 +221,11 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                portfolioViewModel.delete(portfolio); // BUG -> Kalau hapus, foto bukti pembayaran belum terhapus juga
+                                portfolioViewModel.delete(portfolio);
+                                for (Payment payment : paymentList){
+                                    paymentViewModel.delete(portfolio.getId(), payment.getId());
+                                    paymentViewModel.deleteImage(payment.getImage());
+                                }
                                 onBackPressed();
                             }
                         }).create().show();
@@ -232,7 +249,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 Intent intentUpdate = new Intent(this, AddUpdatePortfolioActivity.class);
                 intentUpdate.putExtra(EXTRA_PORTFOLIO, portfolio);
                 intentUpdate.putExtra(EXTRA_PROJECT, project);
-                startActivity(intentUpdate);
+                startActivityForResult(intentUpdate, RC_UPDATE_PORTFOLIO);
                 break;
 
             case R.id.btn_payment_dpf:
@@ -240,7 +257,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                     Intent intentPayment = new Intent(this, PaymentActivity.class);
                     intentPayment.putExtra(EXTRA_PORTFOLIO, portfolio);
                     intentPayment.putExtra(EXTRA_PROJECT, project);
-                    startActivity(intentPayment);
+                    startActivityForResult(intentPayment, RC_ADD_PAYMENT);
                 } else { // Proyek sudah mulai atau selesai
                     new AlertDialog.Builder(this)
                             .setTitle("Proyek sudah dimulai")
@@ -249,6 +266,29 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                             .create().show();
                 }
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null){
+            if (requestCode == RC_UPDATE_PORTFOLIO && resultCode == RC_UPDATE_PORTFOLIO){
+                portfolio = data.getParcelableExtra(EXTRA_PORTFOLIO);
+                tvCount.setText(" / " + portfolio.getCount() + " ekor");
+                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+            } else if (requestCode == RC_ADD_PAYMENT && resultCode == RC_ADD_PAYMENT){
+                Payment payment = data.getParcelableExtra(EXTRA_PAYMENT);
+                paymentList.add(payment);
+                adapter.setData(paymentList);
+
+                tvStatusPayment.setText("Menunggu persetujuan");
+                tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+
+                ibDelete.setVisibility(View.INVISIBLE);
+                btnUpdate.setVisibility(View.INVISIBLE);
+                btnPayment.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }

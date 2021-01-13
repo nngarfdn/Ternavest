@@ -32,11 +32,19 @@ public class PaymentViewModel extends ViewModel {
         repository.update(portfolioId, paymentId, status, rejectionNote);
     }
 
+    public void delete(String portfolioId, String paymentId){
+        repository.delete(portfolioId, paymentId);
+    }
+
     public CollectionReference getReference(){
         return repository.reference;
     }
 
     public void uploadImage(Context context, String portfolioId, Uri uri, String fileName, OnImageUploadCallback callback){
         repository.uploadImage(context, portfolioId, uri, fileName, callback);
+    }
+
+    public void deleteImage(String imageUrl){
+        repository.deleteImage(imageUrl);
     }
 }

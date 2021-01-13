@@ -104,6 +104,19 @@ public class PaymentRepository {
                 });
     }
 
+    // Dipanggil ketika menghapus portofolio yang belum bayar
+    public void delete(String portfolioId, String paymentId){ // Investor
+        reference.document(portfolioId).collection("pembayaran").document(paymentId)
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) Log.d(TAG, "Document was deleted");
+                        else Log.w(TAG, "Error deleting document", task.getException());
+                    }
+                });
+    }
+
     public void uploadImage(Context context, String portfolioId, Uri uri, String fileName, OnImageUploadCallback callback){ // Investor
         byte[] image = convertUriToByteArray(context, uri);
         image = getCompressedByteArray(image, false);
@@ -127,6 +140,22 @@ public class PaymentRepository {
                 Log.w(TAG, "Error uploading image", e);
             }
         });
+    }
+
+    public void deleteImage(String imageUrl){ // Investor
+        storage.getReferenceFromUrl(imageUrl).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Image was deleted");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting image", e);
+                    }
+                });
     }
 
     private Map<String, Object> objectToHashMap(Payment payment){

@@ -98,7 +98,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_payment_dpf"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"/>
 
             <Button
                 android:id="@+id/btn_update_dpf"

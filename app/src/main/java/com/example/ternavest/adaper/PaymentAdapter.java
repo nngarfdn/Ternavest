@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.PAY_REJECT;
+import static com.example.ternavest.utils.DateUtils.getFullDate;
 
 public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHolder> {
     private final ArrayList<Payment> paymentList = new ArrayList<>();
@@ -62,7 +63,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
         }
 
         public void bind(Payment payment) {
-            tvDate.setText(payment.getDate() + ", " + payment.getTime());
+            tvDate.setText(getFullDate(payment.getDate(), false) + ", " + payment.getTime());
 
             String status = payment.getStatus();
             switch (status) {

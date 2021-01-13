@@ -29,14 +29,14 @@ public class DateUtils {
             int[] arrayDate = getArrayDate(date);
             String month = new DateFormatSymbols().getMonths()[(arrayDate[1])];
             if (isSimple) month = month.substring(0,3);
-            return arrayDate[2] + " " + month + " " + arrayDate[0];
+            return arrayDate[0] + " " + month + " " + arrayDate[2];
         } else return "-1";
     }
 
     // Konversi tanggal ke array
     public static int[] getArrayDate(String date){
         if (isValidDateFormat(date)){
-            String[] stringArrayDate = date.split("/");
+            String[] stringArrayDate = date.split("-");
             int[] integerArrayDate = new int[3];
             for (int i = 0; i < 3; i++) integerArrayDate[i] = Integer.parseInt(stringArrayDate[i]);
             // Karena bulan di mulai dari 0, jadi dikurangi 1

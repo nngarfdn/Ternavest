@@ -35,6 +35,8 @@ import static com.example.ternavest.utils.EditTextUtils.getFixText;
 import static com.example.ternavest.utils.EditTextUtils.isNull;
 
 public class AddUpdatePortfolioActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final int RC_UPDATE_PORTFOLIO = 100;
+
     private FirebaseUser firebaseUser;
     private Proyek project;
     private Portfolio portfolio;
@@ -152,7 +154,12 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                 if (isUpdate){
                     portfolioViewModel.update(portfolio.getId(), portfolio.getCount());
                     showToast(this, "Informasi berhasil diedit");
-                    onBackPressed(); // BUG -> Informasi sebelumnya belum diupdate (jumlah ekor)
+
+                    Intent intent = new Intent();
+                    intent.putExtra(EXTRA_PORTFOLIO, portfolio);
+                    setResult(RC_UPDATE_PORTFOLIO, intent);
+
+                    finish();
                 } else {
                     portfolio.setId(project.getId() + "-" + firebaseUser.getUid());
                     portfolio.setProjectId(project.getId());

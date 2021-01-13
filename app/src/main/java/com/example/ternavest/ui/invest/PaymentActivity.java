@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.callback.OnImageUploadCallback;
+import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Payment;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
@@ -26,6 +27,7 @@ import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 
+import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PAYMENT;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
@@ -37,12 +39,14 @@ import static com.example.ternavest.utils.DateUtils.getCurrentTime;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int RC_PAYMENT_IMAGE = 100;
+    public static final int RC_ADD_PAYMENT = 200;
 
     private CardView cvPortfolio;
     private TextView tvProject, tvTotalCost, tvCount, tvStatus, tvAccountName, tvAccountBank, tvAccountNumber, tvNominal;
     private ImageView imgPayment;
     private Button btnUpload, btnSend;
 
+    private LoadingDialog loadingDialog;
     private Proyek project;
     private PaymentViewModel paymentViewModel;
     private ProfileViewModel profileViewModel;
@@ -54,6 +58,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        loadingDialog = new LoadingDialog(this);
 
         tvProject = findViewById(R.id.tv_project_portfolio);
         tvTotalCost = findViewById(R.id.tv_total_cost_portfolio);
@@ -136,14 +142,22 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 payment.setStatus(PAY_PENDING);
 
                 showToast(getApplicationContext(), "Mengunggah bukti pembayaran...");
+                loadingDialog.show();
+
                 String fileName = payment.getId() + ".jpeg";
                 paymentViewModel.uploadImage(this, portfolio.getId(), uriPaymentImage, fileName, new OnImageUploadCallback() {
                     @Override
                     public void onSuccess(String imageUrl) {
                         payment.setImage(imageUrl);
                         paymentViewModel.insert(portfolio.getId(), payment);
+
+                        Intent intentResult = new Intent();
+                        intentResult.putExtra(EXTRA_PAYMENT, payment);
+                        setResult(RC_ADD_PAYMENT, intentResult);
+
+                        loadingDialog.dismiss();
                         showToast(getApplicationContext(), "Pembayaran berhasil diajukan.");
-                        onBackPressed();  // BUG -> Informasi sebelumnya belum diupdate (riwayat pembayaran)
+                        finish();
                     }
                 });
                 break;
