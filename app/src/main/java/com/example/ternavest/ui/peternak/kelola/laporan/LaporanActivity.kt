@@ -31,8 +31,18 @@ class LaporanActivity : AppCompatActivity() {
         setContentView(R.layout.activity_laporan)
 
         p = intent?.getParcelableExtra<Proyek>("proyek")
-
         id = intent?.getStringExtra("id")
+        val level : String? = intent?.getStringExtra("level")
+
+        if (level?.equals("investor")!!){
+            floatingActionButton2.visibility = View.INVISIBLE
+        } else {
+            floatingActionButton2.visibility = View.VISIBLE
+        }
+
+        imgLaporanKosong.visibility = View.INVISIBLE
+        txtProyekKosong.visibility = View.INVISIBLE
+        shimmerKelola.startShimmerAnimation()
 
 
         laporanViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(LaporanViewModel::class.java)
@@ -45,11 +55,27 @@ class LaporanActivity : AppCompatActivity() {
                     laporanViewModel.loadResultByProyekID(p.id!!)
                     laporanViewModel.getResultByProyekID().observe(this, Observer<List<Laporan>> { result ->
                         Log.d(TAG, "onCreate: $result")
-                        imgLaporanKosong.visibility = View.INVISIBLE
-                        val layoutManager = LinearLayoutManager(this)
-                        rv_laporan.setLayoutManager(layoutManager)
-                        val adapter = LaporanAdaper(result)
-                        rv_laporan.setAdapter(adapter)
+                        if (result.isNotEmpty()){
+                            imgLaporanKosong.visibility = View.INVISIBLE
+                            txtProyekKosong.visibility = View.INVISIBLE
+                            shimmerKelola.visibility = View.INVISIBLE
+                            shimmerKelola.stopShimmerAnimation()
+                            val layoutManager = LinearLayoutManager(this)
+                            rv_laporan.setLayoutManager(layoutManager)
+                            val adapter = LaporanAdaper(result)
+                            rv_laporan.setAdapter(adapter)
+                        } else {
+                            imgLaporanKosong.visibility = View.VISIBLE
+                            txtProyekKosong.visibility = View.VISIBLE
+                            shimmerKelola.visibility = View.INVISIBLE
+                            shimmerKelola.stopShimmerAnimation()
+                            val layoutManager = LinearLayoutManager(this)
+                            rv_laporan.setLayoutManager(layoutManager)
+                            val adapter = LaporanAdaper(result)
+                            rv_laporan.setAdapter(adapter)
+
+                        }
+
 
                     })
                 }

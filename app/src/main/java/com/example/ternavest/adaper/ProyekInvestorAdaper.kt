@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ternavest.R
@@ -11,14 +13,22 @@ import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.investor.home.DetailProyekInvestasiFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_proyek.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ProyekInvestorAdaper (private val list: List<Proyek>) : RecyclerView.Adapter<ProyekInvestorAdaper.ViewHolder>() {
+class ProyekInvestorAdaper (private val list: List<Proyek>) : RecyclerView.Adapter<ProyekInvestorAdaper.ViewHolder>(), Filterable {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    var countryFilterList = ArrayList<Proyek>()
+
+    init {
+        countryFilterList = list as ArrayList<Proyek>
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_proyek, parent, false))
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = countryFilterList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -39,6 +49,34 @@ class ProyekInvestorAdaper (private val list: List<Proyek>) : RecyclerView.Adapt
             val bottomSheet = DetailProyekInvestasiFragment()
             bottomSheet.setArguments(args)
             bottomSheet.show((holder.itemView.context as FragmentActivity).supportFragmentManager, bottomSheet.getTag())
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()){
+                    countryFilterList = list as ArrayList<Proyek>
+                } else {
+                    val resultList = ArrayList<Proyek>()
+                    for (row in list){
+                        if (row.namaProyek?.toLowerCase(Locale.ROOT)?.contains(charSearch.toLowerCase(Locale.ROOT))!!){
+                            resultList.add(row)
+                        }
+                    }
+                    countryFilterList = resultList
+                }
+                val filterResult = FilterResults()
+                filterResult.values = countryFilterList
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                countryFilterList = results?.values as ArrayList<Proyek>
+                notifyDataSetChanged()
+            }
+
         }
     }
 }

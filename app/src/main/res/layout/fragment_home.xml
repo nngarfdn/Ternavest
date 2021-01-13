@@ -15,10 +15,19 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="Investasi yang Tersedia" />
 
+    <SearchView
+        android:id="@+id/search_proyek"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:queryHint="Cari proyek"
+        android:layout_marginHorizontal="@dimen/dimen_32"
+        android:layout_below="@+id/toolbar1"/>
+
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerKelola"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar1"
+        android:layout_below="@+id/search_proyek"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -39,6 +48,6 @@
         android:id="@+id/rv_investor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar1"/>
+        android:layout_below="@+id/search_proyek"/>
 
 </RelativeLayout>

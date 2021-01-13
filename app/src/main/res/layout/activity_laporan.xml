@@ -7,6 +7,15 @@
     tools:context=".ui.peternak.kelola.laporan.LaporanActivity">
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@android:color/black"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Laporan Proyek" />
+
     <ImageView
         android:id="@+id/imgLaporanKosong"
         android:layout_width="wrap_content"
@@ -15,16 +24,50 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
 
+    <TextView
+        android:id="@+id/txtProyekKosong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLaporanKosong"
+        android:text="Belum ada laporan"
+        android:textColor="@color/textDescription"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_regular"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_laporan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_32"
         app:markerSize="100dp"
         app:lineWidth="2dp"
+        android:layout_below="@+id/toolbar1"
         app:startLineColor="@color/gray"
         app:endLineColor="@color/gray"
         app:linePadding="5dp"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerKelola"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar1"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/item_laporan_shimmer"/>
+            <include layout="@layout/item_laporan_shimmer"/>
+            <include layout="@layout/item_laporan_shimmer"/>
+            <include layout="@layout/item_laporan_shimmer"/>
+            <include layout="@layout/item_laporan_shimmer"/>
+            <include layout="@layout/item_laporan_shimmer"/>
+            <include layout="@layout/item_laporan_shimmer"/>
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,5 +78,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/dimen_32"
+        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         app:srcCompat="@android:drawable/ic_input_add" />
 </RelativeLayout>

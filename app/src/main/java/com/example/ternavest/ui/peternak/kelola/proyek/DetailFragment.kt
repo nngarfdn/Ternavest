@@ -74,6 +74,7 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
         }
         view.imgLaporanProyek.setOnClickListener {
             val intent = Intent(context, LaporanActivity::class.java)
+            intent.putExtra("level", "peternak")
             intent.putExtra("id", p?.id)
             startActivity(intent)
         }

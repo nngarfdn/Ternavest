@@ -134,6 +134,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                             laporanViewModel.insert(laporan)
                             Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
                             val i = Intent(this, LaporanActivity::class.java)
+                            i.putExtra("level", "peternak")
                             i.putExtra("proyek",p)
                             startActivity(i)
                         }

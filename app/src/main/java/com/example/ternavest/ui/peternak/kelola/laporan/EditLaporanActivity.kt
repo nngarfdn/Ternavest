@@ -109,6 +109,7 @@ class EditLaporanActivity : AppCompatActivity() {
                 laporanViewModel.update(laporan)
                 Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
                 val i = Intent(this, LaporanActivity::class.java)
+                i.putExtra("level", "peternak")
                 i.putExtra("id", p.idProyek)
                 startActivity(i)
             }
@@ -128,6 +129,7 @@ class EditLaporanActivity : AppCompatActivity() {
                                 val proyekId = p?.idProyek
                                 laporanViewModel.delete(p.id!!)
                                 val intent = Intent(this, LaporanActivity::class.java)
+                                intent.putExtra("level", "peternak")
                                 intent.putExtra("id", proyekId)
                                 startActivity(intent)
                             }.create().show()
