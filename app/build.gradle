@@ -76,6 +76,9 @@ dependencies {
     // Facebook shimmer effect dependency
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
+    // Zoomable
+    implementation 'com.github.RaviKoradiya:ZoomableImageView:1.1.1'
+
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

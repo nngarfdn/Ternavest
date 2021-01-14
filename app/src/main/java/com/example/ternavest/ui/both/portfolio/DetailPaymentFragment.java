@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,9 +67,9 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
         btnApprove.setOnClickListener(this);
         btnReject.setOnClickListener(this);
 
-        Intent intent = getActivity().getIntent();
-        if (intent.hasExtra(EXTRA_PAYMENT)){
-            payment = intent.getParcelableExtra(EXTRA_PAYMENT);
+        Bundle bundle = getArguments();
+        if (bundle != null && !bundle.isEmpty()){
+            payment = bundle.getParcelable(EXTRA_PAYMENT);
 
             tvDate.setText(getFullDate(payment.getDate(), false) + ", " + payment.getTime());
             loadImageFromUrl(imgPayment, payment.getImage());
@@ -111,24 +112,24 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                listener.receiveData(PAY_APPROVED, null);
+                                listener.receiveData(payment, PAY_APPROVED, null);
                                 dismiss();
                             }
-                        });
+                        }).create().show();
                 break;
 
             case R.id.btn_reject_dp:
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Setujui pembayaran")
+                        .setTitle("Tolak pembayaran")
                         .setMessage("Apakah Anda yakin ingin menolak pembayaran ini? Pastikan Anda memilih alasan penolakan dengan tepat.")
                         .setNegativeButton("Tidak", null)
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                listener.receiveData(PAY_REJECT, spRejectionNote.toString());
+                                listener.receiveData(payment, PAY_REJECT, spRejectionNote.getSelectedItem().toString());
                                 dismiss();
                             }
-                        });
+                        }).create().show();
                 break;
         }
     }
@@ -145,6 +146,6 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
     }
 
     public interface DetailPaymentListener{
-        void receiveData(String statusPayment, String rejectionNote);
+        void receiveData(Payment payment, String statusResult, String rejectionNote);
     }
 }

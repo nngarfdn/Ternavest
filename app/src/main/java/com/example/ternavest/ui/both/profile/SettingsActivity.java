@@ -114,7 +114,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     case VERIF_APPROVED:
                         tvVerification.setText("Terverifikasi");
                         cvVerification.setCardBackgroundColor(getResources().getColor(R.color.blue));
-                        btnKtp.setEnabled(false);
                         break;
                     case VERIF_PENDING:
                         tvVerification.setText("Menunggu verifikasi");
@@ -144,18 +143,22 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.btn_ktp_settings:
-                new AlertDialog.Builder(this)
-                        .setTitle("Ajukan verifikasi KTP")
-                        .setMessage("Apakah Anda ingin mengunggah KTP dan mengajukan verifikasi akun?")
-                        .setNeutralButton("Batal", null)
-                        .setNegativeButton("Tidak", null)
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(Intent.createChooser(intent, "Ambil foto ktp:"), RC_KTP_IMAGE);
-                            }
-                        }).create().show();
+                if (profile.getVerificationStatus().equals(VERIF_APPROVED)){
+                    showToast(this, "Akunmu telah diverifikasi!");
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setTitle("Ajukan verifikasi KTP")
+                            .setMessage("Apakah Anda ingin mengunggah KTP dan mengajukan verifikasi akun?")
+                            .setNeutralButton("Batal", null)
+                            .setNegativeButton("Tidak", null)
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    startActivityForResult(Intent.createChooser(intent, "Ambil foto ktp:"), RC_KTP_IMAGE);
+                                }
+                            }).create().show();
+                }
                 break;
 
             case R.id.btn_save_settings:

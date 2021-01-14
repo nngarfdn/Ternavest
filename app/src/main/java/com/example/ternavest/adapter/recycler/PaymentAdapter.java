@@ -38,6 +38,12 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
         return paymentList;
     }
 
+    public void setLastPaymentStatus(String newStatus, String rejectionNote){
+        this.paymentList.get(getItemCount()-1).setStatus(newStatus);
+        this.paymentList.get(getItemCount()-1).setRejectionNote(rejectionNote);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public PaymentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -93,7 +99,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
                     bundle.putParcelable(EXTRA_PAYMENT, payment);
                     DetailPaymentFragment bottomSheet = new DetailPaymentFragment();
                     bottomSheet.setArguments(bundle);
-                    bottomSheet.show(((DetailPortfolioActivity) context).getSupportFragmentManager(), bottomSheet.getTag());
+                    bottomSheet.show(((DetailPortfolioActivity) context)
+                            .getSupportFragmentManager(), bottomSheet.getTag());
                 }
             });
         }

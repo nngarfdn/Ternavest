@@ -64,7 +64,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     private LoadingDialog loadingDialog;
     private Profile profile;
     private Proyek project;
-    private Payment payment;
     private PaymentAdapter adapter;
     private Portfolio portfolio;
     private PaymentViewModel paymentViewModel;
@@ -149,27 +148,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
                 // Atur status pembayaran terakhir
                 if (adapter.getItemCount() > 0){
-                    tvPayment.setVisibility(View.VISIBLE);
-                    String lastStatus = adapter.getData().get(adapter.getItemCount()-1).getStatus();
-                    if (lastStatus.equals(PAY_APPROVED)){
-                        tvStatusPayment.setText("Disetujui");
-                        tvStatusPayment.setTextColor(getResources().getColor(R.color.blue));
-                        tvStatusProject.setVisibility(View.VISIBLE);
-
-                        ibDelete.setVisibility(View.INVISIBLE);
-                        btnUpdate.setVisibility(View.INVISIBLE);
-                        btnPayment.setVisibility(View.INVISIBLE);
-                    } else if (lastStatus.equals(PAY_PENDING)){
-                        tvStatusPayment.setText("Menunggu persetujuan");
-                        tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-
-                        ibDelete.setVisibility(View.INVISIBLE);
-                        btnUpdate.setVisibility(View.INVISIBLE);
-                        btnPayment.setVisibility(View.INVISIBLE);
-                    } else if (lastStatus.equals(PAY_REJECT)){
-                        tvStatusPayment.setText("Belum bayar");
-                        tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-                    }
+                    setLastPaymentStatus(adapter.getData().get(adapter.getItemCount()-1).getStatus());
                 } // Saat 0, sudah diatur di atas
             }
         });
@@ -210,6 +189,29 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         }
 
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
+    }
+
+    private void setLastPaymentStatus(String lastStatus) {
+        tvPayment.setVisibility(View.VISIBLE);
+        if (lastStatus.equals(PAY_APPROVED)){
+            tvStatusPayment.setText("Disetujui");
+            tvStatusPayment.setTextColor(getResources().getColor(R.color.blue));
+            tvStatusProject.setVisibility(View.VISIBLE);
+
+            ibDelete.setVisibility(View.INVISIBLE);
+            btnUpdate.setVisibility(View.INVISIBLE);
+            btnPayment.setVisibility(View.INVISIBLE);
+        } else if (lastStatus.equals(PAY_PENDING)){
+            tvStatusPayment.setText("Menunggu persetujuan");
+            tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+
+            ibDelete.setVisibility(View.INVISIBLE);
+            btnUpdate.setVisibility(View.INVISIBLE);
+            btnPayment.setVisibility(View.INVISIBLE);
+        } else if (lastStatus.equals(PAY_REJECT)){
+            tvStatusPayment.setText("Belum bayar");
+            tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -281,7 +283,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 tvCount.setText(" / " + portfolio.getCount() + " ekor");
                 tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
             } else if (requestCode == RC_ADD_PAYMENT && resultCode == RC_ADD_PAYMENT){
-                payment = data.getParcelableExtra(EXTRA_PAYMENT);
+                Payment payment = data.getParcelableExtra(EXTRA_PAYMENT);
                 paymentList.add(payment);
                 adapter.setData(paymentList);
 
@@ -296,18 +298,25 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     }
 
     @Override
-    public void receiveData(String statusPayment, String rejectionNote) {
-        if (statusPayment.equals(PAY_APPROVED)){
+    public void receiveData(Payment payment, String statusResult, String rejectionNote) {
+        payment.setStatus(statusResult);
+        payment.setRejectionNote(rejectionNote);
+
+        if (statusResult.equals(PAY_APPROVED)){
             portfolio.setCost((long) project.getBiayaHewan());
             portfolio.setTotalCost((portfolio.getCount() * project.getBiayaHewan()));
-            portfolio.setStatus(statusPayment);
+            portfolio.setStatus(statusResult);
 
             portfolioViewModel.update(portfolio.getId(), portfolio.getCost(), portfolio.getTotalCost(), portfolio.getStatus());
             showToast(getApplicationContext(), "Pembayaran berhasil disetujui");
-        } else if (statusPayment.equals(PAY_REJECT)){
+        } else if (statusResult.equals(PAY_REJECT)){
             showToast(getApplicationContext(), "Pembayaran berhasil ditolak");
         }
 
-        paymentViewModel.update(portfolio.getId(), payment.getId(), payment.getStatus(), rejectionNote);
+        paymentViewModel.update(portfolio.getId(), payment.getId(), payment.getStatus(), payment.getRejectionNote());
+
+        // Refresh adapter setelah ganti status
+        adapter.setLastPaymentStatus(payment.getStatus(), payment.getRejectionNote()); // Pasti yang keganti item terakhir
+        setLastPaymentStatus(payment.getStatus());
     }
 }

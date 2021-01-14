@@ -125,11 +125,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <com.ravikoradiya.zoomableimageview.ZoomableImageView
                         android:id="@+id/img_payment_payment"
                         android:layout_width="124dp"
                         android:layout_height="124dp"
-                        android:src="@color/gray"/>
+                        android:src="@drawable/upload"
+                        android:scaleType="centerCrop"/>
                 </LinearLayout>
 
                 <LinearLayout

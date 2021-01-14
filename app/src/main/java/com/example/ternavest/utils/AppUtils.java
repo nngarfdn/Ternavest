@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.ternavest.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayInputStream;
@@ -39,9 +40,8 @@ public class AppUtils {
     public static void loadImageFromUrl(ImageView imageView, String url){
         Picasso.get()
                 .load(url)
-                .fit()
-                .centerCrop()
-                //.placeholder(R.drawable.image_empty)
+                .placeholder(R.drawable.load_image)
+                .error(R.drawable.upload)
                 .into(imageView);
     }
 
