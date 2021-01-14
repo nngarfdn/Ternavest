@@ -1,4 +1,4 @@
-package com.example.ternavest.adaper.pager;
+package com.example.ternavest.adapter.pager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,10 +7,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.ternavest.ui.both.portfolio.PortfolioFragment;
 import com.example.ternavest.ui.both.profile.ProfileFragment;
-import com.example.ternavest.ui.peternak.kelola.proyek.KelolaFragment;
+import com.example.ternavest.ui.investor.home.HomeFragment;
 
-public class PeternakPagerAdapter extends FragmentPagerAdapter {
-    public PeternakPagerAdapter(@NonNull FragmentManager fm) {
+public class InvestorPagerAdapter extends FragmentPagerAdapter {
+    public InvestorPagerAdapter(@NonNull FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
@@ -20,7 +20,7 @@ public class PeternakPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new KelolaFragment();
+                fragment = new HomeFragment();
                 break;
 
             case 1:

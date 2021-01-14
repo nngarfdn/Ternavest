@@ -41,7 +41,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private static final int RC_PAYMENT_IMAGE = 100;
     public static final int RC_ADD_PAYMENT = 200;
 
-    private CardView cvPortfolio;
+    private CardView cvPortfolio, cvStatus;
     private TextView tvProject, tvTotalCost, tvCount, tvStatus, tvAccountName, tvAccountBank, tvAccountNumber, tvNominal;
     private ImageView imgPayment;
     private Button btnUpload, btnSend;
@@ -61,6 +61,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
         loadingDialog = new LoadingDialog(this);
 
+        cvStatus = findViewById(R.id.cv_status_portfolio);
         tvProject = findViewById(R.id.tv_project_portfolio);
         tvTotalCost = findViewById(R.id.tv_total_cost_portfolio);
         tvCount = findViewById(R.id.tv_count_portfolio);
@@ -96,6 +97,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
             tvCount.setText(" / " + portfolio.getCount() + " ekor");
             tvStatus.setText("Pending"); // Kalau bisa ke pembayaran, pasti statusnya pending
+            cvStatus.setCardBackgroundColor(getResources().getColor(R.color.orange));
 
             if (intent.hasExtra(EXTRA_PROJECT)){
                 project = intent.getParcelableExtra(EXTRA_PROJECT);

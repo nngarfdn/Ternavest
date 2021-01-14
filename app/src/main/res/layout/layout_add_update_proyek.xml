@@ -6,93 +6,91 @@
 
     <EditText
         android:id="@+id/txtNamaProyek"
+        style="@style/EditText"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Nama Proyek"
-        android:background="@color/gray_light"
         android:layout_below="@+id/toolbartambahpproyek"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtDeskripsiProyek"
+        style="@style/EditText.MultiLine"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Deskripsi Proyek"
-        android:inputType="textMultiLine"
-        android:scrollbars="vertical"
-        android:background="@color/gray_light"
         android:layout_below="@+id/txtNamaProyek"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtJenisHewan"
+        style="@style/EditText"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Jenis Hewan"
-        android:background="@color/gray_light"
         android:layout_below="@+id/txtDeskripsiProyek"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtRoi"
+        style="@style/EditText"
         android:layout_below="@+id/txtJenisHewan"
         android:layout_width="match_parent"
         android:inputType="number"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="ROI berapa persen ?"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtWaktuMulai"
+        style="@style/EditText"
         android:layout_below="@+id/txtRoi"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Tanggal mulai proyek"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtWaktuSelesai"
+        style="@style/EditText"
         android:layout_below="@+id/txtWaktuMulai"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Tanggal selesai proyek"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtBiayaPengelolaan"
+        style="@style/EditText"
         android:layout_below="@+id/txtWaktuSelesai"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Biaya perhewan selama periode"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtAlamatLengkap"
+        style="@style/EditText"
         android:layout_below="@+id/wilayah"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Alamat lengkap proyek"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <ImageView
@@ -130,7 +128,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:background="@color/gray_light"
         android:layout_height="match_parent"
         tools:context=".testing.WilayahTest"
         android:padding="16dp"

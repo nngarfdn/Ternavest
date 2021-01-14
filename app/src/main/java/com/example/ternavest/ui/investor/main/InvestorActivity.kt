@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.example.ternavest.R
-import com.example.ternavest.adaper.pager.InvestorPagerAdapter
+import com.example.ternavest.adapter.pager.InvestorPagerAdapter
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import kotlinx.android.synthetic.main.activity_peternak.*
 

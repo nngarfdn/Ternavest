@@ -5,60 +5,58 @@
 
     <EditText
         android:id="@+id/txtJudulLaporan"
+        style="@style/EditText"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Judul Laporan"
-        android:background="@color/gray_light"
         android:layout_below="@+id/toolbartambahLaporan"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtDeskripsiLaporan"
+        style="@style/EditText.MultiLine"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Deskripsi Laporan"
-        android:inputType="textMultiLine"
-        android:scrollbars="vertical"
-        android:background="@color/gray_light"
         android:layout_below="@+id/txtJudulLaporan"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtTanggalLaporan"
+        style="@style/EditText"
         android:layout_below="@+id/txtDeskripsiLaporan"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Tanggal"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtJenisHewanDetail"
+        style="@style/EditText"
         android:layout_below="@+id/txtTanggalLaporan"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Pemasukan"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp"
         android:inputType="number" />
 
     <EditText
         android:id="@+id/txtRoiDetail"
+        style="@style/EditText"
         android:layout_below="@+id/txtJenisHewanDetail"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Pengeluaran"
-        android:background="@color/gray_light"
         android:paddingHorizontal="8dp"
         android:inputType="number" />
 

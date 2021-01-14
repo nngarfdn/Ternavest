@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adaper.recycler.ProyekAdaper;
+import com.example.ternavest.adapter.recycler.ProyekAdaper;
 import com.example.ternavest.viewmodel.ProyekViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

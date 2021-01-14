@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         app:cardBackgroundColor="@color/orange"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_title_dp"
         app:layout_constraintStart_toEndOf="@+id/tv_title_dp"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
-            android:text="Pending"
+            android:text="@string/loading"
             android:textColor="@color/white" />
     </androidx.cardview.widget.CardView>
 
@@ -68,6 +68,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_approve_dp"
+        style="@style/Button.Primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -78,6 +79,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_reject_dp"
+        style="@style/Button.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -90,6 +92,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_edit_text"
         app:layout_constraintBottom_toBottomOf="@+id/btn_reject_dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_reject_dp"
         app:layout_constraintStart_toStartOf="parent"

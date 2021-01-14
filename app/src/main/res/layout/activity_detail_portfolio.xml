@@ -22,7 +22,6 @@
 
         <TextView
             android:id="@+id/tv_title_dpf"
-            style="@style/TextView.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading"
@@ -52,7 +51,6 @@
 
             <TextView
                 android:id="@+id/tv_level_dpf"
-                style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Peternak"/>
@@ -60,7 +58,6 @@
             <include layout="@layout/item_profile"/>
 
             <TextView
-                style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Status"/>
@@ -72,7 +69,6 @@
 
                 <TextView
                     android:id="@+id/tv_status_payment_dpf"
-                    style="@style/TextView.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/loading"
@@ -80,7 +76,6 @@
 
                 <TextView
                     android:id="@+id/tv_status_project_dpf"
-                    style="@style/TextView.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/loading"
@@ -90,7 +85,6 @@
 
             <TextView
                 android:id="@+id/tv_payment_dpf"
-                style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Riwayat pembayaran"/>
@@ -101,14 +95,16 @@
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_update_dpf"
+                style="@style/Button.Secondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Edit Informasi"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_payment_dpf"
+                style="@style/Button.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lanjut Pembayaran"/>

@@ -1,4 +1,4 @@
-package com.example.ternavest.adaper.recycler;
+package com.example.ternavest.adapter.recycler;
 
 import android.content.Context;
 import android.os.Bundle;

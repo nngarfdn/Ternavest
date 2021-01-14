@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/green"
-                app:cardCornerRadius="8dp"
+                app:cardCornerRadius="4dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,34 +57,34 @@
 
             <TextView
                 android:id="@+id/tv_name_profile"
-                style="@style/TextView.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
                 android:textSize="@dimen/font_md"
+                android:textStyle="bold"
                 app:drawableTint="@color/green"
                 android:drawablePadding="8dp"/>
 
             <TextView
-                android:id="@+id/tv_email_profile"
-                style="@style/TextView.Regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/loading"
-                android:textSize="@dimen/font_nm"
-                app:drawableStartCompat="@drawable/ic_email"
-                android:drawablePadding="8dp"/>
-
-            <TextView
                 android:id="@+id/tv_address_profile"
-                style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
                 android:textSize="@dimen/font_nm"
                 app:drawableStartCompat="@drawable/ic_location_on"
                 android:drawablePadding="8dp"
-                android:maxLines="2"/>
+                android:maxLines="2"
+                app:drawableTint="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_email_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textSize="@dimen/font_nm"
+                app:drawableStartCompat="@drawable/ic_email"
+                android:drawablePadding="8dp"
+                app:drawableTint="@color/black"/>
         </LinearLayout>
     </LinearLayout>
 

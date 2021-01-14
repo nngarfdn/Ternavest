@@ -1,4 +1,4 @@
-package com.example.ternavest.adaper.recycler
+package com.example.ternavest.adapter.recycler
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
-import com.example.ternavest.ui.investor.home.DetailLaporanHomeDialogFragment
+import com.example.ternavest.ui.peternak.kelola.laporan.DetailLaporanDialogFragment
 import kotlinx.android.synthetic.main.item_laporan.view.*
 
-class LaporanHomeAdaper (private val list: List<Laporan>) : RecyclerView.Adapter<LaporanHomeAdaper.ViewHolder>() {
+class LaporanAdaper (private val list: List<Laporan>) : RecyclerView.Adapter<LaporanAdaper.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
@@ -28,7 +28,7 @@ class LaporanHomeAdaper (private val list: List<Laporan>) : RecyclerView.Adapter
         holder.itemView.setOnClickListener {
             val args = Bundle()
             args.putParcelable("laporan",list.get(position))
-            val bottomSheet = DetailLaporanHomeDialogFragment()
+            val bottomSheet = DetailLaporanDialogFragment()
             bottomSheet.setArguments(args)
             bottomSheet.show((holder.itemView.context as FragmentActivity).supportFragmentManager, bottomSheet.getTag())
         }

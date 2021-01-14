@@ -42,17 +42,5 @@
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="32dp"
         android:layout_below="@id/btn_investor"
-        android:fontFamily="@font/poppins_semibold"/>
-
-    <EditText
-        android:background="@drawable/bg_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_google_login"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="32dp"
-        android:hint="test"
-        android:padding="12dp"
-        android:fontFamily="@font/poppins_regular"
-        android:textSize="@dimen/font_nm"/>
+        android:textStyle="bold"/>
 </RelativeLayout>

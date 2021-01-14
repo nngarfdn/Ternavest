@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adaper.recycler.ProyekInvestorAdaper;
+import com.example.ternavest.adapter.recycler.ProyekInvestorAdaper;
 import com.example.ternavest.viewmodel.ProyekViewModel;
 import com.example.ternavest.viewmodel.SearchViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;

@@ -17,16 +17,15 @@
 
         <TextView
             android:id="@+id/tv_date_payment"
-            style="@style/TextView.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading"
+            android:textStyle="bold"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="8dp"/>
 
         <TextView
             android:id="@+id/tv_status_payment"
-            style="@style/TextView.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading"

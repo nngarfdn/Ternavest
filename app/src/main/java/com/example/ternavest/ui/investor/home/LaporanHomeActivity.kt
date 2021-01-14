@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.R
-import com.example.ternavest.adaper.recycler.LaporanHomeAdaper
+import com.example.ternavest.adapter.recycler.LaporanHomeAdaper
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.TambahLaporanActivity

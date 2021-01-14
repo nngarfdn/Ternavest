@@ -24,7 +24,7 @@
         android:layout_marginEnd="8dp"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/imgProfile"
-        android:fontFamily="@font/poppins_medium"
+        android:textStyle="bold"
         android:text="Ayam Pullet Bulan"
         android:textSize="22sp" />
 
@@ -51,7 +51,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iconPemasukan"
-                android:fontFamily="@font/poppins_regular"
                 android:text="Pemasukan"
                 android:layout_marginStart="4dp"
                 android:textSize="14sp" />
@@ -80,7 +79,6 @@
                 android:id="@+id/txtTitlePengeluaran"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
                 android:text="Pengeluaran"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="4dp"
@@ -93,7 +91,7 @@
                 android:layout_below="@+id/txtTitlePengeluaran"
                 android:layout_alignStart="@+id/txtTitlePengeluaran"
                 android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"
                 android:text="Rp 50000"
                 android:layout_alignParentEnd="true"
                 android:textSize="16dp" />
@@ -126,7 +124,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/ic_time"
-                    android:fontFamily="@font/poppins_regular"
                     android:text="15-01-2021"
                     android:layout_marginStart="8dp"
                     android:layout_centerVertical="true"
@@ -137,7 +134,6 @@
                 android:id="@+id/txtTitleDeskripsi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
                 android:textSize="14sp"
                 android:layout_below="@id/rel_tanggal"
                 android:layout_marginTop="16dp"
@@ -147,7 +143,7 @@
                 android:id="@+id/txtDeskripsi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_below="@id/txtTitleDeskripsi"
                 android:layout_marginTop="16dp"

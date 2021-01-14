@@ -22,7 +22,6 @@
 
         <TextView
             android:id="@+id/tv_title_aup"
-            style="@style/TextView.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading"
@@ -64,17 +63,16 @@
 
                     <TextView
                         android:id="@+id/tv_title_cost_aup"
-                        style="@style/TextView.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Biaya per ekor ternak"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/img_icon_cost_aup"
                         app:layout_constraintTop_toTopOf="@+id/img_icon_cost_aup" />
 
                     <TextView
                         android:id="@+id/tv_cost_aup"
-                        style="@style/TextView.Regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -86,13 +84,13 @@
 
             <TextView
                 android:id="@+id/tv_helper_aup"
-                style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp 50.000 adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan."/>
 
             <EditText
                 android:id="@+id/edt_count_aup"
+                style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Jumlah ekor ternak"
@@ -101,8 +99,9 @@
 
             <include layout="@layout/item_total_cost"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_payment_aup"
+                style="@style/Button.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lanjut Pembayaran"/>

@@ -43,6 +43,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_photo_settings"
+                    style="@style/Button.Secondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Pilih Gambar"
@@ -57,31 +58,39 @@
 
             <EditText
                 android:id="@+id/edt_name_settings"
+                style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nama lengkap"
-                android:layout_marginVertical="4dp"/>
+                android:layout_marginVertical="4dp"
+                android:inputType="textPersonName|textCapWords"/>
 
             <EditText
                 android:id="@+id/edt_address_settings"
+                style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Alamat"
-                android:layout_marginVertical="4dp"/>
+                android:layout_marginVertical="4dp"
+                android:inputType="textCapWords"/>
 
             <EditText
                 android:id="@+id/edt_phone_settings"
+                style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nomor telepon"
-                android:layout_marginVertical="4dp"/>
+                android:layout_marginVertical="4dp"
+                android:inputType="phone"/>
 
             <EditText
                 android:id="@+id/edt_whatsapp_settings"
+                style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nomor WhatsApp"
-                android:layout_marginVertical="4dp"/>
+                android:layout_marginVertical="4dp"
+                android:inputType="phone"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -102,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     app:cardBackgroundColor="@color/orange"
-                    app:cardCornerRadius="8dp"
+                    app:cardCornerRadius="4dp"
                     app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView2"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -129,6 +138,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_ktp_settings"
+                    style="@style/Button.Secondary"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -154,28 +164,35 @@
 
                 <EditText
                     android:id="@+id/edt_account_bank_settings"
+                    style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nama bank"
-                    android:layout_marginVertical="4dp"/>
+                    android:layout_marginVertical="4dp"
+                    android:inputType="textCapWords"/>
 
                 <EditText
                     android:id="@+id/edt_account_number_settings"
+                    style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nomor rekening"
-                    android:layout_marginVertical="4dp"/>
+                    android:layout_marginVertical="4dp"
+                    android:inputType="text"/>
 
                 <EditText
                     android:id="@+id/edt_account_name_settings"
+                    style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nama akun rekening"
-                    android:layout_marginVertical="4dp"/>
+                    android:layout_marginVertical="4dp"
+                    android:inputType="textPersonName|textCapWords"/>
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save_settings"
+                style="@style/Button.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Simpan"/>

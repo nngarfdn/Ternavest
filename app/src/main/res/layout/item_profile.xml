@@ -29,16 +29,15 @@
 
             <TextView
                 android:id="@+id/tv_name_profile"
-                style="@style/TextView.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
+                android:textStyle="bold"
                 android:layout_marginHorizontal="8dp"
                 android:layout_toEndOf="@+id/civ_photo_profile"/>
 
             <TextView
                 android:id="@+id/tv_action_profile"
-                style="@style/TextView.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lihat profil"

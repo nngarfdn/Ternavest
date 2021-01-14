@@ -9,11 +9,11 @@
     tools:context=".ui.both.profile.ProfileFragment">
 
     <TextView
-        style="@style/TextView.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profil"
         android:textSize="@dimen/font_nm"
+        android:textStyle="bold"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"/>
 

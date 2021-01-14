@@ -1,4 +1,4 @@
-package com.example.ternavest.adaper.recycler;
+package com.example.ternavest.adapter.recycler;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ternavest.R;
@@ -70,6 +71,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         private final Context context = itemView.getContext();
         private Proyek project;
         private final TextView tvProject, tvTotalCost, tvCount, tvStatus;
+        private final CardView cvStatus;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -77,6 +79,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             tvTotalCost = view.findViewById(R.id.tv_total_cost_portfolio);
             tvCount = view.findViewById(R.id.tv_count_portfolio);
             tvStatus = view.findViewById(R.id.tv_status_portfolio);
+            cvStatus = view.findViewById(R.id.cv_status_portfolio);
         }
 
         public void bind(Portfolio portfolio) {
@@ -96,14 +99,17 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                             case PAY_APPROVED:
                                 status = "Disetujui";
                                 totalCost = portfolio.getTotalCost();
+                                cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.blue));
                                 break;
                             case PAY_REJECT:
                                 status = "Ditolak";
                                 totalCost = project.getBiayaHewan()*portfolio.getCount();
+                                cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.red));
                                 break;
                             case PAY_PENDING:
                                 status = "Pending";
                                 totalCost = project.getBiayaHewan()*portfolio.getCount();
+                                cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.orange));
                                 break;
                         }
                         tvStatus.setText(status);
