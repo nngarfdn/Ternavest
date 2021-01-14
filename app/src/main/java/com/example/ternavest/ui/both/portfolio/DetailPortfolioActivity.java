@@ -19,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adaper.PaymentAdapter;
+import com.example.ternavest.adaper.recycler.PaymentAdapter;
 import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Payment;
 import com.example.ternavest.model.Portfolio;

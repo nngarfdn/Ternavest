@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adaper.ProyekAdaper;
+import com.example.ternavest.adaper.recycler.ProyekAdaper;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;

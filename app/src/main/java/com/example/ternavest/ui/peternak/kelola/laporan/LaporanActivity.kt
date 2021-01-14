@@ -8,10 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.ternavest.MainActivity
 import com.example.ternavest.R
-import com.example.ternavest.adaper.LaporanAdaper
-import com.example.ternavest.adaper.ProyekAdaper
+import com.example.ternavest.adaper.recycler.LaporanAdaper
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.viewmodel.LaporanViewModel

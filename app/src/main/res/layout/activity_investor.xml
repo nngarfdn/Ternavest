@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.investor.InvestorActivity">
+    tools:context=".ui.investor.main.InvestorActivity">
 
-    <FrameLayout
-        android:id="@+id/fl_container"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_above="@+id/bn_main"/>
-
+        android:layout_above="@id/bn_main"
+        android:overScrollMode="never"/>
 
     <com.iammert.library.readablebottombar.ReadableBottomBar
         android:id="@+id/bn_main"
@@ -21,5 +20,4 @@
         app:rbb_tabs="@xml/tabs_investor"
         android:layout_alignParentBottom="true"
         app:rbb_activeItemType="icon"/>
-
 </RelativeLayout>

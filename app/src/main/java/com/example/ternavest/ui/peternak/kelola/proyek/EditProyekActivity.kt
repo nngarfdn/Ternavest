@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
 import com.example.ternavest.model.Proyek
-import com.example.ternavest.ui.peternak.PeternakActivity
+import com.example.ternavest.ui.peternak.main.PeternakActivity
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.gms.tasks.Task

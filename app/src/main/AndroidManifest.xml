@@ -21,11 +21,11 @@
         <activity android:name=".ui.both.profile.SettingsActivity" />
         <activity android:name=".ui.investor.home.LaporanHomeActivity"/>
         <activity android:name=".ui.both.profile.DetailProfileActivity" />
-        <activity android:name=".ui.peternak.PeternakActivity" />
-        <activity android:name=".ui.investor.InvestorActivity" />
+        <activity android:name=".ui.peternak.main.PeternakActivity" />
+        <activity android:name=".ui.investor.main.InvestorActivity" />
         <activity android:name=".testing.WilayahTest" />
         <activity android:name=".ui.peternak.kelola.proyek.TambahProyekActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".testing.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

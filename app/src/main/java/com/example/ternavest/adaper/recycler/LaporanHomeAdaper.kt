@@ -1,4 +1,4 @@
-package com.example.ternavest.adaper
+package com.example.ternavest.adaper.recycler
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
-import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.investor.home.DetailLaporanHomeDialogFragment
-import com.example.ternavest.ui.peternak.kelola.laporan.DetailLaporanDialogFragment
-import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_laporan.view.*
-import kotlinx.android.synthetic.main.item_proyek.view.*
 
 class LaporanHomeAdaper (private val list: List<Laporan>) : RecyclerView.Adapter<LaporanHomeAdaper.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

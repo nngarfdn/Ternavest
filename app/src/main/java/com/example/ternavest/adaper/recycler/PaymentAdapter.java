@@ -1,4 +1,4 @@
-package com.example.ternavest.adaper;
+package com.example.ternavest.adaper.recycler;
 
 import android.content.Context;
 import android.os.Bundle;

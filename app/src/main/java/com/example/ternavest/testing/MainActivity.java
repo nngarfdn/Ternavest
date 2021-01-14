@@ -1,4 +1,4 @@
-package com.example.ternavest;
+package com.example.ternavest.testing;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,11 +12,11 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ternavest.R;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.preference.UserPreference;
-import com.example.ternavest.testing.WilayahTest;
-import com.example.ternavest.ui.investor.InvestorActivity;
-import com.example.ternavest.ui.peternak.PeternakActivity;
+import com.example.ternavest.ui.investor.main.InvestorActivity;
+import com.example.ternavest.ui.peternak.main.PeternakActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

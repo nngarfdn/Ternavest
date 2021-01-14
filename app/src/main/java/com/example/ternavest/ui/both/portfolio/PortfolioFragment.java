@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adaper.PortfolioAdapter;
+import com.example.ternavest.adaper.recycler.PortfolioAdapter;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.viewmodel.PortfolioViewModel;

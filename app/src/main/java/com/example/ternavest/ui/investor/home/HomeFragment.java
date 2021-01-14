@@ -5,9 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -16,17 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import com.example.ternavest.MainActivity;
 import com.example.ternavest.R;
-import com.example.ternavest.adaper.ProyekInvestorAdaper;
-import com.example.ternavest.model.Proyek;
+import com.example.ternavest.adaper.recycler.ProyekInvestorAdaper;
 import com.example.ternavest.viewmodel.ProyekViewModel;
 import com.example.ternavest.viewmodel.SearchViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
-
-import java.util.List;
 
 public class HomeFragment extends Fragment {
 

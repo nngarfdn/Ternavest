@@ -1,4 +1,4 @@
-package com.example.ternavest.adaper
+package com.example.ternavest.adaper.recycler
 
 import android.os.Bundle
 import android.view.LayoutInflater
