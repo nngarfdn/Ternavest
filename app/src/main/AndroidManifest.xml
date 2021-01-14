@@ -12,7 +12,6 @@
         android:theme="@style/Theme.Ternavest"
         tools:ignore="AllowBackup">
         <activity android:name=".ui.investor.portfolio.PaymentActivity"/>
-        <activity android:name=".testing.portfolio.DashboardInvestorActivity" />
         <activity android:name=".ui.both.portfolio.AddUpdatePortfolioActivity" />
         <activity android:name=".ui.both.portfolio.DetailPortfolioActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.EditLaporanActivity" />

@@ -9,17 +9,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.testing.WilayahTest;
-import com.example.ternavest.testing.portfolio.DashboardInvestorActivity;
-import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity;
-import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
-import com.example.ternavest.ui.both.profile.DetailProfileActivity;
 import com.example.ternavest.ui.investor.InvestorActivity;
 import com.example.ternavest.ui.peternak.PeternakActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
@@ -34,8 +29,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import static com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
@@ -90,24 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnGoogle = findViewById(R.id.btn_google_login);
         btnGoogle.setOnClickListener(v -> loginWithGoogle());
-
-        Button btnCoba1 = findViewById(R.id.btn_coba1);
-        btnCoba1.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DetailPortfolioActivity.class)));
-        Button btnCoba2 = findViewById(R.id.btn_coba2);
-        btnCoba2.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddUpdatePortfolioActivity.class)));
-        Button btnCoba3 = findViewById(R.id.btn_coba3);
-        btnCoba3.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DashboardInvestorActivity.class)));
         Button btnInvestor = findViewById(R.id.btn_investor);
         btnInvestor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, InvestorActivity.class)));
-        Button btnCoba4 = findViewById(R.id.btn_coba4);
-        btnCoba4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, DetailProfileActivity.class);
-                intent.putExtra(EXTRA_PROFILE, profile);
-                startActivity(intent);
-            }
-        });
     }
 
     private void loginWithGoogle() {
