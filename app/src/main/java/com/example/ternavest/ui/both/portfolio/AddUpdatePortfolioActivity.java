@@ -1,6 +1,7 @@
 package com.example.ternavest.ui.both.portfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,6 +24,7 @@ import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
@@ -42,7 +44,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
     private PortfolioViewModel portfolioViewModel;
 
     private CardView cvProject;
-    private TextView tvTitle, tvProjectName, tvProjectLivestock, tvProjectROI, tvCost, tvTotalCost, tvHelper;
+    private TextView tvProjectName, tvProjectLivestock, tvProjectROI, tvCost, tvTotalCost, tvHelper;
     private ImageView imgProject;
     private Button btnPayment;
     private EditText edtCount;
@@ -54,10 +56,16 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update_portfolio);
 
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar); //No Problerm
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         imgProject = findViewById(R.id.imgProyek);
-        tvTitle = findViewById(R.id.tv_title_aup);
+//        tvTitle = findViewById(R.id.tv_title_aup);
         tvProjectName = findViewById(R.id.txtNamaProyek);
         tvProjectLivestock = findViewById(R.id.txtJenisHewan);
         tvProjectROI = findViewById(R.id.txtROI);
@@ -75,7 +83,13 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
         if (intent.hasExtra(EXTRA_PROJECT)){
             project = intent.getParcelableExtra(EXTRA_PROJECT);
 
-            loadImageFromUrl(imgProject, project.getPhotoProyek());
+            Picasso.get()
+                    .load(project.getPhotoProyek())
+                .resize(100, 100) // resizes the image to these dimensions (in pixel)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_baseline_autorenew_24)
+                    .into(imgProject);
+
             tvProjectName.setText(project.getNamaProyek());
             tvProjectLivestock.setText(project.getJenisHewan());
             tvProjectROI.setText(project.getRoi() + "%");
@@ -86,7 +100,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             if (isUpdate){
                 portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
-                tvTitle.setText("Edit Informasi Investasi");
+//                tvTitle.setText("Edit Informasi Investasi");
                 tvTotalCost.setText(getRupiahFormat(
                         portfolio.getCount() * project.getBiayaHewan()
                 ));
@@ -95,7 +109,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             } else {
                 portfolio = new Portfolio();
 
-                tvTitle.setText("Mulai Investasi");
+//                tvTitle.setText("Mulai Investasi");
                 tvTotalCost.setText(getRupiahFormat(project.getBiayaHewan()));
                 edtCount.setText("1");
                 btnPayment.setText("Lanjut Pembayaran");
@@ -177,5 +191,11 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

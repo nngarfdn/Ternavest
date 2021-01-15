@@ -79,6 +79,7 @@ dependencies {
     // Zoomable
     implementation 'com.github.RaviKoradiya:ZoomableImageView:1.1.1'
 
+
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

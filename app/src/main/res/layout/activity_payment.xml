@@ -7,28 +7,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.both.portfolio.AddUpdatePortfolioActivity"
     android:orientation="vertical"
-    android:padding="16dp">
+    >
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/ib_back_payment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_backspace"
-            android:background="@android:color/transparent"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:id="@+id/tv_title_payment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pembayaran"
-            android:layout_toEndOf="@+id/ib_back_payment"
-            android:layout_marginStart="16dp"/>
-    </RelativeLayout>
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@android:color/black"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Mulai Investasi" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,6 +26,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16"
             android:orientation="vertical">
 
             <include layout="@layout/item_portfolio"/>
@@ -154,6 +143,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_send_payment"
                 style="@style/Button.Primary"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Kirim Bukti"/>

@@ -86,7 +86,7 @@
                 android:id="@+id/tv_helper_aup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/loading"/>
+                android:text="Rp 50.000 adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan."/>
 
             <EditText
                 android:id="@+id/edt_count_aup"

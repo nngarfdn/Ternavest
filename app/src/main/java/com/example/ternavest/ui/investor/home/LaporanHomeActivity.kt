@@ -29,6 +29,10 @@ class LaporanHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_laporan)
 
+        setSupportActionBar(toolbar1)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         p = intent?.getParcelableExtra<Proyek>("proyek")
         id = intent?.getStringExtra("id")
         val level : String? = intent?.getStringExtra("level")
@@ -107,6 +111,11 @@ class LaporanHomeActivity : AppCompatActivity() {
     override fun onResume() {
         p?.id?.let { laporanViewModel.loadResultByProyekID(it) }
         super.onResume()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }

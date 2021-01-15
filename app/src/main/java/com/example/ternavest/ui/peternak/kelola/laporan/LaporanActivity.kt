@@ -15,9 +15,9 @@ import com.example.ternavest.model.Proyek
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import kotlinx.android.synthetic.main.activity_laporan.*
+import kotlinx.android.synthetic.main.activity_tambah_laporan.*
 
 class LaporanActivity : AppCompatActivity() {
-
 
     private val TAG = "LaporanActivity"
     private lateinit var laporanViewModel: LaporanViewModel
@@ -27,6 +27,10 @@ class LaporanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_laporan)
+
+        setSupportActionBar(toolbar1)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         p = intent?.getParcelableExtra<Proyek>("proyek")
         id = intent?.getStringExtra("id")
@@ -106,6 +110,11 @@ class LaporanActivity : AppCompatActivity() {
     override fun onResume() {
         p?.id?.let { laporanViewModel.loadResultByProyekID(it) }
         super.onResume()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }

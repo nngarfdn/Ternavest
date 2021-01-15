@@ -2,6 +2,7 @@ package com.example.ternavest.ui.investor.portfolio;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -64,6 +65,12 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_payment);
 
         loadingDialog = new LoadingDialog(this);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar1);
+        toolbar.setTitle("Pembayaran");
+        setSupportActionBar(toolbar); //No Problerm
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cvStatus = findViewById(R.id.cv_status_portfolio);
         tvProject = findViewById(R.id.tv_project_portfolio);
@@ -187,5 +194,11 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
