@@ -32,8 +32,12 @@ public class PortfolioViewModel extends ViewModel {
         repository.update(portfolioId, count);
     }
 
-    public void update(String portfolioId, long cost, long totalCost, String status){
-        repository.update(portfolioId, cost, totalCost, status);
+    public void update(String portfolioId, long cost, long totalCost){
+        repository.update(portfolioId, cost, totalCost);
+    }
+
+    public void update(String portfolioId, String status){
+        repository.update(portfolioId, status);
     }
 
     public void delete(Portfolio portfolio){

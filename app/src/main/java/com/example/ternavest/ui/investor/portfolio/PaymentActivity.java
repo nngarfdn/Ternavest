@@ -26,6 +26,7 @@ import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
+import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PAYMENT;
@@ -52,6 +53,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private Proyek project;
     private PaymentViewModel paymentViewModel;
     private ProfileViewModel profileViewModel;
+    private PortfolioViewModel portfolioViewModel;
     private Portfolio portfolio;
 
     private Uri uriPaymentImage;
@@ -115,6 +117,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         paymentViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PaymentViewModel.class);
+        portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -157,6 +160,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                     public void onSuccess(String imageUrl) {
                         payment.setImage(imageUrl);
                         paymentViewModel.insert(portfolio.getId(), payment);
+                        portfolioViewModel.update(portfolio.getId(), project.getBiayaHewan(), portfolio.getCount() * project.getBiayaHewan());
 
                         Intent intentResult = new Intent();
                         intentResult.putExtra(EXTRA_PAYMENT, payment);

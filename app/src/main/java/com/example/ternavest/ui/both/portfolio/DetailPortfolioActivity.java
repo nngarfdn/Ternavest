@@ -120,11 +120,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         }
         cvProfile.setEnabled(false);
 
-        // Default riwayat pembayaran -> size 0
-        tvStatusPayment.setText("Belum bayar");
-        tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-        tvPayment.setVisibility(View.INVISIBLE);
-
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(this, new Observer<Profile>() {
             @Override
@@ -150,7 +145,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 // Atur status pembayaran terakhir
                 if (adapter.getItemCount() > 0){
                     setLastPaymentStatus(adapter.getData().get(adapter.getItemCount()-1).getStatus());
-                } // Saat 0, sudah diatur di atas
+                } // Saat 0, sudah diatur di intent hasExtra
             }
         });
 
@@ -166,7 +161,13 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 // Atur informasi proyek dan portfolio
                 tvTitle.setText(project.getNamaProyek());
                 tvProject.setText(project.getNamaProyek());
-                tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
+
+                // Default riwayat pembayaran -> size 0
+                tvStatusPayment.setText("Belum bayar");
+                tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+                tvPayment.setVisibility(View.INVISIBLE);
+                if (portfolio.getTotalCost() == 0) // Tidak ada pengajuan pembayaran yang pending, biaya hewan belum disimpan di portofolio
+                    tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
                 // Atur status proyek
                 if (differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0){
@@ -199,6 +200,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
             tvStatusPayment.setTextColor(getResources().getColor(R.color.blue));
             tvStatusProject.setVisibility(View.VISIBLE);
 
+            tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
+
             ibDelete.setVisibility(View.INVISIBLE);
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
@@ -206,12 +209,16 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
             tvStatusPayment.setText("Menunggu persetujuan");
             tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
 
+            tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
+
             ibDelete.setVisibility(View.INVISIBLE);
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
         } else if (lastStatus.equals(PAY_REJECT)){
             tvStatusPayment.setText("Belum bayar");
             tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+
+            tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
         }
     }
 
@@ -290,6 +297,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
                 tvStatusPayment.setText("Menunggu persetujuan");
                 tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+                tvPayment.setVisibility(View.VISIBLE);
 
                 ibDelete.setVisibility(View.INVISIBLE);
                 btnUpdate.setVisibility(View.INVISIBLE);
@@ -304,13 +312,11 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         payment.setRejectionNote(rejectionNote);
 
         if (statusResult.equals(PAY_APPROVED)){
-            portfolio.setCost((long) project.getBiayaHewan());
-            portfolio.setTotalCost((portfolio.getCount() * project.getBiayaHewan()));
             portfolio.setStatus(statusResult);
-
-            portfolioViewModel.update(portfolio.getId(), portfolio.getCost(), portfolio.getTotalCost(), portfolio.getStatus());
+            portfolioViewModel.update(portfolio.getId(), portfolio.getStatus());
             showToast(getApplicationContext(), "Pembayaran berhasil disetujui");
         } else if (statusResult.equals(PAY_REJECT)){
+            portfolioViewModel.update(portfolio.getId(), 0, 0);
             showToast(getApplicationContext(), "Pembayaran berhasil ditolak");
         }
 

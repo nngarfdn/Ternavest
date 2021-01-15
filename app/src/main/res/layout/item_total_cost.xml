@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Total biaya yang dibayar"
-            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_icon_total_cost_payment"
             app:layout_constraintTop_toTopOf="@+id/img_icon_total_cost_payment" />
 

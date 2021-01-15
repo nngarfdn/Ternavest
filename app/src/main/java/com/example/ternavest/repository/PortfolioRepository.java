@@ -111,11 +111,24 @@ public class PortfolioRepository {
                 });
     }
 
-    // Update ketika pembayaran disetujui -> ganti status dan simpan biaya karena ada kemungkinan biaya per ekor diedit
-    // Jika pembayaran terakhir ditolak, status tetap pending (tidak melakukan update)
-    public void update(String portfolioId, long cost, long totalCost, String status){  // Investor
+    // Update ketika mengajukan pembayaran (insert)/ditolak (update status tolak) -> simpan biaya saat pengajuan karena ada kemungkinan biaya per ekor diedit
+    // Status tetap pending
+    public void update(String portfolioId, long cost, long totalCost){  // Investor
         reference.document(portfolioId)
-                .update("biaya", cost, "totalBiaya", totalCost, "status", status)
+                .update("biaya", cost, "totalBiaya", totalCost)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) Log.d(TAG, "Document was updated");
+                        else Log.w(TAG, "Error updating document", task.getException());
+                    }
+                });
+    }
+
+    // Update ketika pembayaran disetujui -> ganti status
+    public void update(String portfolioId, String status){  // Investor
+        reference.document(portfolioId)
+                .update("status", status)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

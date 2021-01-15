@@ -74,7 +74,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/loading"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/img_account_name_payment"
                         app:layout_constraintStart_toEndOf="@+id/img_account_name_payment"
                         app:layout_constraintTop_toTopOf="@+id/img_account_name_payment" />
@@ -96,7 +95,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/loading"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/img_account_bank_payment"
                         app:layout_constraintStart_toEndOf="@+id/img_account_bank_payment"
                         app:layout_constraintTop_toTopOf="@+id/img_account_bank_payment" />

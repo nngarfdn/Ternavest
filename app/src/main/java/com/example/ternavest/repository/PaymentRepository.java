@@ -43,22 +43,6 @@ public class PaymentRepository {
         return resultData;
     }
 
-    /*public void queryById(String portfolioId, String paymentId){
-        reference.document(portfolioId).collection("pembayaran").document(paymentId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
-                            Payment payment = new Payment();
-                            payment = snapshotToObject(task.getResult());
-                            resultData.postValue(payment);
-                            Log.d(TAG, "Document was queried");
-                        } else Log.w(TAG, "Error querying document", task.getException());
-                    }
-                });
-    }*/
-
     // Dipanggil waktu buka detail portofolio
     public void query(String portfolioId){ // Investor, peternak
         reference.document(portfolioId).collection("pembayaran")
