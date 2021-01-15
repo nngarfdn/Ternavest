@@ -16,6 +16,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail.view.*
+import kotlinx.android.synthetic.main.fragment_detail.view.imgDeskripsiLaporan
+import kotlinx.android.synthetic.main.fragment_detail.view.imgLaporanProyek
+import kotlinx.android.synthetic.main.fragment_detail.view.imgProfile
+import kotlinx.android.synthetic.main.fragment_detail.view.txtDeskripsi
+import kotlinx.android.synthetic.main.fragment_detail.view.txtJenisHewanDetail
+import kotlinx.android.synthetic.main.fragment_detail.view.txtPeminat
+import kotlinx.android.synthetic.main.fragment_detail.view.txtRoiDetail
+import kotlinx.android.synthetic.main.fragment_detail.view.txtTanggalDetail
+import kotlinx.android.synthetic.main.fragment_detail.view.txtTitle
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.*
 import java.util.*
 
 class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
@@ -53,12 +63,14 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
 
         view.txtPeminat.setText(listProfile.toString())
 
+
         view.txtTitle.setText(p?.namaProyek)
         view.txtDeskripsi.setText(p?.deskripsiProyek)
         view.txtJenisHewanDetail.setText(p?.jenisHewan)
         view.txtRoiDetail.setText("${p?.roi}%")
         view.txtTanggalDetail.setText("${p?.waktuMulai} - ${p?.waktuSelesai}")
 
+//        view.btnInvestasiSekarang.visibility = View.INVISIBLE
 
         Picasso.get()
                 .load(p?.photoProyek)

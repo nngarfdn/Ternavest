@@ -200,6 +200,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgDeskripsiLaporan"/>
 
+            <Button
+                android:id="@+id/btnInvestasiSekarang"
+                style="@style/Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_peminat"
+                android:text="Investasi Sekarang"
+                android:layout_marginTop="@dimen/dimen_16"/>
 
         </RelativeLayout>
     </ScrollView>

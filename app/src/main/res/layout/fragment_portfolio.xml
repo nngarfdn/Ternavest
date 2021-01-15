@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.both.portfolio.PortfolioFragment"
     android:orientation="vertical"
-    android:padding="16dp">
+    >
 
-    <TextView
-        android:id="@+id/tv_title_portfolio"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/loading" />
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@android:color/black"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Portfolio" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_portfolio_portfolio"
@@ -20,5 +24,6 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_portfolio"
         android:layout_marginTop="8dp"
+        android:paddingHorizontal="@dimen/dimen_16"
         android:overScrollMode="never"/>
 </LinearLayout>

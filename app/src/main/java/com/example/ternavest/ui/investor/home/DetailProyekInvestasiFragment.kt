@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity
+import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT
 import com.example.ternavest.ui.both.profile.DetailProfileActivity
 import com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
@@ -83,6 +85,12 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
             val intent = Intent(context, LaporanHomeActivity::class.java)
             intent.putExtra("level", "investor")
             intent.putExtra("id", p?.id)
+            startActivity(intent)
+        }
+
+        view.btnInvestasiSekarang.setOnClickListener {
+            val intent = Intent(context, AddUpdatePortfolioActivity::class.java)
+            intent.putExtra(EXTRA_PROJECT, p)
             startActivity(intent)
         }
     }

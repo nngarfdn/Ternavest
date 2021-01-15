@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -94,8 +95,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_PORTFOLIO)){
             portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
-
             tvCount.setText(" / " + portfolio.getCount() + " ekor");
+            tvNominal.setText("Rp " + portfolio.getTotalCost());
+            Log.d("TAG", "onCreate: " + "Rp " + portfolio.getTotalCost());
             tvStatus.setText("Pending"); // Kalau bisa ke pembayaran, pasti statusnya pending
             cvStatus.setCardBackgroundColor(getResources().getColor(R.color.orange));
 
@@ -104,8 +106,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 tvProject.setText(project.getNamaProyek());
                 tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
                 tvNominal.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
-            }
 
+                Log.d("Payment Activity", "onCreate: " + "Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+
+            }
             profileViewModel.loadData(portfolio.getBreederId());
         }
 

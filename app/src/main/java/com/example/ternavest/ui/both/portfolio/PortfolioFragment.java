@@ -51,9 +51,8 @@ public class PortfolioFragment extends Fragment {
         adapter = new PortfolioAdapter();
         recyclerView.setAdapter(adapter);
 
-        TextView tvTitle = view.findViewById(R.id.tv_title_portfolio);
-        if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) tvTitle.setText("Portofolio");
-        else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) tvTitle.setText("Peminat");
+//        if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) tvTitle.setText("Portofolio");
+//        else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) tvTitle.setText("Peminat");
 
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
         portfolioViewModel.loadData(userPreference.getUserLevel());

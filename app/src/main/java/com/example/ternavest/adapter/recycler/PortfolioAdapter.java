@@ -83,7 +83,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         }
 
         public void bind(Portfolio portfolio) {
-            tvCount.setText(String.valueOf(portfolio.getCount()));
+            tvCount.setText(String.valueOf(portfolio.getCount()) + " ekor");
 
             reference.document(portfolio.getProjectId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -113,7 +113,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                                 break;
                         }
                         tvStatus.setText(status);
-                        tvTotalCost.setText(String.valueOf(totalCost));
+                        tvTotalCost.setText("Rp " +String.valueOf(totalCost) +" /");
                     }
                 }
             });
