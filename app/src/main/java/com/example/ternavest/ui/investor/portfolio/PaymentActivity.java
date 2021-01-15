@@ -33,6 +33,7 @@ import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EX
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.createIdFromCurrentDate;
+import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.DateUtils.getCurrentDate;
@@ -96,18 +97,18 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         if (intent.hasExtra(EXTRA_PORTFOLIO)){
             portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
             tvCount.setText(" / " + portfolio.getCount() + " ekor");
-            tvNominal.setText("Rp " + portfolio.getTotalCost());
-            Log.d("TAG", "onCreate: " + "Rp " + portfolio.getTotalCost());
+            tvNominal.setText(getRupiahFormat(portfolio.getTotalCost()));
+            Log.d("TAG", "onCreate: " + getRupiahFormat(portfolio.getTotalCost()));
             tvStatus.setText("Pending"); // Kalau bisa ke pembayaran, pasti statusnya pending
             cvStatus.setCardBackgroundColor(getResources().getColor(R.color.orange));
 
             if (intent.hasExtra(EXTRA_PROJECT)){
                 project = intent.getParcelableExtra(EXTRA_PROJECT);
                 tvProject.setText(project.getNamaProyek());
-                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
-                tvNominal.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+                tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
+                tvNominal.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
-                Log.d("Payment Activity", "onCreate: " + "Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+                Log.d("Payment Activity", "onCreate: " + getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
             }
             profileViewModel.loadData(portfolio.getBreederId());

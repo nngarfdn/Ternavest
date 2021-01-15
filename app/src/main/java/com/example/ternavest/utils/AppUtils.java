@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -35,6 +36,15 @@ public class AppUtils {
 
     public static void showToast(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    public static String getRupiahFormat(long amount){
+        String country = "ID", language = "in";
+        return "Rp" + NumberFormat.getNumberInstance(new Locale(language, country)).format(amount);
+    }
+
+    public static boolean isValidPhone(String number){
+        return number.charAt(0) == '6' && number.charAt(1) == '2';
     }
 
     public static void loadImageFromUrl(ImageView imageView, String url){

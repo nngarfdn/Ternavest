@@ -13,7 +13,7 @@ data class Proyek(
         var roi: Int? = 0,
         var waktuMulai: String? = "",
         var waktuSelesai: String? = "",
-        var biayaHewan: Int? = 0,
+        var biayaHewan: Long? = 0,
         var provinsi: String? = "",
         var kabupaten: String? = "",
         var kecamatan: String? = "",

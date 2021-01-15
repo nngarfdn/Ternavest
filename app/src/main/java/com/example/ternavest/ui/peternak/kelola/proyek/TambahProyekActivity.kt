@@ -356,7 +356,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                         val waktuMulai = txtWaktuMulai.text.toString()
                         val waktuSelesai = txtWaktuSelesai.text.toString()
                         val biayaHewan = txtBiayaPengelolaan.text.toString()
-                        val biayaPengelolahan = biayaHewan.toInt()
+                        val biayaPengelolahan = biayaHewan.toLong()
                         val alamat: String = txtAlamatLengkap.getText().toString()
                         var kecamatan: String? = null
                         kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {

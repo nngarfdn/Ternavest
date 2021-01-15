@@ -45,6 +45,7 @@ import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.PAY_REJECT;
+import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.DateUtils.differenceOfDates;
@@ -165,7 +166,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 // Atur informasi proyek dan portfolio
                 tvTitle.setText(project.getNamaProyek());
                 tvProject.setText(project.getNamaProyek());
-                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+                tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
                 // Atur status proyek
                 if (differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0){
@@ -281,7 +282,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
             if (requestCode == RC_UPDATE_PORTFOLIO && resultCode == RC_UPDATE_PORTFOLIO){
                 portfolio = data.getParcelableExtra(EXTRA_PORTFOLIO);
                 tvCount.setText(" / " + portfolio.getCount() + " ekor");
-                tvTotalCost.setText("Rp" + (portfolio.getCount() * project.getBiayaHewan()));
+                tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
             } else if (requestCode == RC_ADD_PAYMENT && resultCode == RC_ADD_PAYMENT){
                 Payment payment = data.getParcelableExtra(EXTRA_PAYMENT);
                 paymentList.add(payment);

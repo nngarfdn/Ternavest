@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,9 @@ import com.example.ternavest.adapter.recycler.PortfolioAdapter;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -27,6 +31,8 @@ import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 
 public class PortfolioFragment extends Fragment {
+    private static final String TAG = PortfolioFragment.class.getSimpleName();
+
     private RecyclerView recyclerView;
     private PortfolioViewModel portfolioViewModel;
     private PortfolioAdapter adapter;
@@ -60,6 +66,16 @@ public class PortfolioFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Portfolio> portfolioList) {
                 adapter.setData(portfolioList);
+            }
+        });
+        portfolioViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) Log.w(TAG, "Listen failed", error);
+                else if (value != null && !value.isEmpty()){
+                    portfolioViewModel.loadData(userPreference.getUserLevel());
+                    Log.d(TAG, "Changes detected");
+                }
             }
         });
     }

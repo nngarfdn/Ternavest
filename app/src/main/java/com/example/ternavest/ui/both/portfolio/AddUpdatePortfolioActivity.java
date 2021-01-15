@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
+import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.EditTextUtils.getFixText;
@@ -78,15 +79,15 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             tvProjectName.setText(project.getNamaProyek());
             tvProjectLivestock.setText(project.getJenisHewan());
             tvProjectROI.setText(project.getRoi() + "%");
-            tvCost.setText("Rp" + project.getBiayaHewan());
-            tvHelper.setText("Rp" + project.getBiayaHewan() + " adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan.");
+            tvCost.setText(getRupiahFormat(project.getBiayaHewan()));
+            tvHelper.setText(getRupiahFormat(project.getBiayaHewan()) + " adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan.");
 
             isUpdate = intent.hasExtra(EXTRA_PORTFOLIO);
             if (isUpdate){
                 portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
                 tvTitle.setText("Edit Informasi Investasi");
-                tvTotalCost.setText("Rp" + (
+                tvTotalCost.setText(getRupiahFormat(
                         portfolio.getCount() * project.getBiayaHewan()
                 ));
                 edtCount.setText(String.valueOf(portfolio.getCount()));
@@ -95,7 +96,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                 portfolio = new Portfolio();
 
                 tvTitle.setText("Mulai Investasi");
-                tvTotalCost.setText("Rp" + project.getBiayaHewan());
+                tvTotalCost.setText(getRupiahFormat(project.getBiayaHewan()));
                 edtCount.setText("1");
                 btnPayment.setText("Lanjut Pembayaran");
             }
@@ -108,7 +109,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 0){ // Masih BUG -> belum fix
-                    tvTotalCost.setText("Rp" + (
+                    tvTotalCost.setText(getRupiahFormat(
                             Integer.parseInt(getFixText(edtCount)) * project.getBiayaHewan()
                     ));
                 } else {
@@ -156,10 +157,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                     Intent intent = new Intent();
                     intent.putExtra(EXTRA_PORTFOLIO, portfolio);
                     setResult(RC_UPDATE_PORTFOLIO, intent);
-
-                    finish();
                 } else {
-                    portfolio.setId(project.getId() + "-" + firebaseUser.getUid());
                     portfolio.setProjectId(project.getId());
                     portfolio.setInvestorId(firebaseUser.getUid());
                     portfolio.setBreederId(project.getUuid());
@@ -172,8 +170,11 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
 
                     Intent intent = new Intent(this, PaymentActivity.class);
                     intent.putExtra(EXTRA_PORTFOLIO, portfolio);
+                    intent.putExtra(EXTRA_PROJECT, project);
                     startActivity(intent);
                 }
+
+                finish();
                 break;
         }
     }

@@ -176,7 +176,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
 
             val biayaHewan = txtBiayaPengelolaan.text.toString()
-            val biayaPengelolahana = biayaHewan.toInt()
+            val biayaPengelolahana = biayaHewan.toLong()
 
             if (TextUtils.isEmpty(biayaHewan)) {
                 txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
@@ -427,7 +427,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                         val waktuMulai = txtWaktuMulai.text.toString()
                         val waktuSelesai = txtWaktuSelesai.text.toString()
                         val biayaHewan = txtBiayaPengelolaan.text.toString()
-                        val biayaPengelolahan = biayaHewan.toInt()
+                        val biayaPengelolahan = biayaHewan.toLong()
                         val alamat: String = txtAlamatLengkap.getText().toString()
                         var kecamatan: String? = null
                         kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {

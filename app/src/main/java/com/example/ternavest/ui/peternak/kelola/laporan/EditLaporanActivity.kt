@@ -104,7 +104,7 @@ class EditLaporanActivity : AppCompatActivity() {
                 Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
             }
 
-            val laporan = Laporan(p.id, p.idProyek,judul,deskripsi,tanggal,pemasukan.toInt(), pengeluaran.toInt(),photo)
+            val laporan = Laporan(p.id, p.idProyek,judul,deskripsi,tanggal,pemasukan.toLong(), pengeluaran.toLong(),photo)
             if (vJudul && vDeskripsi && vPemasukan && vPengeluaran && vTgl) {
                 laporanViewModel.update(laporan)
                 Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
@@ -165,9 +165,9 @@ class EditLaporanActivity : AppCompatActivity() {
                         val deskripsi = txtDeskripsiLaporan.text.toString()
                         val tanggal = txtTanggalLaporan.text.toString()
                         val pemasukan = txtJenisHewanDetail.text.toString()
-                        val pemasukanInt = pemasukan.toInt()
+                        val pemasukanInt = pemasukan.toLong()
                         val pengeluaran = txtRoiDetail.text.toString()
-                        val pengeluaranInt = pengeluaran.toInt()
+                        val pengeluaranInt = pengeluaran.toLong()
                         val vJudul = validasiStringEditText(judul, "Masukan judul laporan", txtJudulLaporan)
                         val vDeskripsi = validasiStringEditText(deskripsi, "Masukan deskripsi laporan", txtDeskripsiLaporan)
                         val vTgl = validasiStringEditText(tanggal, "Masukan tanggal", txtTanggalLaporan)

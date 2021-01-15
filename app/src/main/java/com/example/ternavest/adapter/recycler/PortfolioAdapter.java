@@ -28,6 +28,7 @@ import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EX
 import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.PAY_REJECT;
+import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.ViewHolder> {
@@ -83,7 +84,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         }
 
         public void bind(Portfolio portfolio) {
-            tvCount.setText(String.valueOf(portfolio.getCount()) + " ekor");
+            tvCount.setText(" / " + (portfolio.getCount()) + " ekor");
 
             reference.document(portfolio.getProjectId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -113,7 +114,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                                 break;
                         }
                         tvStatus.setText(status);
-                        tvTotalCost.setText("Rp " +String.valueOf(totalCost) +" /");
+                        tvTotalCost.setText(getRupiahFormat(totalCost));
                     }
                 }
             });

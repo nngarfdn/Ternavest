@@ -10,7 +10,7 @@ data class Laporan(
         var judulLaporan : String? = "",
         var deskripsiLaporan : String? = "",
         var tanggal : String? = "",
-        var pemasukan  : Int? = 0,
-        var pengeluaran : Int? = 0,
+        var pemasukan  : Long? = 0,
+        var pengeluaran : Long? = 0,
         var photoLaporan : String? = ""
 ) : Parcelable

@@ -18,7 +18,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
@@ -87,6 +86,7 @@ public class PortfolioRepository {
 
     // Jangan simpan biaya dulu karena ada kemungkinan biaya diedit oleh peternak, hanya lakukan pembayaran dengan biaya ter-update
     public void insert(Portfolio portfolio){  // Investor
+        portfolio.setId(reference.document().getId()); // Id otomatis
         reference.document(portfolio.getId())
                 .set(objectToHashMap(portfolio))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
