@@ -3,31 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/dimen_16"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.both.portfolio.AddUpdatePortfolioActivity"
-    android:orientation="vertical"
-    android:padding="16dp">
-    
-    <RelativeLayout
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/ib_back_aup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_backspace"
-            android:background="@android:color/transparent"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:id="@+id/tv_title_aup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:layout_toEndOf="@+id/ib_back_aup"
-            android:layout_marginStart="16dp"/>
-    </RelativeLayout>
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@android:color/black"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Laporan Proyek" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,6 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
             android:orientation="vertical">
             <include layout="@layout/item_proyek"/>
 
@@ -45,8 +34,13 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="@dimen/dimen_32"
                 app:cardUseCompatPadding="true"
-                app:contentPadding="16dp">
+                app:contentPaddingBottom="16dp"
+                app:contentPaddingTop="@dimen/dimen_16"
+                app:contentPaddingLeft="4dp"
+                app:contentPaddingRight="4dp" >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -84,6 +78,8 @@
 
             <TextView
                 android:id="@+id/tv_helper_aup"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="@dimen/dimen_32"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp 50.000 adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan."/>
@@ -91,8 +87,10 @@
             <EditText
                 android:id="@+id/edt_count_aup"
                 style="@style/EditText"
+                android:layout_marginHorizontal="@dimen/dimen_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:hint="Jumlah ekor ternak"
                 android:layout_marginVertical="4dp"
                 android:inputType="number"/>
@@ -102,6 +100,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_payment_aup"
                 style="@style/Button.Primary"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="@dimen/dimen_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lanjut Pembayaran"/>
