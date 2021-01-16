@@ -15,7 +15,7 @@
         app:titleTextColor="@android:color/black"
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Laporan Proyek" />
+        app:title="Portfolio" />
 
     <ScrollView
         android:layout_width="match_parent"

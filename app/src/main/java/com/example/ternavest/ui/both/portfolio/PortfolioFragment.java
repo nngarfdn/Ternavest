@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -16,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.PortfolioAdapter;
@@ -58,10 +58,10 @@ public class PortfolioFragment extends Fragment {
         adapter = new PortfolioAdapter();
         recyclerView.setAdapter(adapter);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar1);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Portofolio");
-        else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Peminat");
+        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar1);
+
+        if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) toolbar.setTitle("Portofolio");
+        else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) toolbar.setTitle("Peminat");
 
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
         portfolioViewModel.loadData(userPreference.getUserLevel());

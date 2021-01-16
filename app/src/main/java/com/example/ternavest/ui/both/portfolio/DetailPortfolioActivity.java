@@ -2,6 +2,7 @@ package com.example.ternavest.ui.both.portfolio;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,10 +14,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.PaymentAdapter;
@@ -27,6 +33,7 @@ import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.both.profile.DetailProfileActivity;
+import com.example.ternavest.ui.investor.home.DetailProyekInvestasiFragment;
 import com.example.ternavest.ui.investor.portfolio.PaymentActivity;
 import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
@@ -56,11 +63,12 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     public static final String EXTRA_PORTFOLIO = "extra_portfolio";
     public static final String EXTRA_PROJECT = "extra_project";
 
-    private ImageButton ibDelete;
+    private Toolbar toolbar;
     private CircleImageView civProfile;
-    private TextView tvTitle, tvProject, tvTotalCost, tvCount, tvAction, tvProfile, tvStatusProject, tvStatusPayment, tvLevel, tvPayment;
+    private TextView tvProject, tvTotalCost, tvCount, tvAction, tvProfile, tvStatusProject, tvStatusPayment, tvLevel, tvPayment;
     private Button btnUpdate, btnPayment;
     private CardView cvProfile, cvPortfolio;
+
 
     private LoadingDialog loadingDialog;
     private Profile profile;
@@ -79,6 +87,39 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_portfolio);
 
+        toolbar = (Toolbar)findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar); //No Problerm
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_delete:
+                        new AlertDialog.Builder(DetailPortfolioActivity.this)
+                                .setTitle("Batalkan investasi")
+                                .setMessage("Apakah Anda yakin ingin membatalkan investasi pada proyek ini?")
+                                .setNegativeButton("Tidak", null)
+                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        portfolioViewModel.delete(portfolio);
+                                        for (Payment payment : paymentList){
+                                            paymentViewModel.delete(portfolio.getId(), payment.getId());
+                                            paymentViewModel.deleteImage(payment.getImage());
+                                        }
+                                        onBackPressed();
+                                    }
+                                }).create().show();
+
+                        break;
+
+                }
+                return false;
+            }
+        });
+
         userPreference = new UserPreference(this);
         loadingDialog = new LoadingDialog(this);
         loadingDialog.show();
@@ -89,7 +130,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         adapter = new PaymentAdapter();
         recyclerView.setAdapter(adapter);
 
-        tvTitle = findViewById(R.id.tv_title_dpf);
         tvProject = findViewById(R.id.tv_project_portfolio);
         tvTotalCost = findViewById(R.id.tv_total_cost_portfolio);
         tvCount = findViewById(R.id.tv_count_portfolio);
@@ -103,18 +143,19 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
         cvPortfolio = findViewById(R.id.cv_portfolio_portfolio);
         cvProfile = findViewById(R.id.cv_profile_profile);
-        ibDelete = findViewById(R.id.ib_delete_dpf);
         btnUpdate = findViewById(R.id.btn_update_dpf);
         btnPayment = findViewById(R.id.btn_payment_dpf);
         cvPortfolio.setOnClickListener(this);
         cvProfile.setOnClickListener(this);
-        ibDelete.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
 
         tvAction.setText("Lihat proyek");
         if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
-            ibDelete.setVisibility(View.INVISIBLE);
+            Menu menu = toolbar.getMenu();
+            MenuItem item = menu.findItem(R.id.action_delete);
+            item.setVisible(false);
+
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
         }
@@ -159,7 +200,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 project = intent.getParcelableExtra(EXTRA_PROJECT);
 
                 // Atur informasi proyek dan portfolio
-                tvTitle.setText(project.getNamaProyek());
+                toolbar.setTitle(project.getNamaProyek());
                 tvProject.setText(project.getNamaProyek());
 
                 // Default riwayat pembayaran -> size 0
@@ -202,7 +243,10 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
             tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
 
-            ibDelete.setVisibility(View.INVISIBLE);
+            Menu menu = toolbar.getMenu();
+            MenuItem item = menu.findItem(R.id.action_delete);
+            item.setVisible(false);
+
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
         } else if (lastStatus.equals(PAY_PENDING)){
@@ -211,7 +255,10 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
             tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
 
-            ibDelete.setVisibility(View.INVISIBLE);
+            Menu menu = toolbar.getMenu();
+            MenuItem item = menu.findItem(R.id.action_delete);
+            item.setVisible(false);
+
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
         } else if (lastStatus.equals(PAY_REJECT)){
@@ -226,28 +273,11 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.ib_delete_dpf:
-                new AlertDialog.Builder(this)
-                        .setTitle("Batalkan investasi")
-                        .setMessage("Apakah Anda yakin ingin membatalkan investasi pada proyek ini?")
-                        .setNegativeButton("Tidak", null)
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                portfolioViewModel.delete(portfolio);
-                                for (Payment payment : paymentList){
-                                    paymentViewModel.delete(portfolio.getId(), payment.getId());
-                                    paymentViewModel.deleteImage(payment.getImage());
-                                }
-                                onBackPressed();
-                            }
-                        }).create().show();
-                break;
 
             case R.id.cv_portfolio_portfolio:
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("proyek", project);
-                DetailFragment bottomSheet = new DetailFragment();
+                DetailProyekInvestasiFragment bottomSheet = new DetailProyekInvestasiFragment();
                 bottomSheet.setArguments(bundle);
                 bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
                 break;
@@ -299,7 +329,9 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
                 tvPayment.setVisibility(View.VISIBLE);
 
-                ibDelete.setVisibility(View.INVISIBLE);
+                Menu menu = toolbar.getMenu();
+                MenuItem item = menu.findItem(R.id.action_delete);
+                item.setVisible(false);
                 btnUpdate.setVisibility(View.INVISIBLE);
                 btnPayment.setVisibility(View.INVISIBLE);
             }
@@ -325,5 +357,19 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         // Refresh adapter setelah ganti status
         adapter.setLastPaymentStatus(payment.getStatus(), payment.getRejectionNote()); // Pasti yang keganti item terakhir
         setLastPaymentStatus(payment.getStatus());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_delete, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

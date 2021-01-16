@@ -2,6 +2,7 @@ package com.example.ternavest.ui.both.profile;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,7 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
+
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.ProyekAdaper;
@@ -52,6 +53,12 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_profile);
+
+
+        Toolbar toolbar = findViewById(R.id.toolbarProfile);
+        setSupportActionBar(toolbar); //No Problerm
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.rv_project_profile);
         recyclerView.setHasFixedSize(true);
@@ -136,10 +143,7 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
             tvEmail.setText(profile.getEmail());
         }
     }
-
-    private void setSupportActionBar(Toolbar toolbar) {
-
-    }
+    
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -197,4 +201,6 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
                 break;
         }
     }
+
+
 }

@@ -6,15 +6,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.github.vipulasri.timelineview.TimelineView
+    <ImageView
         android:id="@+id/timeline"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:markerSize="20dp"
-        app:lineWidth="3dp"
-        app:startLineColor="@color/green_dark"
-        app:endLineColor="@color/green_dark"
-        app:lineStyle="dash"/>
+        android:src="@drawable/ic_lingkaran"/>
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"

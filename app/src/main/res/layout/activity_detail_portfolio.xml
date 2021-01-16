@@ -1,41 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.both.portfolio.DetailPortfolioActivity"
     android:orientation="vertical"
-    android:padding="16dp">
+    >
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/ib_back_dpf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_backspace"
-            android:background="@android:color/transparent"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:id="@+id/tv_title_dpf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:layout_toEndOf="@+id/ib_back_dpf"
-            android:layout_marginStart="16dp"/>
-
-        <ImageButton
-            android:id="@+id/ib_delete_dpf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_delete_24"
-            android:background="@android:color/transparent"
-            android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@android:color/black"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Portfolio" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,6 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dimen_16"
+            android:layout_marginHorizontal="@dimen/dimen_16"
             android:orientation="vertical">
 
             <include layout="@layout/item_portfolio"/>
@@ -87,17 +69,20 @@
                 android:id="@+id/tv_payment_dpf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:text="Riwayat pembayaran"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_payment_dpf"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_update_dpf"
                 style="@style/Button.Secondary"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Edit Informasi"/>
@@ -106,6 +91,7 @@
                 android:id="@+id/btn_payment_dpf"
                 style="@style/Button.Primary"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:layout_height="wrap_content"
                 android:text="Lanjut Pembayaran"/>
         </LinearLayout>
