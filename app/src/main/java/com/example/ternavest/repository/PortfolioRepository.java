@@ -22,6 +22,7 @@ import java.util.Map;
 
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
+import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 
 public class PortfolioRepository {
     private final String TAG = getClass().getSimpleName();
@@ -34,6 +35,7 @@ public class PortfolioRepository {
         return resultData;
     }
 
+    // Dipanggil di PortofolioFragment
     public void query(String userLevel){ // Investor, peternak
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -60,7 +62,8 @@ public class PortfolioRepository {
         });
     }
 
-    public void query(String userId, String userLevel){ // Investor
+    // Dipanggil di detail profil
+    public void query(String userId, String userLevel){ // Investor, peternak
         Query query = reference;
         if (userLevel.equals(LEVEL_PETERNAK)) query = query.whereEqualTo("idPeternak", userId);
         else if (userLevel.equals(LEVEL_INVESTOR)) query = query.whereEqualTo("idInvestor", userId);
@@ -82,6 +85,29 @@ public class PortfolioRepository {
                 } else Log.w(TAG, "Error querying document", task.getException());
             }
         });
+    }
+
+    // Dipanggil di detail proyek
+    public void queryPeminat(String projectId){ // Investor, peternak
+        reference.whereEqualTo("status", PAY_APPROVED).whereEqualTo("idProyek", projectId)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()){
+                        ArrayList<Portfolio> portfolioList = new ArrayList<>();
+
+                        for (DocumentSnapshot snapshot : task.getResult()){
+                            Portfolio portfolio = new Portfolio();
+                            portfolio = snapshotToObject(snapshot);
+                            portfolioList.add(portfolio);
+                            Log.d(TAG, "queryPeminat: " + portfolio.getInvestorId());
+                        }
+
+                        resultData.postValue(portfolioList);
+                        Log.d(TAG, "Document was queried");
+                    } else Log.w(TAG, "Error querying document", task.getException());
+                }
+            });
     }
 
     // Jangan simpan biaya dulu karena ada kemungkinan biaya diedit oleh peternak, hanya lakukan pembayaran dengan biaya ter-update

@@ -24,6 +24,10 @@ public class PortfolioViewModel extends ViewModel {
         repository.query(userId, userLevel);
     }
 
+    public void queryPeminat(String projectId){
+        repository.queryPeminat(projectId);
+    }
+
     public void insert(Portfolio portfolio){
         repository.insert(portfolio);
     }

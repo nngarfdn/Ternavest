@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ternavest.R;
+import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.investor.main.InvestorActivity;
 import com.example.ternavest.ui.peternak.main.PeternakActivity;
+import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,6 +31,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
@@ -85,6 +89,18 @@ public class MainActivity extends AppCompatActivity {
         btnGoogle.setOnClickListener(v -> loginWithGoogle());
         Button btnInvestor = findViewById(R.id.btn_investor);
         btnInvestor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, InvestorActivity.class)));
+
+        // Contoh query peminat
+        PortfolioViewModel portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
+        portfolioViewModel.queryPeminat("kTAS8lKMYuw9nlSAYRaW");
+        portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
+            @Override
+            public void onChanged(ArrayList<Portfolio> result) {
+                for (Portfolio portfolio : result){
+                    Log.d(TAG, "Peminat: " + portfolio.getInvestorId());
+                }
+            }
+        });
     }
 
     private void loginWithGoogle() {

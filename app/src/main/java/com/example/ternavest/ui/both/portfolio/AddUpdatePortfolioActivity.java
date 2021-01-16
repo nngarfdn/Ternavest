@@ -30,7 +30,6 @@ import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EX
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
-import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.EditTextUtils.getFixText;
 import static com.example.ternavest.utils.EditTextUtils.isNull;
@@ -56,16 +55,13 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update_portfolio);
 
-
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar); //No Problerm
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         imgProject = findViewById(R.id.imgProyek);
-//        tvTitle = findViewById(R.id.tv_title_aup);
         tvProjectName = findViewById(R.id.txtNamaProyek);
         tvProjectLivestock = findViewById(R.id.txtJenisHewan);
         tvProjectROI = findViewById(R.id.txtROI);
@@ -85,7 +81,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
 
             Picasso.get()
                     .load(project.getPhotoProyek())
-                .resize(100, 100) // resizes the image to these dimensions (in pixel)
+                    .resize(100, 100) // resizes the image to these dimensions (in pixel)
                     .centerCrop()
                     .placeholder(R.drawable.ic_baseline_autorenew_24)
                     .into(imgProject);
@@ -100,7 +96,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             if (isUpdate){
                 portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
-//                tvTitle.setText("Edit Informasi Investasi");
+                getSupportActionBar().setTitle("Edit Informasi Investasi");
                 tvTotalCost.setText(getRupiahFormat(
                         portfolio.getCount() * project.getBiayaHewan()
                 ));
@@ -109,7 +105,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             } else {
                 portfolio = new Portfolio();
 
-//                tvTitle.setText("Mulai Investasi");
+                getSupportActionBar().setTitle("Mulai Investasi");
                 tvTotalCost.setText(getRupiahFormat(project.getBiayaHewan()));
                 edtCount.setText("1");
                 btnPayment.setText("Lanjut Pembayaran");

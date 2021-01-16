@@ -16,7 +16,7 @@
         app:titleTextColor="@android:color/black"
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Mulai Investasi" />
+        app:title="Pembayaran" />
 
     <ScrollView
         android:layout_width="match_parent"
