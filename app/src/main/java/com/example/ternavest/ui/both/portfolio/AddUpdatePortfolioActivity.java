@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -112,25 +113,26 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             }
         }
 
+        edtCount.setFilters(new InputFilter[] {new InputFilter.LengthFilter(6)}); // Batasin jumlah digit
         edtCount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0){ // Masih BUG -> belum fix
+                if (charSequence.length() > 0){ // Hitung real-time
                     tvTotalCost.setText(getRupiahFormat(
-                            Integer.parseInt(getFixText(edtCount)) * project.getBiayaHewan()
-                    ));
-                } else {
-                    tvTotalCost.setText("Rp0");
-                }
+                            Long.parseLong(getFixText(edtCount)) * project.getBiayaHewan()));
+                    btnPayment.setEnabled(true);
+                } else tvTotalCost.setText("Rp0");
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (isNull(getFixText(edtCount))){
-                    edtCount.setText("1");
+                String count = getFixText(edtCount);
+                if (isNull(count) || Long.parseLong(count) <= 0){
+                    edtCount.setError("Jumlah ekor tidak boleh kosong");
+                    btnPayment.setEnabled(false);
                 }
             }
         });
