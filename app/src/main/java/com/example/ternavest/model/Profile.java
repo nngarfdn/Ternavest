@@ -17,10 +17,11 @@ public class Profile implements Parcelable {
     private String accountName;
     private String accountNumber;
     private String verificationStatus;
+    private String verificationRejectionNote;
 
     public Profile() {}
 
-    public Profile(String id, String name, String email, String level, String photo, String ktp, String address, String phone, String whatsApp, String accountBank, String accountName, String accountNumber, String verificationStatus) {
+    public Profile(String id, String name, String email, String level, String photo, String ktp, String address, String phone, String whatsApp, String accountBank, String accountName, String accountNumber, String verificationStatus, String verificationRejectionNote) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -34,6 +35,17 @@ public class Profile implements Parcelable {
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.verificationStatus = verificationStatus;
+        this.verificationRejectionNote = verificationRejectionNote;
+    }
+
+    // Dipakai saat insert profile (satu kali)
+    public Profile(String id, String name, String email, String level, String verificationStatus, String verificationRejectionNote) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.level = level;
+        this.verificationStatus = verificationStatus;
+        this.verificationRejectionNote = verificationRejectionNote;
     }
 
     protected Profile(Parcel in) {
@@ -50,6 +62,7 @@ public class Profile implements Parcelable {
         accountName = in.readString();
         accountNumber = in.readString();
         verificationStatus = in.readString();
+        verificationRejectionNote = in.readString();
     }
 
     @Override
@@ -67,6 +80,7 @@ public class Profile implements Parcelable {
         dest.writeString(accountName);
         dest.writeString(accountNumber);
         dest.writeString(verificationStatus);
+        dest.writeString(verificationRejectionNote);
     }
 
     @Override
@@ -90,10 +104,6 @@ public class Profile implements Parcelable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -106,32 +116,16 @@ public class Profile implements Parcelable {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getLevel() {
         return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public String getKtp() {
         return ktp;
-    }
-
-    public void setKtp(String ktp) {
-        this.ktp = ktp;
     }
 
     public String getAddress() {
@@ -186,7 +180,11 @@ public class Profile implements Parcelable {
         return verificationStatus;
     }
 
-    public void setVerificationStatus(String verificationStatus) {
-        this.verificationStatus = verificationStatus;
+    public String getVerificationRejectionNote() {
+        return verificationRejectionNote;
+    }
+
+    public static Creator<Profile> getCREATOR() {
+        return CREATOR;
     }
 }

@@ -196,7 +196,7 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
                     dialog.setMessage("Akun ini belum mengajukan pemverifikasian akun.");
                 }
 
-                dialog.setNeutralButton("Tutup", null);
+                dialog.setPositiveButton("Tutup", null);
                 dialog.create().show();
                 break;
         }

@@ -12,6 +12,7 @@ import com.example.ternavest.R
 import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
+import com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK
 import com.example.ternavest.viewmodel.PortfolioViewModel
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
@@ -114,7 +115,7 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
         }
         view.imgLaporanProyek.setOnClickListener {
             val intent = Intent(context, LaporanActivity::class.java)
-            intent.putExtra("level", "peternak")
+            intent.putExtra("level", LEVEL_PETERNAK)
             intent.putExtra("id", p?.id)
             startActivity(intent)
         }

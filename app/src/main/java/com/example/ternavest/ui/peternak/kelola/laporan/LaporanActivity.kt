@@ -12,6 +12,7 @@ import com.example.ternavest.R
 import com.example.ternavest.adapter.recycler.LaporanAdaper
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import kotlinx.android.synthetic.main.activity_laporan.*
@@ -36,7 +37,7 @@ class LaporanActivity : AppCompatActivity() {
         id = intent?.getStringExtra("id")
         val level : String? = intent?.getStringExtra("level")
 
-        if (level?.equals("investor")!!){
+        if (level?.equals(LEVEL_INVESTOR)!!){
             floatingActionButton2.visibility = View.INVISIBLE
         } else {
             floatingActionButton2.visibility = View.VISIBLE

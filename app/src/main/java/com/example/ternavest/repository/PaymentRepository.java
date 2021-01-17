@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.ternavest.utils.AppUtils.convertUriToByteArray;
-import static com.example.ternavest.utils.AppUtils.getCompressedByteArray;
+import static com.example.ternavest.utils.ImageUtils.convertUriToByteArray;
+import static com.example.ternavest.utils.ImageUtils.getCompressedByteArray;
 
 public class PaymentRepository {
     public static final String FOLDER_PAYMENT = "pembayaran";

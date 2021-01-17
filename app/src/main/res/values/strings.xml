@@ -44,7 +44,7 @@
 
     <string-array name="ref_rejection_note_payment">
         <item>Bukti tidak sah</item>
-        <item>Pembayaran kurang</item>
-        <item>Foto kurang jelas</item>
+        <item>Total pembayaran kurang</item>
+        <item>Informasi tidak dapat dibaca</item>
     </string-array>
 </resources>

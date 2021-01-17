@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,9 +54,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private Profile profile;
     private ProfileViewModel profileViewModel;
 
+    private Button btnKtp;
+    private CardView cvVerification;
     private CircleImageView imgPhoto;
     private EditText edtName, edtAddress, edtPhone, edtWhatsApp, edtAccontBank, edtAccountNumber, edtAccountName;
     private ImageView imgKtp;
+    private TextView tvVerification, tvKtpRejectionNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +73,21 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         loadingDialog.show();
 
         Button btnPhoto = findViewById(R.id.btn_photo_settings);
-        Button btnKtp = findViewById(R.id.btn_ktp_settings);
+        btnKtp = findViewById(R.id.btn_ktp_settings);
         Button btnSave = findViewById(R.id.btn_save_settings);
+        ImageButton ibKtpHelp = findViewById(R.id.ib_ktp_help_settings);
         btnPhoto.setOnClickListener(this);
         btnKtp.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+        ibKtpHelp.setOnClickListener(this);
 
         imgPhoto = findViewById(R.id.img_photo_settings);
         imgKtp = findViewById(R.id.img_ktp_settings);
 
-        CardView cvVerification = findViewById(R.id.cv_verification_settings);
-        TextView tvVerification = findViewById(R.id.tv_verification_settings);
+        cvVerification = findViewById(R.id.cv_verification_settings);
+        tvVerification = findViewById(R.id.tv_verification_settings);
+        tvKtpRejectionNote = findViewById(R.id.tv_ktp_rejection_note_settings);
+        tvKtpRejectionNote.setVisibility(View.GONE);
 
         edtName = findViewById(R.id.edt_name_settings);
         edtAddress = findViewById(R.id.edt_address_settings);
@@ -98,10 +106,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             public void onChanged(Profile result) {
                 profile = result;
 
-                loadImageFromUrl(imgPhoto, firebaseUser.getPhotoUrl().toString());
+                loadImageFromUrl(imgPhoto, profile.getPhoto());
                 loadImageFromUrl(imgKtp, profile.getKtp());
 
-                edtName.setText(firebaseUser.getDisplayName());
+                edtName.setText(profile.getName());
                 edtAddress.setText(profile.getAddress());
                 edtPhone.setText(profile.getPhone());
                 edtWhatsApp.setText(profile.getWhatsApp());
@@ -110,26 +118,33 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 edtAccountNumber.setText(profile.getAccountNumber());
                 edtAccountName.setText(profile.getAccountName());
 
-                switch (profile.getVerificationStatus()) {
-                    case VERIF_APPROVED:
-                        tvVerification.setText("Terverifikasi");
-                        cvVerification.setCardBackgroundColor(getResources().getColor(R.color.blue));
-                        break;
-                    case VERIF_PENDING:
-                        tvVerification.setText("Menunggu verifikasi");
-                        cvVerification.setCardBackgroundColor(getResources().getColor(R.color.orange));
-                        break;
-                    case VERIF_REJECT:
-                        tvVerification.setText("Ditolak");
-                        cvVerification.setCardBackgroundColor(getResources().getColor(R.color.red));
-                        break;
-                }
-
+                setVerificationStatus(profile.getVerificationStatus());
                 if (profile.getLevel().equals(LEVEL_INVESTOR)) layoutAccount.setVisibility(View.GONE);
 
                 loadingDialog.dismiss();
             }
         });
+    }
+
+    private void setVerificationStatus(String verificationStatus){
+        switch (verificationStatus) {
+            case VERIF_APPROVED:
+                tvVerification.setText("Terverifikasi");
+                cvVerification.setCardBackgroundColor(getResources().getColor(R.color.blue));
+                tvKtpRejectionNote.setVisibility(View.GONE);
+                break;
+            case VERIF_PENDING:
+                tvVerification.setText("Menunggu verifikasi");
+                cvVerification.setCardBackgroundColor(getResources().getColor(R.color.orange));
+                tvKtpRejectionNote.setVisibility(View.GONE);
+                break;
+            case VERIF_REJECT:
+                tvVerification.setText("Ditolak");
+                cvVerification.setCardBackgroundColor(getResources().getColor(R.color.red));
+                tvKtpRejectionNote.setVisibility(View.VISIBLE);
+                tvKtpRejectionNote.setText("Pengajuanmu ditolak karena " + profile.getVerificationRejectionNote());
+                break;
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -145,6 +160,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_ktp_settings:
                 if (profile.getVerificationStatus().equals(VERIF_APPROVED)){
                     showToast(this, "Akunmu telah diverifikasi!");
+                    btnKtp.setEnabled(false);
                 } else {
                     new AlertDialog.Builder(this)
                             .setTitle("Ajukan verifikasi KTP")
@@ -155,7 +171,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    startActivityForResult(Intent.createChooser(intent, "Ambil foto ktp:"), RC_KTP_IMAGE);
+                                    startActivityForResult(Intent.createChooser(intent, "Ambil foto KTP:"), RC_KTP_IMAGE);
                                 }
                             }).create().show();
                 }
@@ -197,10 +213,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     profile.setAccountName(accountName);
                 }
 
-                // Ambil dari Firebase Auth
-                profile.setId(firebaseUser.getUid());
-                profile.setEmail(firebaseUser.getEmail());
-
                 // Simpan nama ke Authentication
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(name)
@@ -212,6 +224,16 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                 showToast(getApplicationContext(), "Pengaturan profil berhasil disimpan.");
                 finish();
+                break;
+
+            case R.id.ib_ktp_help_settings:
+                new AlertDialog.Builder(this)
+                        .setTitle("Bantuan Verifikasi KTP")
+                        .setMessage("Untuk mengajukan verifikasi akun, kamu harus mengunggah foto KTP asli dan memasukkan nama lengkap sesuai KTP.\n\n" +
+                                "Informasi pada foto KTP yang diambil juga harus jelas dan dapat dibaca.\n\n" +
+                                "Setelah akun terverifikasi, kamu tidak bisa lagi mengajukan verifikasi.")
+                        .setPositiveButton("Tutup", null)
+                        .create().show();
                 break;
         }
     }
@@ -231,14 +253,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     profileViewModel.uploadImage(this, uriProfileImage, FOLDER_PROFILE, fileName, new OnImageUploadCallback() {
                         @Override
                         public void onSuccess(String imageUrl) {
-                            profile.setPhoto(imageUrl);
-
-                            // Simpan foto ke Authentication
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setPhotoUri(Uri.parse(imageUrl))
-                                    .build();
-                            firebaseUser.updateProfile(profileUpdates);
-
+                            profileViewModel.update(imageUrl);
                             loadingDialog.dismiss();
                         }
                     });
@@ -257,6 +272,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onSuccess(String imageUrl) {
                             profileViewModel.sendVerification(imageUrl);
+                            setVerificationStatus(VERIF_PENDING);
                             showToast(getApplicationContext(), "Verifikasi KTP berhasil diajukan.");
                         }
                     });

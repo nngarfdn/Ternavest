@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
+import com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -109,7 +110,7 @@ class EditLaporanActivity : AppCompatActivity() {
                 laporanViewModel.update(laporan)
                 Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
                 val i = Intent(this, LaporanActivity::class.java)
-                i.putExtra("level", "peternak")
+                i.putExtra("level", LEVEL_PETERNAK)
                 i.putExtra("id", p.idProyek)
                 startActivity(i)
             }
@@ -129,7 +130,7 @@ class EditLaporanActivity : AppCompatActivity() {
                                 val proyekId = p?.idProyek
                                 laporanViewModel.delete(p.id!!)
                                 val intent = Intent(this, LaporanActivity::class.java)
-                                intent.putExtra("level", "peternak")
+                                intent.putExtra("level", LEVEL_PETERNAK)
                                 intent.putExtra("id", proyekId)
                                 startActivity(intent)
                             }.create().show()

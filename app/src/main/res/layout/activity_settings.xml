@@ -61,7 +61,7 @@
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nama lengkap"
+                android:hint="Nama lengkap sesuai KTP"
                 android:layout_marginVertical="4dp"
                 android:inputType="textPersonName|textCapWords"/>
 
@@ -126,6 +126,16 @@
                         android:textColor="@color/white"/>
                 </androidx.cardview.widget.CardView>
 
+                <ImageButton
+                    android:id="@+id/ib_ktp_help_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_info"
+                    android:tint="@color/green"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.ravikoradiya.zoomableimageview.ZoomableImageView
                     android:id="@+id/img_ktp_settings"
                     android:layout_width="180dp"
@@ -147,6 +157,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/img_ktp_settings"
                     app:layout_constraintTop_toTopOf="@+id/img_ktp_settings" />
+
+                <TextView
+                    android:id="@+id/tv_ktp_rejection_note_settings"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/font_nm"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_ktp_settings" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -159,8 +182,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rekening"
-                    android:layout_marginTop="16dp"/>
+                    android:text="Rekening"/>
 
                 <EditText
                     android:id="@+id/edt_account_bank_settings"

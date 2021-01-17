@@ -17,6 +17,7 @@ import com.example.ternavest.ui.both.profile.DetailProfileActivity
 import com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
 import com.example.ternavest.ui.peternak.kelola.proyek.EditProyekActivity
+import com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso
@@ -83,7 +84,7 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
         }
         view.imgLaporanProyek.setOnClickListener {
             val intent = Intent(context, LaporanHomeActivity::class.java)
-            intent.putExtra("level", "investor")
+            intent.putExtra("level", LEVEL_INVESTOR)
             intent.putExtra("id", p?.id)
             startActivity(intent)
         }

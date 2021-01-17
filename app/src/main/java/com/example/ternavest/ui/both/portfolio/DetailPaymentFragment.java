@@ -34,7 +34,7 @@ import static com.example.ternavest.utils.DateUtils.getFullDate;
 
 public class DetailPaymentFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     private CardView cvStatus;
-    private TextView tvStatus, tvDate;
+    private TextView tvStatus, tvDate, tvRejectionNote;
     private ImageView imgPayment;
     private Button btnApprove, btnReject;
     private Spinner spRejectionNote;
@@ -59,8 +59,10 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
         cvStatus = view.findViewById(R.id.cv_status_dp);
         tvStatus = view.findViewById(R.id.tv_status_dp);
         tvDate = view.findViewById(R.id.tv_date_dp);
+        tvRejectionNote = view.findViewById(R.id.tv_rejection_note_dp);
         imgPayment = view.findViewById(R.id.img_receipt_dp);
         spRejectionNote = view.findViewById(R.id.spin_reject_dp);
+        tvRejectionNote.setVisibility(View.GONE);
 
         btnApprove = view.findViewById(R.id.btn_approve_dp);
         btnReject = view.findViewById(R.id.btn_reject_dp);
@@ -81,14 +83,18 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
                 case PAY_APPROVED:
                     status = "Disetujui";
                     cvStatus.setCardBackgroundColor(getContext().getResources().getColor(R.color.blue));
+                    tvRejectionNote.setVisibility(View.GONE);
                     break;
                 case PAY_REJECT:
                     status = "Ditolak";
                     cvStatus.setCardBackgroundColor(getContext().getResources().getColor(R.color.red));
+                    tvRejectionNote.setVisibility(View.VISIBLE);
+                    tvRejectionNote.setText(payment.getRejectionNote());
                     break;
                 case PAY_PENDING:
                     status = "Pending";
                     cvStatus.setCardBackgroundColor(getContext().getResources().getColor(R.color.orange));
+                    tvRejectionNote.setVisibility(View.GONE);
 
                     if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
                         btnApprove.setVisibility(View.VISIBLE);

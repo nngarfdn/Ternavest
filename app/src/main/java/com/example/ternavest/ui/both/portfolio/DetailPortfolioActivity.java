@@ -3,7 +3,6 @@ package com.example.ternavest.ui.both.portfolio;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.view.menu.*;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,7 +14,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ActionMode;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.PaymentAdapter;
@@ -38,7 +34,6 @@ import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.both.profile.DetailProfileActivity;
 import com.example.ternavest.ui.investor.home.DetailProyekInvestasiFragment;
 import com.example.ternavest.ui.investor.portfolio.PaymentActivity;
-import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
@@ -96,6 +91,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){

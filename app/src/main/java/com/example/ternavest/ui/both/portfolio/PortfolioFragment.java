@@ -71,21 +71,16 @@ public class PortfolioFragment extends Fragment {
         portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
             @Override
             public void onChanged(ArrayList<Portfolio> portfolioList) {
-                if (portfolioList.isEmpty()){
-                    adapter.setData(portfolioList);
-                    imgIlustrasi.setVisibility(View.VISIBLE);
-                }else {
-                    adapter.setData(portfolioList);
-                    imgIlustrasi.setVisibility(View.INVISIBLE);
-                }
-
+                adapter.setData(portfolioList);
+                if (portfolioList.isEmpty()) imgIlustrasi.setVisibility(View.VISIBLE);
+                else imgIlustrasi.setVisibility(View.INVISIBLE);
             }
         });
         portfolioViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) Log.w(TAG, "Listen failed", error);
-                else if (value != null && !value.isEmpty()){
+                else if (value != null){
                     portfolioViewModel.loadData(userPreference.getUserLevel());
                     Log.d(TAG, "Changes detected");
                 }

@@ -90,9 +90,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btnLogOut.setOnClickListener(this);
 
         btnKtp.setVisibility(View.GONE);
-        loadImageFromUrl(imgPhoto, firebaseUser.getPhotoUrl().toString());
-        tvName.setText(firebaseUser.getDisplayName());
-        tvEmail.setText(firebaseUser.getEmail());
 
         ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.loadData();
@@ -101,6 +98,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(Profile result) {
                 profile = result;
+
+                loadImageFromUrl(imgPhoto, profile.getPhoto());
+                tvName.setText(profile.getName());
+                tvEmail.setText(profile.getEmail());
 
                 if (profile.getVerificationStatus().equals(VERIF_APPROVED)){
                     btnKtp.setText("Akun terverifikasi");
@@ -125,7 +126,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) Log.w(TAG, "Listen failed", error);
-                else if (value != null && !value.isEmpty()){
+                else if (value != null){
                     profileViewModel.loadData();
                     Log.d(TAG, "Changes detected");
                 }
@@ -148,7 +149,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     dialog.setMessage("Kamu bisa mengajukan verifikasi melalui pengaturan profil dengan cara mengunggah foto KTP.");
                 }
 
-                dialog.setNeutralButton("Tutup", null);
+                dialog.setPositiveButton("Tutup", null);
                 dialog.create().show();
                 break;
 

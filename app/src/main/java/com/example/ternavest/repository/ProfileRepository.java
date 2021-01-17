@@ -25,15 +25,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
-import static com.example.ternavest.utils.AppUtils.convertBitmapToByteArray;
-import static com.example.ternavest.utils.AppUtils.convertUriToByteArray;
-import static com.example.ternavest.utils.AppUtils.getCompressedByteArray;
+import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
+import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
+import static com.example.ternavest.utils.ImageUtils.convertBitmapToByteArray;
+import static com.example.ternavest.utils.ImageUtils.convertUriToByteArray;
+import static com.example.ternavest.utils.ImageUtils.getCompressedByteArray;
 
 public class ProfileRepository {
     public static final String FOLDER_KTP = "ktp";
@@ -77,15 +76,15 @@ public class ProfileRepository {
                             Profile profile;
 
                             if (!task.getResult().exists()) { // Kalau belum ada profil di Firestore
-                                profile = new Profile();
-
                                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                profile.setId(firebaseUser.getUid());
-                                profile.setName(firebaseUser.getDisplayName());
-                                profile.setEmail(firebaseUser.getEmail());
-
-                                profile.setLevel("peternak");
-                                profile.setVerificationStatus("pending");
+                                profile = new Profile(
+                                        firebaseUser.getUid(),
+                                        firebaseUser.getDisplayName(),
+                                        firebaseUser.getEmail(),
+                                        LEVEL_PETERNAK,
+                                        VERIF_PENDING,
+                                        null
+                                );
                                 insert(profile);
                             } else profile = snapshotToObject(task.getResult());
 
@@ -98,7 +97,7 @@ public class ProfileRepository {
 
     public void insert(Profile profile){
         reference.document(userId)
-                .set(objectToHashMap(profile))
+                .set(objectToHashMapForInsert(profile))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -123,12 +122,12 @@ public class ProfileRepository {
     // Khusus ganti foto profil
     public void update(String photo){
         reference.document(userId)
-                .update("photo", photo)
+                .update("foto", photo)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated");
-                        else Log.w(TAG, "Error updating document", task.getException());
+                        if (task.isSuccessful()) Log.d(TAG, "Profile photo was updated");
+                        else Log.w(TAG, "Error updating profile photo", task.getException());
                     }
                 });
     }
@@ -138,13 +137,14 @@ public class ProfileRepository {
         reference.document(userId)
                 .update(
                         "ktp", ktp,
-                        "statusVerifikasi", "pending"
+                        "statusVerifikasi", VERIF_PENDING,
+                        "alasanDitolakVerifikasi", null
                 )
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated");
-                        else Log.w(TAG, "Error updating document", task.getException());
+                        if (task.isSuccessful()) Log.d(TAG, "sendVerification successful");
+                        else Log.w(TAG, "Error sendVerification", task.getException());
                     }
                 });
 
@@ -197,14 +197,14 @@ public class ProfileRepository {
                     @Override
                     public void onSuccess(Uri uri) {
                         callback.onSuccess(uri.toString());
-                        Log.d(TAG, "Image was uploaded");
+                        Log.d(TAG, "KTP was uploaded");
                     }
                 });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error uploading image", e);
+                Log.w(TAG, "Error uploading KTP", e);
             }
         });
     }
@@ -225,21 +225,33 @@ public class ProfileRepository {
                 });
     }
 
-    private Map<String, Object> objectToHashMap(Profile profile){
+    private Map<String, Object> objectToHashMapForInsert(Profile profile){
         Map<String, Object> document = new HashMap<>();
         document.put("id", profile.getId());
         document.put("nama", profile.getName());
         document.put("email", profile.getEmail());
         document.put("level", profile.getLevel());
-        document.put("foto", profile.getPhoto());
-        document.put("ktp", profile.getKtp());
+        document.put("statusVerifikasi", profile.getVerificationStatus());
+        document.put("alasanDitolakVerifikasi", profile.getVerificationRejectionNote());
+        return document;
+    }
+
+    private Map<String, Object> objectToHashMap(Profile profile){
+        Map<String, Object> document = new HashMap<>();
+        //document.put("id", profile.getId());
+        document.put("nama", profile.getName());
+        //document.put("email", profile.getEmail());
+        //document.put("level", profile.getLevel());
+        //document.put("foto", profile.getPhoto());
+        //document.put("ktp", profile.getKtp());
         document.put("alamat", profile.getAddress());
         document.put("telepon", profile.getPhone());
         document.put("whatsapp", profile.getWhatsApp());
         document.put("namaBank", profile.getAccountBank());
         document.put("namaRekening", profile.getAccountName());
         document.put("nomorRekening", profile.getAccountNumber());
-        document.put("statusVerifikasi", profile.getVerificationStatus());
+        //document.put("statusVerifikasi", profile.getVerificationStatus());
+        //document.put("alasanDitolakVerifikasi", profile.getVerificationRejectionNote());
         return document;
     }
 
@@ -257,7 +269,8 @@ public class ProfileRepository {
                 document.getString("namaBank"),
                 document.getString("namaRekening"),
                 document.getString("nomorRekening"),
-                document.getString("statusVerifikasi")
+                document.getString("statusVerifikasi"),
+                document.getString("alasanDitolakVerifikasi")
         );
     }
 }

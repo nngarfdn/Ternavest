@@ -70,6 +70,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_dp"
                 app:drawableTint="@color/green" />
 
+            <TextView
+                android:id="@+id/tv_rejection_note_dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/loading"
+                android:textColor="@color/red"
+                android:textSize="@dimen/font_nm"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date_dp" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_receipt_dp"
                 android:layout_width="match_parent"
@@ -78,15 +90,15 @@
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_date_dp" >
+                app:layout_constraintTop_toBottomOf="@+id/tv_rejection_note_dp">
 
                 <com.ravikoradiya.zoomableimageview.ZoomableImageView
                     android:id="@+id/img_receipt_dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="8dp"
-                    android:src="@drawable/upload"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/upload" />
             </androidx.cardview.widget.CardView>
 
             <TextView
