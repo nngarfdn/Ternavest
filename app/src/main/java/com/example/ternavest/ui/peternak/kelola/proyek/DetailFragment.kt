@@ -20,20 +20,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail.view.*
-import kotlinx.android.synthetic.main.fragment_detail.view.imgDeskripsiLaporan
-import kotlinx.android.synthetic.main.fragment_detail.view.imgLaporanProyek
-import kotlinx.android.synthetic.main.fragment_detail.view.imgProfile
-import kotlinx.android.synthetic.main.fragment_detail.view.txtDeskripsi
-import kotlinx.android.synthetic.main.fragment_detail.view.txtJenisHewanDetail
-import kotlinx.android.synthetic.main.fragment_detail.view.txtPeminat
-import kotlinx.android.synthetic.main.fragment_detail.view.txtRoiDetail
-import kotlinx.android.synthetic.main.fragment_detail.view.txtTanggalDetail
-import kotlinx.android.synthetic.main.fragment_detail.view.txtTitle
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.*
-import java.util.*
-import kotlin.collections.ArrayList
 
-class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
+class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
     // TODO: Rename and change types of parameters
     private val TAG = "DetailFragment"
     private var param1: String? = null
@@ -44,6 +32,9 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var portfolioViewModel: PortfolioViewModel
     private lateinit var profileViewModel: ProfileViewModel
+    private var listProductId: ArrayList<String> = ArrayList()
+    private var listProfile : ArrayList<Profile> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,27 +59,23 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
         portfolioViewModel.queryPeminat(p?.id)
         portfolioViewModel.data.observe(this, { portfolioList ->
 
-            var nama: ArrayList<String> = ArrayList()
-            for (portfolio in portfolioList) {
-                profileViewModel.loadData(portfolio.investorId)
-                nama.clear()
-                profileViewModel.data.observe(this, { profile ->
-                    nama.add(profile.name)
-                    Log.d(TAG, "onCreateView nama: ${profile.name}")
-
-                    val b = nama.distinct()
-
-                    Log.d(TAG, "onCreateView: anggota $b")
+            for (porto in portfolioList) {
+//                listProductId.add(porto.investorId)
+                profileViewModel.loadData(porto.investorId)
+                profileViewModel.data.observe(this, { profil ->
+                    listProfile.add(profil)
+                    val b = listProfile.distinct()
+                    Log.d(TAG, "onCreateView: load profile ${profil.name}")
+                    Log.d(TAG, "onCreateView: list profile $b")
                 })
-
             }
+
 
 
         })
 
-        var listProfile: MutableList<String?>? = mutableListOf()
 
-        val listProductId = p?.peminat
+
 
         view.txtPeminat.setText(listProfile.toString())
 
@@ -124,16 +111,32 @@ class DetailFragment : BottomSheetDialogFragment(), PeminatCallback {
     }
 
 
-    override fun onFinish(listItem: ArrayList<Profile>?) {
-        val listNama: ArrayList<String> = ArrayList<String>()
 
-        if (listItem != null) {
-            for (profil in listItem) {
-                listNama
-            }
+
+    private fun loadProductById() {
+        val listItem: ArrayList<Profile> = ArrayList<Profile>()
+        val iterator: Iterator<String> = listProductId.iterator()
+        while (iterator.hasNext()) {
+            database!!.collection("profil").document(iterator.next())
+                    .get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val product: Profile? = task.result!!.toObject(Profile::class.java)
+                            if (product != null) listItem.add(product)
+                            if (!iterator.hasNext()) onFinish(listItem) // Pemuatan id terakhir
+                        }
+                    }
         }
-
     }
 
+    override fun onFinish(listItem: ArrayList<Profile>) {
+        for (item in listItem) {
+            Log.d(TAG, "onFinish: nama peminat ${item?.name}")
+        }
+    }
 
+}
+
+internal interface ProfileCallback {
+    fun onFinish(listItem: ArrayList<Profile>)
 }

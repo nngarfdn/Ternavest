@@ -194,11 +194,20 @@
                 android:layout_below="@id/imgDeskripsiLaporan"
                 android:layout_marginTop="16dp"
                 android:text="Peminat proyek"/>
+
+            <TextView
+                android:id="@+id/txtPeminatKosong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_below="@id/txtPeminat"
+                android:layout_marginTop="8dp"
+                android:text="Belum ada peminat"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_peminat"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgDeskripsiLaporan"/>
+                android:layout_height="60dp"
+                android:layout_below="@+id/txtPeminat"/>
 
             <Button
                 android:id="@+id/btnInvestasiSekarang"
