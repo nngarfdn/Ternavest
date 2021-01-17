@@ -3,6 +3,7 @@ package com.example.ternavest.ui.both.portfolio;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.view.menu.*;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,8 +16,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ActionMode;
+
 import android.view.Menu;
 import android.view.MenuInflater;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -154,7 +157,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
             Menu menu = toolbar.getMenu();
             MenuItem item = menu.findItem(R.id.action_delete);
-            item.setVisible(false);
+//            item.setVisible(false);
 
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
@@ -364,6 +367,12 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_delete, menu);
+
+        if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) {
+            MenuItem item = menu.findItem(R.id.action_delete);
+            item.setVisible(false);
+        }
+
         return true;
     }
 

@@ -123,7 +123,7 @@ class EditLaporanActivity : AppCompatActivity() {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
                             .setTitle("Setel ulang kata sandi")
-                            .setMessage("Kirim tautan penyetelan ulang kata sandi ke email Anda?")
+                            .setMessage("Apakah kamu yakin ingin menghapus ?")
                             .setNegativeButton("Tidak", null)
                             .setPositiveButton("Ya") { dialogInterface, i ->
                                 val proyekId = p?.idProyek

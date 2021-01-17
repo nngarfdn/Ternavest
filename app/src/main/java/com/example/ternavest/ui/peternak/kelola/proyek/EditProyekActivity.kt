@@ -17,6 +17,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
 import com.example.ternavest.ui.peternak.main.PeternakActivity
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
@@ -77,15 +79,23 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         toolbartambahpproyek.setOnMenuItemClickListener {item ->
-                when (item.getItemId()) {
-                    R.id.action_delete -> {
-                        proyekViewModel.delete(p.id!!)
-                        startActivity(Intent(this, PeternakActivity::class.java))
-                        true
 
-                    }
-                    else -> super.onOptionsItemSelected(item)
+            when (item.getItemId()) {
+                R.id.action_delete -> {
+                    AlertDialog.Builder(this)
+                            .setTitle("Hapus Proyek")
+                            .setMessage("Apakah kamu yakin ingin menghapus ?")
+                            .setNegativeButton("Tidak", null)
+                            .setPositiveButton("Ya") { dialogInterface, i ->
+                                proyekViewModel.delete(p.id!!)
+                                startActivity(Intent(this, PeternakActivity::class.java))
+                            }.create().show()
+
+                    true
+
                 }
+                else -> super.onOptionsItemSelected(item)
+            }
         }
 
         proyekViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProyekViewModel::class.java)

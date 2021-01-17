@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
@@ -90,9 +91,11 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()){
-                        project = task.getResult().toObject(Proyek.class);
+                        project = Objects.requireNonNull(task.getResult()).toObject(Proyek.class);
 
-                        tvProject.setText(project.getNamaProyek());
+                        if (project != null) {
+                            tvProject.setText(project.getNamaProyek());
+                        }
 
                         String status = portfolio.getStatus();
                         long totalCost = 0;

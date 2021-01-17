@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ternavest.R;
@@ -37,6 +38,7 @@ public class PortfolioFragment extends Fragment {
     private RecyclerView recyclerView;
     private PortfolioViewModel portfolioViewModel;
     private PortfolioAdapter adapter;
+    private ImageView imgIlustrasi;
 
     public PortfolioFragment() {}
 
@@ -53,6 +55,7 @@ public class PortfolioFragment extends Fragment {
         UserPreference userPreference = new UserPreference(getContext());
 
         recyclerView = view.findViewById(R.id.rv_portfolio_portfolio);
+        imgIlustrasi = view.findViewById(R.id.img_ilustrasi);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         adapter = new PortfolioAdapter();
@@ -68,7 +71,14 @@ public class PortfolioFragment extends Fragment {
         portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
             @Override
             public void onChanged(ArrayList<Portfolio> portfolioList) {
-                adapter.setData(portfolioList);
+                if (portfolioList.isEmpty()){
+                    adapter.setData(portfolioList);
+                    imgIlustrasi.setVisibility(View.VISIBLE);
+                }else {
+                    adapter.setData(portfolioList);
+                    imgIlustrasi.setVisibility(View.INVISIBLE);
+                }
+
             }
         });
         portfolioViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
