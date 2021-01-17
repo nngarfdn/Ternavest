@@ -185,7 +185,12 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 // Atur status pembayaran terakhir
                 if (adapter.getItemCount() > 0){
                     setLastPaymentStatus(adapter.getData().get(adapter.getItemCount()-1).getStatus());
-                } // Saat 0, sudah diatur di intent hasExtra
+                } else {
+                    tvStatusPayment.setText("Belum bayar");
+                    tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+                    tvPayment.setVisibility(View.INVISIBLE);
+                    tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
+                }
             }
         });
 
@@ -201,13 +206,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 // Atur informasi proyek dan portfolio
                 toolbar.setTitle(project.getNamaProyek());
                 tvProject.setText(project.getNamaProyek());
-
-                // Default riwayat pembayaran -> size 0
-                tvStatusPayment.setText("Belum bayar");
-                tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-                tvPayment.setVisibility(View.INVISIBLE);
-                if (portfolio.getTotalCost() == 0) // Tidak ada pengajuan pembayaran yang pending, biaya hewan belum disimpan di portofolio
-                    tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
                 // Atur status proyek
                 if (differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0){
@@ -272,7 +270,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-
             case R.id.cv_portfolio_portfolio:
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("proyek", project);
@@ -360,7 +357,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_delete, menu);
 

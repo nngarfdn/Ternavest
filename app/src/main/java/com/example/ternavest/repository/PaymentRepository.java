@@ -50,9 +50,8 @@ public class PaymentRepository {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        ArrayList<Payment> paymentList = new ArrayList<>();
-
-                        if (!task.getResult().isEmpty()){
+                        if (task.isSuccessful()){
+                            ArrayList<Payment> paymentList = new ArrayList<>();
                             for (DocumentSnapshot snapshot : task.getResult()){
                                 paymentList.add(snapshotToObject(snapshot));
                             }

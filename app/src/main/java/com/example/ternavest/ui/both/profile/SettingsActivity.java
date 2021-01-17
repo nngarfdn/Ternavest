@@ -40,6 +40,7 @@ import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_APPROVED;
 import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
 import static com.example.ternavest.utils.AppUtils.VERIF_REJECT;
+import static com.example.ternavest.utils.AppUtils.isValidPhone;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.EditTextUtils.getFixText;
@@ -185,9 +186,16 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                 if (isNull(name) || isNull(address) || isNull(phone) || isNull(whatsApp)){
                     if (isNull(name)) showToast(this, "Nama lengkap belum dimasukkan");
-                    if (isNull(address)) showToast(this, "Alamat belum dimasukkan");
-                    if (isNull(phone)) showToast(this, "Mohon masukkan nomor telepon yang dapat dihubungi");
-                    if (isNull(whatsApp)) showToast(this, "Mohon masukkan nomor WhatsApp yang dapat dihubungi");
+                    else if (isNull(address)) showToast(this, "Alamat belum dimasukkan");
+                    else if (isNull(phone)) showToast(this, "Mohon masukkan nomor telepon yang dapat dihubungi");
+                    else if (isNull(whatsApp)) showToast(this, "Mohon masukkan nomor WhatsApp yang dapat dihubungi");
+                    return;
+                }
+
+                if (!isValidPhone(phone) || !isValidPhone(whatsApp)){
+                    if (!isValidPhone(phone)) edtPhone.setError("Awali nomor telepon dengan 62");
+                    if (!isValidPhone(whatsApp)) edtWhatsApp.setError("Awali nomor WhatsApp dengan 62");
+                    showToast(getApplicationContext(), "Awali nomor telepon dan WhatsApp dengan 62");
                     return;
                 }
 
@@ -203,8 +211,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                     if (isNull(accountBank) || isNull(accountNumber) || isNull(accountName)){
                         if (isNull(accountBank)) showToast(getApplicationContext(), "Mohon pilih nama bank yang sesuai");
-                        if (isNull(accountNumber)) showToast(getApplicationContext(), "Mohon masukkan nomor rekening");
-                        if (isNull(accountName)) showToast(getApplicationContext(), "Mohon masukkan nama pemilik rekening");
+                        else if (isNull(accountNumber)) showToast(getApplicationContext(), "Mohon masukkan nomor rekening");
+                        else if (isNull(accountName)) showToast(getApplicationContext(), "Mohon masukkan nama pemilik rekening");
                         return;
                     }
 
