@@ -1,7 +1,6 @@
 package com.example.ternavest.repository;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
@@ -30,7 +29,6 @@ import java.util.Map;
 
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
-import static com.example.ternavest.utils.ImageUtils.convertBitmapToByteArray;
 import static com.example.ternavest.utils.ImageUtils.convertUriToByteArray;
 import static com.example.ternavest.utils.ImageUtils.getCompressedByteArray;
 
@@ -181,30 +179,6 @@ public class ProfileRepository {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.w(TAG, "Error uploading image", e);
-            }
-        });
-    }
-
-    public void uploadKTP(Context context, Bitmap bitmap, String fileName, OnImageUploadCallback callback){
-        byte[] image = convertBitmapToByteArray(context, bitmap);
-
-        StorageReference reference = storage.getReference().child(FOLDER_KTP + "/" + fileName);
-        UploadTask uploadTask = reference.putBytes(image);
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        callback.onSuccess(uri.toString());
-                        Log.d(TAG, "KTP was uploaded");
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error uploading KTP", e);
             }
         });
     }

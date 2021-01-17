@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,6 +34,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.ternavest.repository.ProfileRepository.FOLDER_KTP;
 import static com.example.ternavest.repository.ProfileRepository.FOLDER_PROFILE;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
@@ -54,6 +55,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private LoadingDialog loadingDialog;
     private Profile profile;
     private ProfileViewModel profileViewModel;
+    private Uri uriKTP;
 
     private Button btnKtp;
     private CardView cvVerification;
@@ -171,8 +173,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                             .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    ContentValues values = new ContentValues();
+                                    values.put(MediaStore.Images.Media.TITLE, "Ambil foto KTP");
+                                    values.put(MediaStore.Images.Media.DESCRIPTION, "Menggunakan kamera");
+                                    uriKTP = getContentResolver().insert(
+                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    startActivityForResult(Intent.createChooser(intent, "Ambil foto KTP:"), RC_KTP_IMAGE);
+                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uriKTP);
+                                    startActivityForResult(intent, RC_KTP_IMAGE);
                                 }
                             }).create().show();
                 }
@@ -269,14 +277,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             }
         } else if (requestCode == RC_KTP_IMAGE){
             if (resultCode == Activity.RESULT_OK){
-                if (data != null) if (data.hasExtra("data")){
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    imgKtp.setImageBitmap(bitmap);
-
+                try {
+                    loadImageFromUrl(imgKtp, uriKTP.toString());
                     showToast(getApplicationContext(), "Mengajukan verifikasi KTP...");
-
                     String fileName = firebaseUser.getUid() + ".jpeg";
-                    profileViewModel.uploadKTP(this, bitmap, fileName, new OnImageUploadCallback() {
+                    profileViewModel.uploadImage(this, uriKTP, FOLDER_KTP, fileName, new OnImageUploadCallback() {
                         @Override
                         public void onSuccess(String imageUrl) {
                             profileViewModel.sendVerification(imageUrl);
@@ -284,6 +289,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                             showToast(getApplicationContext(), "Verifikasi KTP berhasil diajukan.");
                         }
                     });
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }
