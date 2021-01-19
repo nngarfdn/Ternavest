@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class PortfolioFragment extends Fragment {
     private RecyclerView recyclerView;
     private PortfolioViewModel portfolioViewModel;
     private PortfolioAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView imgIlustrasi;
 
     public PortfolioFragment() {}
@@ -56,6 +58,7 @@ public class PortfolioFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.rv_portfolio_portfolio);
         imgIlustrasi = view.findViewById(R.id.img_ilustrasi);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         adapter = new PortfolioAdapter();
@@ -67,6 +70,35 @@ public class PortfolioFragment extends Fragment {
         else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) toolbar.setTitle("Peminat");
 
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
+        portfolioViewModel.loadData(userPreference.getUserLevel());
+        portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
+            @Override
+            public void onChanged(ArrayList<Portfolio> portfolioList) {
+                adapter.setData(portfolioList);
+                if (portfolioList.isEmpty()) imgIlustrasi.setVisibility(View.VISIBLE);
+                else imgIlustrasi.setVisibility(View.INVISIBLE);
+            }
+        });
+        portfolioViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) Log.w(TAG, "Listen failed", error);
+                else if (value != null){
+                    portfolioViewModel.loadData(userPreference.getUserLevel());
+                    Log.d(TAG, "Changes detected");
+                }
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            getData();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+    }
+
+    private void getData() {
+
+        UserPreference userPreference = new UserPreference(getContext());
         portfolioViewModel.loadData(userPreference.getUserLevel());
         portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
             @Override

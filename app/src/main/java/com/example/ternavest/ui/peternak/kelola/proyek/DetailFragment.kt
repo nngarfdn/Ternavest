@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.R
+import com.example.ternavest.adapter.recycler.PeminatAdaper
 import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
@@ -19,6 +21,7 @@ import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 
 class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
@@ -26,19 +29,16 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
     private val TAG = "DetailFragment"
     private var param1: String? = null
     private var param2: String? = null
-    private var database: FirebaseFirestore? = null
 
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var portfolioViewModel: PortfolioViewModel
     private lateinit var profileViewModel: ProfileViewModel
-    private var listProductId: ArrayList<String> = ArrayList()
     private var listProfile : ArrayList<Profile> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        database = FirebaseFirestore.getInstance()
         arguments?.let {
 
         }
@@ -60,33 +60,37 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
         portfolioViewModel.data.observe(this, { portfolioList ->
 
             for (porto in portfolioList) {
-//                listProductId.add(porto.investorId)
                 profileViewModel.loadData(porto.investorId)
                 profileViewModel.data.observe(this, { profil ->
                     listProfile.add(profil)
                     val b = listProfile.distinct()
                     Log.d(TAG, "onCreateView: load profile ${profil.name}")
                     Log.d(TAG, "onCreateView: list profile $b")
+
+                    if (b.isNotEmpty()){
+                        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
+                        rv_peminat.setLayoutManager(layoutManager)
+                        val adapter = PeminatAdaper(b)
+                        rv_peminat.setAdapter(adapter)
+                        txtPeminatKosong.visibility = View.INVISIBLE
+                    } else {
+                        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
+                        rv_peminat.setLayoutManager(layoutManager)
+                        val adapter = PeminatAdaper(b)
+                        rv_peminat.setAdapter(adapter)
+                        txtPeminatKosong.visibility = View.VISIBLE
+                    }
+
                 })
             }
 
-
-
         })
-
-
-
-
-        view.txtPeminat.setText(listProfile.toString())
-
 
         view.txtTitle.setText(p?.namaProyek)
         view.txtDeskripsi.setText(p?.deskripsiProyek)
         view.txtJenisHewanDetail.setText(p?.jenisHewan)
         view.txtRoiDetail.setText("${p?.roi}%")
         view.txtTanggalDetail.setText("${p?.waktuMulai} - ${p?.waktuSelesai}")
-
-//        view.btnInvestasiSekarang.visibility = View.INVISIBLE
 
         Picasso.get()
                 .load(p?.photoProyek)
@@ -110,24 +114,6 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
         return view
     }
 
-
-
-
-    private fun loadProductById() {
-        val listItem: ArrayList<Profile> = ArrayList<Profile>()
-        val iterator: Iterator<String> = listProductId.iterator()
-        while (iterator.hasNext()) {
-            database!!.collection("profil").document(iterator.next())
-                    .get()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val product: Profile? = task.result!!.toObject(Profile::class.java)
-                            if (product != null) listItem.add(product)
-                            if (!iterator.hasNext()) onFinish(listItem) // Pemuatan id terakhir
-                        }
-                    }
-        }
-    }
 
     override fun onFinish(listItem: ArrayList<Profile>) {
         for (item in listItem) {

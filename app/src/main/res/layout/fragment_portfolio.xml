@@ -25,13 +25,17 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_peminat_kosong"/>
 
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_below="@id/toolbar1"
+        android:layout_height="wrap_content">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_portfolio_portfolio"
         android:layout_width="match_parent"
-        android:layout_below="@id/toolbar1"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:paddingHorizontal="@dimen/dimen_16"
         android:overScrollMode="never"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

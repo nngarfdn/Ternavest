@@ -32,16 +32,13 @@ import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.*
 import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.*
 
 class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private var database: FirebaseFirestore? = null
     private val TAG = "DetailProyekInvestasiFr"
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var portfolioViewModel: PortfolioViewModel
     private lateinit var profileViewModel: ProfileViewModel
-    private var listProductId: ArrayList<String> = ArrayList()
     private var listProfile : ArrayList<Profile> = ArrayList()
 
 
