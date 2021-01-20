@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".ui.welcome.intro.FragmentIntrob">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/introb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_intro_b"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/txt_judul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="Bangun"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/black"
+        android:layout_below="@+id/introb"/>
+
+    <TextView
+        android:layout_below="@id/txt_judul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Proyek ternak tanpa takut modal"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

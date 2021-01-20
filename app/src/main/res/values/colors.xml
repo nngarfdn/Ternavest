@@ -21,4 +21,20 @@
     <color name="gray_light_transparent">#A6EBEBEB</color>
     <color name="shimmer">#dddddd</color>
     <color name="textDescription">#3F3F3F</color>
+
+    <array name="array_dot_active">
+        <item>@color/green_dark</item>
+        <item>@color/green_dark</item>
+        <item>@color/green_dark</item>
+        <item>@color/green_dark</item>
+
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/gray_light</item>
+        <item>@color/gray_light</item>
+        <item>@color/gray_light</item>
+        <item>@color/gray_light</item>
+
+    </array>
 </resources>

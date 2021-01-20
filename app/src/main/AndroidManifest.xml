@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.ternavest">
 
-
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.investor.portfolio.PaymentActivity"/>
+        <activity android:name=".ui.both.login.LoginActivity"></activity>
+        <activity android:name=".ui.welcome.WelcomeActivity" />
+        <activity android:name=".testing.MainActivity" />
+        <activity android:name=".ui.investor.portfolio.PaymentActivity" />
         <activity android:name=".ui.both.portfolio.AddUpdatePortfolioActivity" />
         <activity android:name=".ui.both.portfolio.DetailPortfolioActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.EditLaporanActivity" />
@@ -22,13 +24,13 @@
         <activity android:name=".ui.peternak.kelola.proyek.EditProyekActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.LaporanActivity" />
         <activity android:name=".ui.both.profile.SettingsActivity" />
-        <activity android:name=".ui.investor.home.LaporanHomeActivity"/>
+        <activity android:name=".ui.investor.home.LaporanHomeActivity" />
         <activity android:name=".ui.both.profile.DetailProfileActivity" />
         <activity android:name=".ui.peternak.main.PeternakActivity" />
         <activity android:name=".ui.investor.main.InvestorActivity" />
         <activity android:name=".testing.WilayahTest" />
         <activity android:name=".ui.peternak.kelola.proyek.TambahProyekActivity" />
-        <activity android:name=".testing.MainActivity">
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

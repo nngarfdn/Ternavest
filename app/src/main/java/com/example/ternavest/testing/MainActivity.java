@@ -37,7 +37,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
     private static final int RC_SIGN_IN = 9001;
-
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
     private Profile profile;
