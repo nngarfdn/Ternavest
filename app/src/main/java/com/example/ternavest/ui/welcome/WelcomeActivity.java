@@ -33,7 +33,6 @@ public class WelcomeActivity extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private int[] layouts;
     private Button btnPeternak, btnInvest;
-    private PrefManager prefManager;
 
     @SuppressLint("ObsoleteSdkInt")
     @Override
@@ -73,14 +72,14 @@ public class WelcomeActivity extends AppCompatActivity {
         btnPeternak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen(LEVEL_PETERNAK);
+                launchLogin(LEVEL_PETERNAK);
             }
         });
 
         btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen(LEVEL_INVESTOR);
+                launchLogin(LEVEL_INVESTOR);
             }
         });
     }
@@ -110,8 +109,7 @@ public class WelcomeActivity extends AppCompatActivity {
         return viewPager.getCurrentItem() + 1;
     }
 
-    private void launchHomeScreen(String level) {
-        prefManager.setFirstTimeLaunch(false);
+    private void launchLogin(String level) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("EXTRA_LEVEL", level);
         startActivity(intent);
