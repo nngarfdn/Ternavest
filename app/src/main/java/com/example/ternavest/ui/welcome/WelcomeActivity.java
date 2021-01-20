@@ -1,18 +1,12 @@
 package com.example.ternavest.ui.welcome;
 
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,25 +23,16 @@ import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 
 public class WelcomeActivity extends AppCompatActivity {
-    private ViewPager viewPager;
     private LinearLayout dotsLayout;
     private int[] layouts;
     private Button btnPeternak, btnInvest;
 
-    @SuppressLint("ObsoleteSdkInt")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        // membuat transparan notifikasi
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-
         setContentView(R.layout.activity_welcome);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnPeternak = (Button) findViewById(R.id.btn_peternak);
         btnInvest = (Button) findViewById(R.id.btn_invest);
@@ -61,9 +46,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // tombol dots (lingkaran kecil perpindahan slide)
         addBottomDots(0);
-
-        // membuat transparan notifikasi
-        changeStatusBarColor();
 
         MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
@@ -105,15 +87,10 @@ public class WelcomeActivity extends AppCompatActivity {
             dots[currentPage].setTextColor(colorsActive[currentPage]);
     }
 
-    private int getItem() {
-        return viewPager.getCurrentItem() + 1;
-    }
-
     private void launchLogin(String level) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("EXTRA_LEVEL", level);
         startActivity(intent);
-        finish();
     }
 
     //  viewpager change listener
@@ -131,30 +108,17 @@ public class WelcomeActivity extends AppCompatActivity {
     };
 
     /**
-     * Making notification bar transparent
-     */
-    private void changeStatusBarColor() {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.TRANSPARENT);
-    }
-
-    /**
      * View pager adapter
      */
     public class MyViewPagerAdapter extends PagerAdapter {
-
-        public MyViewPagerAdapter() {
-        }
+        public MyViewPagerAdapter() {}
 
         @NotNull
         @Override
         public Object instantiateItem(@NotNull ViewGroup container, int position) {
             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
-
             return view;
         }
 
