@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adapter.recycler.ProyekAdaper;
+import com.example.ternavest.adapter.recycler.ProyekAdapter;
 import com.example.ternavest.viewmodel.ProyekViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -94,7 +94,7 @@ public class KelolaFragment extends Fragment {
                 shimmerKelola.stopShimmerAnimation();
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 rvKelolaProyek.setLayoutManager(layoutManager);
-                ProyekAdaper adapter = new ProyekAdaper(result);
+                ProyekAdapter adapter = new ProyekAdapter(result);
                 rvKelolaProyek.setAdapter(adapter);
             }
 

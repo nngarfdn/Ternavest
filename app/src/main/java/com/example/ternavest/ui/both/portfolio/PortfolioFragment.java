@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.PortfolioAdapter;
@@ -36,11 +35,12 @@ import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 public class PortfolioFragment extends Fragment {
     private static final String TAG = PortfolioFragment.class.getSimpleName();
 
-    private RecyclerView recyclerView;
-    private PortfolioViewModel portfolioViewModel;
     private PortfolioAdapter adapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private PortfolioViewModel portfolioViewModel;
+    private UserPreference userPreference;
+
     private ImageView imgIlustrasi;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public PortfolioFragment() {}
 
@@ -54,9 +54,9 @@ public class PortfolioFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
 
-        UserPreference userPreference = new UserPreference(getContext());
+        userPreference = new UserPreference(getContext());
 
-        recyclerView = view.findViewById(R.id.rv_portfolio_portfolio);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_portfolio_portfolio);
         imgIlustrasi = view.findViewById(R.id.img_ilustrasi);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -64,8 +64,7 @@ public class PortfolioFragment extends Fragment {
         adapter = new PortfolioAdapter();
         recyclerView.setAdapter(adapter);
 
-        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar1);
-
+        Toolbar toolbar = view.findViewById(R.id.toolbar1);
         if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) toolbar.setTitle("Portofolio");
         else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) toolbar.setTitle("Peminat");
 
@@ -91,32 +90,8 @@ public class PortfolioFragment extends Fragment {
         });
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            getData();
+            portfolioViewModel.loadData(userPreference.getUserLevel());
             swipeRefreshLayout.setRefreshing(false);
-        });
-    }
-
-    private void getData() {
-
-        UserPreference userPreference = new UserPreference(getContext());
-        portfolioViewModel.loadData(userPreference.getUserLevel());
-        portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
-            @Override
-            public void onChanged(ArrayList<Portfolio> portfolioList) {
-                adapter.setData(portfolioList);
-                if (portfolioList.isEmpty()) imgIlustrasi.setVisibility(View.VISIBLE);
-                else imgIlustrasi.setVisibility(View.INVISIBLE);
-            }
-        });
-        portfolioViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) Log.w(TAG, "Listen failed", error);
-                else if (value != null){
-                    portfolioViewModel.loadData(userPreference.getUserLevel());
-                    Log.d(TAG, "Changes detected");
-                }
-            }
         });
     }
 }

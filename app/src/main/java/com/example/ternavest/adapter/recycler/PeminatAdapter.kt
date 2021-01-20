@@ -1,21 +1,15 @@
 package com.example.ternavest.adapter.recycler
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ternavest.R
-import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Profile
-import com.example.ternavest.ui.peternak.kelola.laporan.DetailLaporanDialogFragment
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_laporan.view.*
 import kotlinx.android.synthetic.main.item_peminat.view.*
-import kotlinx.android.synthetic.main.item_proyek.view.*
 
-class PeminatAdaper (private val list: List<Profile>) : RecyclerView.Adapter<PeminatAdaper.ViewHolder>() {
+class PeminatAdapter (private val list: List<Profile>) : RecyclerView.Adapter<PeminatAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(

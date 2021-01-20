@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.R
-import com.example.ternavest.adapter.recycler.PeminatAdaper
+import com.example.ternavest.adapter.recycler.PeminatAdapter
 import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
@@ -70,13 +70,13 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
                     if (b.isNotEmpty()){
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
                         rv_peminat.setLayoutManager(layoutManager)
-                        val adapter = PeminatAdaper(b)
+                        val adapter = PeminatAdapter(b)
                         rv_peminat.setAdapter(adapter)
                         txtPeminatKosong.visibility = View.INVISIBLE
                     } else {
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
                         rv_peminat.setLayoutManager(layoutManager)
-                        val adapter = PeminatAdaper(b)
+                        val adapter = PeminatAdapter(b)
                         rv_peminat.setAdapter(adapter)
                         txtPeminatKosong.visibility = View.VISIBLE
                     }

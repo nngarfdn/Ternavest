@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 
 import com.example.ternavest.R;
-import com.example.ternavest.adapter.recycler.ProyekAdaper;
+import com.example.ternavest.adapter.recycler.ProyekAdapter;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;
@@ -41,29 +41,26 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
     public static final String EXTRA_PROFILE = "extra_profile";
 
     private Profile profile;
-    private ProyekAdaper adapter;
+    private ProyekAdapter adapter;
 
     private Button btnKtp, btnPhone, btnWhatsApp;
-    private RecyclerView recyclerView;
     private TextView tvLevel, tvAddress;
 
-    private ArrayList<Proyek> projectList = new ArrayList<>();
+    private final ArrayList<Proyek> projectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_profile);
 
-
         Toolbar toolbar = findViewById(R.id.toolbarProfile);
         setSupportActionBar(toolbar); //No Problerm
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = findViewById(R.id.rv_project_profile);
+        RecyclerView recyclerView = findViewById(R.id.rv_project_profile);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ProyekAdaper(projectList);
+        adapter = new ProyekAdapter(projectList);
         recyclerView.setAdapter(adapter);
 
         CircleImageView imgPhoto = findViewById(R.id.img_photo_profile);

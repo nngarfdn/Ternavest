@@ -60,22 +60,22 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     public static final String EXTRA_PAYMENT = "extra_payment";
     public static final String EXTRA_PORTFOLIO = "extra_portfolio";
     public static final String EXTRA_PROJECT = "extra_project";
+    public static final String PAY_EMPTY = "belum_ada_pembayaran";
 
-    private Toolbar toolbar;
-    private CircleImageView civProfile;
-    private TextView tvProject, tvTotalCost, tvCount, tvAction, tvProfile, tvStatusProject, tvStatusPayment, tvLevel, tvPayment;
     private Button btnUpdate, btnPayment;
     private CardView cvProfile, cvPortfolio;
-
+    private CircleImageView civProfile;
+    private TextView tvProject, tvTotalCost, tvCount, tvAction, tvProfile, tvStatusProject, tvStatusPayment, tvLevel, tvPayment;
+    private Toolbar toolbar;
 
     private LoadingDialog loadingDialog;
-    private Profile profile;
-    private Proyek project;
     private PaymentAdapter adapter;
-    private Portfolio portfolio;
     private PaymentViewModel paymentViewModel;
-    private ProfileViewModel profileViewModel;
+    private Portfolio portfolio;
     private PortfolioViewModel portfolioViewModel;
+    private Profile profile;
+    private ProfileViewModel profileViewModel;
+    private Proyek project;
     private UserPreference userPreference;
 
     private ArrayList<Payment> paymentList = new ArrayList<>();
@@ -85,9 +85,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_portfolio);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar1);
+        toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar); //No Problerm
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -103,15 +102,14 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        portfolioViewModel.delete(portfolio);
-                                        for (Payment payment : paymentList){
+                                        portfolioViewModel.delete(portfolio); // Hapus portofolio
+                                        for (Payment payment : paymentList){ // Hapus pembayaran + foto bukti
                                             paymentViewModel.delete(portfolio.getId(), payment.getId());
                                             paymentViewModel.deleteImage(payment.getImage());
                                         }
                                         onBackPressed();
                                     }
                                 }).create().show();
-
                         break;
 
                 }
@@ -151,14 +149,11 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
         tvAction.setText("Lihat proyek");
         if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
-            Menu menu = toolbar.getMenu();
-            MenuItem item = menu.findItem(R.id.action_delete);
-//            item.setVisible(false);
-
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
         }
-        cvProfile.setEnabled(false);
+        cvProfile.setEnabled(false); // Tunggu selesai query dulu
+        tvPayment.setVisibility(View.INVISIBLE);
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(this, new Observer<Profile>() {
@@ -166,7 +161,6 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
             public void onChanged(Profile result) {
                 profile = result;
 
-                // Atur informasi profil
                 tvProfile.setText(profile.getName());
                 loadImageFromUrl(civProfile, profile.getPhoto());
                 cvProfile.setEnabled(true);
@@ -185,11 +179,10 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 // Atur status pembayaran terakhir
                 if (adapter.getItemCount() > 0){
                     setLastPaymentStatus(adapter.getData().get(adapter.getItemCount()-1).getStatus());
+                    tvPayment.setVisibility(View.VISIBLE);
                 } else {
-                    tvStatusPayment.setText("Belum bayar");
-                    tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+                    setLastPaymentStatus(PAY_EMPTY);
                     tvPayment.setVisibility(View.INVISIBLE);
-                    tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
                 }
             }
         });
@@ -232,37 +225,35 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     }
 
     private void setLastPaymentStatus(String lastStatus) {
-        tvPayment.setVisibility(View.VISIBLE);
+        if (lastStatus.equals(PAY_EMPTY)) tvPayment.setVisibility(View.INVISIBLE);
+        else tvPayment.setVisibility(View.VISIBLE);
+
+        Menu menu = toolbar.getMenu();
+        MenuItem menuDelete = menu.findItem(R.id.action_delete);
+
         if (lastStatus.equals(PAY_APPROVED)){
             tvStatusPayment.setText("Disetujui");
             tvStatusPayment.setTextColor(getResources().getColor(R.color.blue));
+            tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
             tvStatusProject.setVisibility(View.VISIBLE);
 
-            tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
-
-            Menu menu = toolbar.getMenu();
-            MenuItem item = menu.findItem(R.id.action_delete);
-            item.setVisible(false);
-
+            menuDelete.setVisible(false);
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
         } else if (lastStatus.equals(PAY_PENDING)){
             tvStatusPayment.setText("Menunggu persetujuan");
             tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-
             tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
 
-            Menu menu = toolbar.getMenu();
-            MenuItem item = menu.findItem(R.id.action_delete);
-            item.setVisible(false);
-
+            menuDelete.setVisible(false);
             btnUpdate.setVisibility(View.INVISIBLE);
             btnPayment.setVisibility(View.INVISIBLE);
-        } else if (lastStatus.equals(PAY_REJECT)){
+        } else if (lastStatus.equals(PAY_REJECT) || lastStatus.equals(PAY_EMPTY)){
             tvStatusPayment.setText("Belum bayar");
             tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-
             tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
+
+            menuDelete.setVisible(true);
         }
     }
 
@@ -320,16 +311,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 Payment payment = data.getParcelableExtra(EXTRA_PAYMENT);
                 paymentList.add(payment);
                 adapter.setData(paymentList);
-
-                tvStatusPayment.setText("Menunggu persetujuan");
-                tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-                tvPayment.setVisibility(View.VISIBLE);
-
-                Menu menu = toolbar.getMenu();
-                MenuItem item = menu.findItem(R.id.action_delete);
-                item.setVisible(false);
-                btnUpdate.setVisibility(View.INVISIBLE);
-                btnPayment.setVisibility(View.INVISIBLE);
+                setLastPaymentStatus(PAY_PENDING);
             }
         }
     }

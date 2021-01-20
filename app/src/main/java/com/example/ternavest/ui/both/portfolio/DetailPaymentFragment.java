@@ -33,15 +33,15 @@ import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.DateUtils.getFullDate;
 
 public class DetailPaymentFragment extends BottomSheetDialogFragment implements View.OnClickListener {
-    private CardView cvStatus;
-    private TextView tvStatus, tvDate, tvRejectionNote;
-    private ImageView imgPayment;
-    private Button btnApprove, btnReject;
-    private Spinner spRejectionNote;
-
-    private UserPreference userPreference;
-    private Payment payment;
     private DetailPaymentListener listener;
+    private Payment payment;
+    private UserPreference userPreference;
+
+    private Button btnApprove, btnReject;
+    private CardView cvStatus;
+    private ImageView imgPayment;
+    private Spinner spRejectionNote;
+    private TextView tvStatus, tvDate, tvRejectionNote;
 
     public DetailPaymentFragment(){}
 
@@ -78,23 +78,23 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
 
             btnApprove.setVisibility(View.GONE);
             btnReject.setVisibility(View.GONE);
+            tvRejectionNote.setVisibility(View.GONE);
             String status = payment.getStatus();
             switch (status) {
                 case PAY_APPROVED:
                     status = "Disetujui";
                     cvStatus.setCardBackgroundColor(getContext().getResources().getColor(R.color.blue));
-                    tvRejectionNote.setVisibility(View.GONE);
                     break;
                 case PAY_REJECT:
                     status = "Ditolak";
                     cvStatus.setCardBackgroundColor(getContext().getResources().getColor(R.color.red));
-                    tvRejectionNote.setVisibility(View.VISIBLE);
+
                     tvRejectionNote.setText(payment.getRejectionNote());
+                    tvRejectionNote.setVisibility(View.VISIBLE);
                     break;
                 case PAY_PENDING:
                     status = "Pending";
                     cvStatus.setCardBackgroundColor(getContext().getResources().getColor(R.color.orange));
-                    tvRejectionNote.setVisibility(View.GONE);
 
                     if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
                         btnApprove.setVisibility(View.VISIBLE);
@@ -113,7 +113,7 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
             case R.id.btn_approve_dp:
                 new AlertDialog.Builder(getContext())
                         .setTitle("Setujui pembayaran")
-                        .setMessage("Apakah Anda yakin bukti pembayaran telah valid?")
+                        .setMessage("Apakah Anda yakin bukti pembayaran sudah valid?")
                         .setNegativeButton("Tidak", null)
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
@@ -127,7 +127,7 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
             case R.id.btn_reject_dp:
                 new AlertDialog.Builder(getContext())
                         .setTitle("Tolak pembayaran")
-                        .setMessage("Apakah Anda yakin ingin menolak pembayaran ini? Pastikan Anda memilih alasan penolakan dengan tepat.")
+                        .setMessage("Apakah Anda yakin ingin menolak pembayaran ini?\n\nPastikan Anda memilih alasan penolakan dengan tepat.")
                         .setNegativeButton("Tidak", null)
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override

@@ -55,9 +55,9 @@ public class ProfileRepository {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
-                            Profile profile = new Profile();
-                            profile = snapshotToObject(task.getResult());
+                            Profile profile = snapshotToObject(task.getResult());
                             resultData.postValue(profile);
+                            Log.d(TAG, "query: " + profile.getName());
                             Log.d(TAG, "Document was queried");
                         } else Log.w(TAG, "Error querying document", task.getException());
                     }
@@ -87,6 +87,7 @@ public class ProfileRepository {
                             } else profile = snapshotToObject(task.getResult());
 
                             resultData.postValue(profile);
+                            Log.d(TAG, "query: " + profile.getName());
                             Log.d(TAG, "Document was queried");
                         } else Log.w(TAG, "Error querying document", task.getException());
                     }

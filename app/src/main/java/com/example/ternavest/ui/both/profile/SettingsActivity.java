@@ -101,6 +101,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         edtAccountName = findViewById(R.id.edt_account_name_settings);
 
         LinearLayout layoutAccount = findViewById(R.id.layout_account_settings);
+        layoutAccount.setVisibility(View.GONE);
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.loadData();
@@ -122,7 +123,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 edtAccountName.setText(profile.getAccountName());
 
                 setVerificationStatus(profile.getVerificationStatus());
+
                 if (profile.getLevel().equals(LEVEL_INVESTOR)) layoutAccount.setVisibility(View.GONE);
+                else if (profile.getLevel().equals(LEVEL_PETERNAK)) layoutAccount.setVisibility(View.VISIBLE);
 
                 loadingDialog.dismiss();
             }
@@ -157,7 +160,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_photo_settings:
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Pilih foto profil:"), RC_PROFILE_IMAGE);
+                startActivityForResult(Intent.createChooser(intent, "Pilih foto profil"), RC_PROFILE_IMAGE);
                 break;
 
             case R.id.btn_ktp_settings:
@@ -291,6 +294,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     });
                 } catch (Exception e){
                     e.printStackTrace();
+                    showToast(getApplicationContext(), "Pengajuan verifikasi KTP gagal. Mohon coba lagi.");
                 }
             }
         }

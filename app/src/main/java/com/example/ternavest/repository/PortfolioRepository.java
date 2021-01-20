@@ -50,9 +50,9 @@ public class PortfolioRepository {
                     ArrayList<Portfolio> portfolioList = new ArrayList<>();
 
                     for (DocumentSnapshot snapshot : task.getResult()){
-                        Portfolio portfolio = new Portfolio();
-                        portfolio = snapshotToObject(snapshot);
+                        Portfolio portfolio = snapshotToObject(snapshot);
                         portfolioList.add(portfolio);
+                        Log.d(TAG, "query: " + portfolio.getId());
                     }
 
                     resultData.postValue(portfolioList);
@@ -75,9 +75,9 @@ public class PortfolioRepository {
                     ArrayList<Portfolio> portfolioList = new ArrayList<>();
 
                     for (DocumentSnapshot snapshot : task.getResult()){
-                        Portfolio portfolio = new Portfolio();
-                        portfolio = snapshotToObject(snapshot);
+                        Portfolio portfolio = snapshotToObject(snapshot);
                         portfolioList.add(portfolio);
+                        Log.d(TAG, "query: " + portfolio.getId());
                     }
 
                     resultData.postValue(portfolioList);
@@ -97,8 +97,7 @@ public class PortfolioRepository {
                         ArrayList<Portfolio> portfolioList = new ArrayList<>();
 
                         for (DocumentSnapshot snapshot : task.getResult()){
-                            Portfolio portfolio = new Portfolio();
-                            portfolio = snapshotToObject(snapshot);
+                            Portfolio portfolio = snapshotToObject(snapshot);
                             portfolioList.add(portfolio);
                             Log.d(TAG, "queryPeminat: " + portfolio.getInvestorId());
                         }
@@ -131,8 +130,8 @@ public class PortfolioRepository {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated");
-                        else Log.w(TAG, "Error updating document", task.getException());
+                        if (task.isSuccessful()) Log.d(TAG, "Document was updated: jumlahEkor");
+                        else Log.w(TAG, "Error updating document: jumlahEkor", task.getException());
                     }
                 });
     }
@@ -145,8 +144,8 @@ public class PortfolioRepository {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated");
-                        else Log.w(TAG, "Error updating document", task.getException());
+                        if (task.isSuccessful()) Log.d(TAG, "Document was updated: biaya");
+                        else Log.w(TAG, "Error updating document: biaya", task.getException());
                     }
                 });
     }
@@ -158,8 +157,8 @@ public class PortfolioRepository {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated");
-                        else Log.w(TAG, "Error updating document", task.getException());
+                        if (task.isSuccessful()) Log.d(TAG, "Document was updated: status");
+                        else Log.w(TAG, "Error updating document: status", task.getException());
                     }
                 });
     }

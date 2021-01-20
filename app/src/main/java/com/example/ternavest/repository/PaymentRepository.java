@@ -53,7 +53,9 @@ public class PaymentRepository {
                         if (task.isSuccessful()){
                             ArrayList<Payment> paymentList = new ArrayList<>();
                             for (DocumentSnapshot snapshot : task.getResult()){
-                                paymentList.add(snapshotToObject(snapshot));
+                                Payment payment = snapshotToObject(snapshot);
+                                paymentList.add(payment);
+                                Log.d(TAG, "query: " + payment.getId());
                             }
                             resultData.postValue(paymentList);
                             Log.d(TAG, "Document was queried");

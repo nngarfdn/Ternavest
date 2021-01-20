@@ -9,14 +9,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.R
-import com.example.ternavest.adapter.recycler.LaporanAdaper
+import com.example.ternavest.adapter.recycler.LaporanAdapter
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import kotlinx.android.synthetic.main.activity_laporan.*
-import kotlinx.android.synthetic.main.activity_tambah_laporan.*
 
 class LaporanActivity : AppCompatActivity() {
 
@@ -64,7 +63,7 @@ class LaporanActivity : AppCompatActivity() {
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
                             rv_laporan.setLayoutManager(layoutManager)
-                            val adapter = LaporanAdaper(result)
+                            val adapter = LaporanAdapter(result)
                             rv_laporan.setAdapter(adapter)
                         } else {
                             imgLaporanKosong.visibility = View.VISIBLE
@@ -73,7 +72,7 @@ class LaporanActivity : AppCompatActivity() {
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
                             rv_laporan.setLayoutManager(layoutManager)
-                            val adapter = LaporanAdaper(result)
+                            val adapter = LaporanAdapter(result)
                             rv_laporan.setAdapter(adapter)
 
                         }
@@ -95,7 +94,7 @@ class LaporanActivity : AppCompatActivity() {
                 imgLaporanKosong.visibility = View.INVISIBLE
                 val layoutManager = LinearLayoutManager(this)
                 rv_laporan.setLayoutManager(layoutManager)
-                val adapter = LaporanAdaper(result)
+                val adapter = LaporanAdapter(result)
                 rv_laporan.setAdapter(adapter)
             })
 

@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.R
-import com.example.ternavest.adapter.recycler.LaporanHomeAdaper
+import com.example.ternavest.adapter.recycler.LaporanHomeAdapter
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.TambahLaporanActivity
@@ -65,7 +65,7 @@ class LaporanHomeActivity : AppCompatActivity() {
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
                             rv_laporan.setLayoutManager(layoutManager)
-                            val adapter = LaporanHomeAdaper(result)
+                            val adapter = LaporanHomeAdapter(result)
                             rv_laporan.setAdapter(adapter)
                         } else {
                             imgLaporanKosong.visibility = View.VISIBLE
@@ -74,7 +74,7 @@ class LaporanHomeActivity : AppCompatActivity() {
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
                             rv_laporan.setLayoutManager(layoutManager)
-                            val adapter = LaporanHomeAdaper(result)
+                            val adapter = LaporanHomeAdapter(result)
                             rv_laporan.setAdapter(adapter)
 
                         }
@@ -96,7 +96,7 @@ class LaporanHomeActivity : AppCompatActivity() {
                 imgLaporanKosong.visibility = View.INVISIBLE
                 val layoutManager = LinearLayoutManager(this)
                 rv_laporan.setLayoutManager(layoutManager)
-                val adapter = LaporanHomeAdaper(result)
+                val adapter = LaporanHomeAdapter(result)
                 rv_laporan.setAdapter(adapter)
             })
 

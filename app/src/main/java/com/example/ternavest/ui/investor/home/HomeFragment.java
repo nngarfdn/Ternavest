@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adapter.recycler.ProyekInvestorAdaper;
+import com.example.ternavest.adapter.recycler.ProyekInvestorAdapter;
 import com.example.ternavest.viewmodel.ProyekViewModel;
 import com.example.ternavest.viewmodel.SearchViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProyekViewModel projectViewModel;
-    private ProyekInvestorAdaper adapter;
+    private ProyekInvestorAdapter adapter;
     private ShimmerFrameLayout shimmerKelola;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SearchViewModel searchViewModel;
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
                 searchViewModel.getData().observe(getViewLifecycleOwner(), result -> {
                     shimmerKelola.setVisibility(View.INVISIBLE);
                     shimmerKelola.stopShimmerAnimation();
-                    adapter = new ProyekInvestorAdaper(result);
+                    adapter = new ProyekInvestorAdapter(result);
                     recyclerView.setAdapter(adapter);
                 });
                 return false;
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
         projectViewModel.getResult().observe(this, proyeks -> {
             shimmerKelola.setVisibility(View.INVISIBLE);
             shimmerKelola.stopShimmerAnimation();
-            adapter = new ProyekInvestorAdaper(proyeks);
+            adapter = new ProyekInvestorAdapter(proyeks);
             recyclerView.setAdapter(adapter);
         });
     }

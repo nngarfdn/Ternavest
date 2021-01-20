@@ -39,15 +39,15 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
     public static final int RC_UPDATE_PORTFOLIO = 100;
 
     private FirebaseUser firebaseUser;
-    private Proyek project;
     private Portfolio portfolio;
     private PortfolioViewModel portfolioViewModel;
+    private Proyek project;
 
-    private CardView cvProject;
-    private TextView tvProjectName, tvProjectLivestock, tvProjectROI, tvCost, tvTotalCost, tvHelper;
-    private ImageView imgProject;
     private Button btnPayment;
+    private CardView cvProject;
     private EditText edtCount;
+    private ImageView imgProject;
+    private TextView tvProjectName, tvProjectLivestock, tvProjectROI, tvCost, tvTotalCost, tvHelper;
 
     private boolean isUpdate;
 
@@ -95,20 +95,19 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
 
             isUpdate = intent.hasExtra(EXTRA_PORTFOLIO);
             if (isUpdate){
+                getSupportActionBar().setTitle("Edit Informasi Investasi");
                 portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
-                getSupportActionBar().setTitle("Edit Informasi Investasi");
                 tvTotalCost.setText(getRupiahFormat(
-                        portfolio.getCount() * project.getBiayaHewan()
-                ));
+                        portfolio.getCount() * project.getBiayaHewan()));
                 edtCount.setText(String.valueOf(portfolio.getCount()));
                 btnPayment.setText("Simpan");
             } else {
+                getSupportActionBar().setTitle("Mulai Investasi");
                 portfolio = new Portfolio();
 
-                getSupportActionBar().setTitle("Mulai Investasi");
                 tvTotalCost.setText(getRupiahFormat(project.getBiayaHewan()));
-                edtCount.setText("1");
+                edtCount.setText("1"); // Nilai default
                 btnPayment.setText("Lanjut Pembayaran");
             }
         }
@@ -131,7 +130,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             public void afterTextChanged(Editable editable) {
                 String count = getFixText(edtCount);
                 if (isNull(count) || Long.parseLong(count) <= 0){
-                    edtCount.setError("Jumlah ekor tidak boleh kosong");
+                    edtCount.setError("Harap isi berapa ekor yang akan diinvestasikan");
                     btnPayment.setEnabled(false);
                 }
             }
@@ -155,11 +154,6 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             case R.id.btn_payment_aup:
                 String count = getFixText(edtCount);
 
-                if (isNull(count)){
-                    showToast(this, "Harap isi berapa ekor yang akan diinvestasikan");
-                    return;
-                }
-
                 portfolio.setCount(Integer.parseInt(count));
 
                 if (isUpdate){
@@ -178,7 +172,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                     portfolio.setStatus(PAY_PENDING);
 
                     portfolioViewModel.insert(portfolio);
-                    showToast(this, "Proyek telah ditambah ke portfolio");
+                    showToast(this, "Proyek telah ditambah ke portofolio");
 
                     Intent intent = new Intent(this, PaymentActivity.class);
                     intent.putExtra(EXTRA_PORTFOLIO, portfolio);

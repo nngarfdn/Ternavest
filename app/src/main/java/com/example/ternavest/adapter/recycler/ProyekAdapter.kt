@@ -12,7 +12,7 @@ import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_proyek.view.*
 
-class ProyekAdaper (private val list: List<Proyek>) : RecyclerView.Adapter<ProyekAdaper.ViewHolder>() {
+class ProyekAdapter (private val list: List<Proyek>) : RecyclerView.Adapter<ProyekAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(

@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btnAbout.setOnClickListener(this);
         btnLogOut.setOnClickListener(this);
 
-        btnKtp.setVisibility(View.GONE);
+        btnKtp.setVisibility(View.GONE); // Sembunyikan dulu
 
         ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.loadData();
@@ -154,7 +154,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_verification_profile:
-                new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                new AlertDialog.Builder(getContext())
                         .setTitle("Kirim tautan verifikasi")
                         .setMessage("Email Anda belum diverifikasi. Kirim tautan verifikasi ke email Anda?")
                         .setNegativeButton("Tidak", null)
@@ -173,7 +173,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_reset_password_profile:
-                new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                new AlertDialog.Builder(getContext())
                         .setTitle("Setel ulang kata sandi")
                         .setMessage("Kirim tautan penyetelan ulang kata sandi ke email Anda?")
                         .setNegativeButton("Tidak", null)
@@ -203,6 +203,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                         .build();
                                 GoogleSignIn.getClient(getActivity(), gso).signOut();
                                 firebaseAuth.signOut();
+
+                                // Restart
                                 startActivity(new Intent(getContext(), MainActivity.class));
                                 getActivity().finish();
                             }

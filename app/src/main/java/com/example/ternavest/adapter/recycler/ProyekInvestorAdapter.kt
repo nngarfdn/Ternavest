@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_proyek.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProyekInvestorAdaper (private val list: List<Proyek>) : RecyclerView.Adapter<ProyekInvestorAdaper.ViewHolder>(), Filterable {
+class ProyekInvestorAdapter (private val list: List<Proyek>) : RecyclerView.Adapter<ProyekInvestorAdapter.ViewHolder>(), Filterable {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     var countryFilterList = ArrayList<Proyek>()

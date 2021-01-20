@@ -45,17 +45,17 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private static final int RC_PAYMENT_IMAGE = 100;
     public static final int RC_ADD_PAYMENT = 200;
 
-    private CardView cvPortfolio, cvStatus;
-    private TextView tvProject, tvTotalCost, tvCount, tvStatus, tvAccountName, tvAccountBank, tvAccountNumber, tvNominal;
-    private ImageView imgPayment;
-    private Button btnUpload, btnSend;
-
     private LoadingDialog loadingDialog;
-    private Proyek project;
     private PaymentViewModel paymentViewModel;
     private ProfileViewModel profileViewModel;
-    private PortfolioViewModel portfolioViewModel;
     private Portfolio portfolio;
+    private PortfolioViewModel portfolioViewModel;
+    private Proyek project;
+
+    private Button btnUpload, btnSend;
+    private CardView cvPortfolio, cvStatus;
+    private ImageView imgPayment;
+    private TextView tvProject, tvTotalCost, tvCount, tvStatus, tvAccountName, tvAccountBank, tvAccountNumber, tvNominal;
 
     private Uri uriPaymentImage;
 
@@ -66,10 +66,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
         loadingDialog = new LoadingDialog(this);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar1);
+        Toolbar toolbar = findViewById(R.id.toolbar1);
         toolbar.setTitle("Pembayaran");
         setSupportActionBar(toolbar); //No Problerm
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cvStatus = findViewById(R.id.cv_status_portfolio);
@@ -107,7 +106,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
             tvCount.setText(" / " + portfolio.getCount() + " ekor");
             tvNominal.setText(getRupiahFormat(portfolio.getTotalCost()));
-            Log.d("TAG", "onCreate: " + getRupiahFormat(portfolio.getTotalCost()));
+            Log.d(getClass().getSimpleName(), "onCreate: " + getRupiahFormat(portfolio.getTotalCost()));
             tvStatus.setText("Pending"); // Kalau bisa ke pembayaran, pasti statusnya pending
             cvStatus.setCardBackgroundColor(getResources().getColor(R.color.orange));
 
@@ -117,9 +116,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
                 tvNominal.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
-                Log.d("Payment Activity", "onCreate: " + getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
-
+                Log.d(getClass().getSimpleName(), "onCreate: " + getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
             }
+
             profileViewModel.loadData(portfolio.getBreederId());
         }
 
@@ -142,15 +141,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btn_upload_payment:
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Pilih bukti pembayaran untuk diunggah:"), RC_PAYMENT_IMAGE);
+                startActivityForResult(Intent.createChooser(intent, "Unggah bukti pembayaran"), RC_PAYMENT_IMAGE);
                 break;
 
             case R.id.btn_send_payment:
-                if (uriPaymentImage == null){
-                    showToast(this, "Mohon pilih bukti pembayaran terlebih dahulu");
-                    return;
-                }
-
                 Payment payment = new Payment();
                 payment.setId(createIdFromCurrentDate());
                 payment.setDate(getCurrentDate());
@@ -167,7 +161,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                     public void onSuccess(String imageUrl) {
                         payment.setImage(imageUrl);
                         paymentViewModel.insert(portfolio.getId(), payment);
-                        portfolioViewModel.update(portfolio.getId(), project.getBiayaHewan(), portfolio.getCount() * project.getBiayaHewan());
+                        portfolioViewModel.update(portfolio.getId(), project.getBiayaHewan(), portfolio.getCount() * project.getBiayaHewan()); // Kunci harga ke portofolio
 
                         Intent intentResult = new Intent();
                         intentResult.putExtra(EXTRA_PAYMENT, payment);

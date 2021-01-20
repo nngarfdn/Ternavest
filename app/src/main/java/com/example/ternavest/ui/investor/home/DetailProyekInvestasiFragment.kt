@@ -11,23 +11,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.R
-import com.example.ternavest.adapter.recycler.LaporanAdaper
-import com.example.ternavest.adapter.recycler.PeminatAdaper
+import com.example.ternavest.adapter.recycler.PeminatAdapter
 import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT
 import com.example.ternavest.ui.both.profile.DetailProfileActivity
 import com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE
-import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
-import com.example.ternavest.ui.peternak.kelola.proyek.EditProyekActivity
 import com.example.ternavest.viewmodel.PortfolioViewModel
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_laporan.*
 import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.*
 import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.*
 
@@ -79,13 +75,13 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
                     if (b.isNotEmpty()){
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
                         rv_peminat.setLayoutManager(layoutManager)
-                        val adapter = PeminatAdaper(b)
+                        val adapter = PeminatAdapter(b)
                         rv_peminat.setAdapter(adapter)
                         txtPeminatKosong.visibility = View.INVISIBLE
                     } else {
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
                         rv_peminat.setLayoutManager(layoutManager)
-                        val adapter = PeminatAdaper(b)
+                        val adapter = PeminatAdapter(b)
                         rv_peminat.setAdapter(adapter)
                         txtPeminatKosong.visibility = View.VISIBLE
                     }
