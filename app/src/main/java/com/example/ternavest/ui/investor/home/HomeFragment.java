@@ -18,35 +18,21 @@ import android.widget.SearchView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.ProyekInvestorAdapter;
-import com.example.ternavest.viewmodel.ProyekViewModel;
+import com.example.ternavest.model.Filter;
 import com.example.ternavest.viewmodel.SearchViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-public class HomeFragment extends Fragment {
+import static com.example.ternavest.ui.investor.home.SearchFilterFragment.EXTRA_FILTER;
+
+public class HomeFragment extends Fragment implements SearchFilterFragment.SearchFilterListener {
     private RecyclerView recyclerView;
-    private ProyekViewModel projectViewModel;
     private ProyekInvestorAdapter adapter;
     private ShimmerFrameLayout shimmerKelola;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SearchViewModel searchViewModel;
-    private SearchView searchView;
+    private Filter filter;
 
     public HomeFragment() {}
-
-    public static HomeFragment newInstance(String param1, String param2) {
-        return new HomeFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
-        searchViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(SearchViewModel.class);
-        if (getArguments() != null) {
-
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,40 +42,43 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         recyclerView = view.findViewById(R.id.rv_investor);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         shimmerKelola = view.findViewById(R.id.shimmerKelola);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
-        searchView = view.findViewById(R.id.search_proyek);
+        SearchView searchView = view.findViewById(R.id.search_proyek);
 
-        CharSequence query = searchView.getQuery();
+        searchViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(SearchViewModel.class);
+        searchViewModel.getData().observe(getViewLifecycleOwner(), result -> {
+            shimmerKelola.setVisibility(View.INVISIBLE);
+            shimmerKelola.stopShimmerAnimation();
+            adapter = new ProyekInvestorAdapter(result);
+            recyclerView.setAdapter(adapter);
+        });
+
+        filter = new Filter();
+        getData(filter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchViewModel.loadData(query);
-                shimmerKelola.startShimmerAnimation();
-                searchViewModel.getData().observe(getViewLifecycleOwner(), result -> {
-                    shimmerKelola.setVisibility(View.INVISIBLE);
-                    shimmerKelola.stopShimmerAnimation();
-                    adapter = new ProyekInvestorAdapter(result);
-                    recyclerView.setAdapter(adapter);
-                });
+                filter.setKataKunci(query);
+                getData(filter);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //    adapter.getFilter().filter(newText);
+                if (newText.equals("")) onQueryTextSubmit("");
                 return false;
             }
         });
 
-        projectViewModel.loadResult();
-        shimmerKelola.startShimmerAnimation();
-        getData();
-
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            getData();
+            getData(filter);
             swipeRefreshLayout.setRefreshing(false);
         });
 
@@ -98,22 +87,22 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                //bundle.putParcelable(EXTRA_FILTER, filter);
+                bundle.putParcelable(EXTRA_FILTER, filter);
                 SearchFilterFragment bottomSheet = new SearchFilterFragment();
                 bottomSheet.setArguments(bundle);
-                bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
+                bottomSheet.show(getChildFragmentManager(), bottomSheet.getTag());
             }
         });
     }
 
-    private void getData() {
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        projectViewModel.getResult().observe(this, proyeks -> {
-            shimmerKelola.setVisibility(View.INVISIBLE);
-            shimmerKelola.stopShimmerAnimation();
-            adapter = new ProyekInvestorAdapter(proyeks);
-            recyclerView.setAdapter(adapter);
-        });
+    private void getData(Filter filter) {
+        shimmerKelola.startShimmerAnimation();
+        searchViewModel.loadData(filter);
+    }
+
+    @Override
+    public void receiveData(Filter result) {
+        filter = result;
+        getData(filter);
     }
 }

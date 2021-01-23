@@ -3,6 +3,7 @@ package com.example.ternavest.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ternavest.model.Filter;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.repository.SearchRepository;
 
@@ -15,7 +16,7 @@ public class SearchViewModel extends ViewModel {
         return repository.getData();
     }
 
-    public void loadData(String filter){
+    public void loadData(Filter filter){
         repository.query(filter);
     }
 }

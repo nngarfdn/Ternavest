@@ -63,6 +63,7 @@ class ProyekRepository {
         val db = FirebaseFirestore.getInstance()
         val savedProdukList = ArrayList<Proyek>()
         db.collection("proyek")
+                .orderBy("namaProyek")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
@@ -88,6 +89,7 @@ class ProyekRepository {
         val db = FirebaseFirestore.getInstance()
         val savedProdukList = ArrayList<Proyek>()
         db.collection("proyek")
+                .orderBy("namaProyek")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
@@ -113,6 +115,7 @@ class ProyekRepository {
         val db = FirebaseFirestore.getInstance()
         val savedProdukList = ArrayList<Proyek>()
         db.collection("proyek")
+                .orderBy("namaProyek")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {

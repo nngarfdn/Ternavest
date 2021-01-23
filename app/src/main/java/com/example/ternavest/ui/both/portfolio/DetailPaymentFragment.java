@@ -147,7 +147,7 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
             listener = (DetailPaymentListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() +
-                    "must implement " + DetailPaymentListener.class.getSimpleName());
+                    " must implement " + DetailPaymentListener.class.getSimpleName());
         }
     }
 

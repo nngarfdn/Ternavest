@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ternavest.model.Filter;
 import com.example.ternavest.model.Proyek;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,30 +22,34 @@ public class SearchRepository {
     private final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     private final MutableLiveData<ArrayList<Proyek>> resultData = new MutableLiveData<>();
-
     public LiveData<ArrayList<Proyek>> getData() {
         return resultData;
     }
 
-    public void query(String filter) {
+    public void query(Filter filter) {
         Query query = database.collection("proyek");
 
+        // Filter lokasi
+        if (filter.isProvinsi()) query = query.whereEqualTo("provinsi", filter.getNamaProvinsi());
+        if (filter.isKabupaten()) query = query.whereEqualTo("kabupaten", filter.getNamaKabupaten());
+        if (filter.isKecamatan()) query = query.whereEqualTo("kecamatan", filter.getNamaKecamatan());
 
-        query.whereEqualTo("namaProyek", filter)
+        query.orderBy("namaProyek")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             ArrayList<Proyek> listProduct = new ArrayList<>();
                             QuerySnapshot querySnapshot = task.getResult();
 
                             for (DocumentSnapshot snapshot : querySnapshot) {
-                                Proyek produk = snapshot.toObject(Proyek.class);
-                                Log.d(TAG, "Nama item: " + produk.getNamaProyek());
-                                listProduct.add(produk);
-                                continue;
+                                Proyek project = snapshot.toObject(Proyek.class);
+                                if (project.getNamaProyek().toLowerCase().contains(filter.getKataKunci().toLowerCase()) ||
+                                        project.getJenisHewan().toLowerCase().contains(filter.getKataKunci().toLowerCase())){
+                                    listProduct.add(project);
+                                }
+                                Log.d(TAG, "Nama item: " + project.getNamaProyek());
                             }
 
                             resultData.postValue(listProduct);
