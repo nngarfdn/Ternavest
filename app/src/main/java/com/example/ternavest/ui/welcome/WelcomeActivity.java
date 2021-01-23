@@ -16,6 +16,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.ternavest.R;
+import com.example.ternavest.testing.MainActivity;
 import com.example.ternavest.ui.both.login.LoginActivity;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,6 +65,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 launchLogin(LEVEL_INVESTOR);
             }
         });
+        
+        TextView tvTesting = findViewById(R.id.tv_testing_welcome);
+        tvTesting.setOnClickListener(view -> startActivity(new Intent(WelcomeActivity.this, MainActivity.class)));
     }
 
     private void addBottomDots(int currentPage) {

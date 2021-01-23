@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import com.example.ternavest.R;
@@ -22,23 +23,18 @@ import com.example.ternavest.viewmodel.SearchViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 public class HomeFragment extends Fragment {
-
     private RecyclerView recyclerView;
     private ProyekViewModel projectViewModel;
     private ProyekInvestorAdapter adapter;
     private ShimmerFrameLayout shimmerKelola;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SearchViewModel searchViewModel;
-    SearchView searchView;
+    private SearchView searchView;
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
+    public HomeFragment() {}
 
     public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
+        return new HomeFragment();
     }
 
     @Override
@@ -53,9 +49,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -99,6 +93,17 @@ public class HomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
 
+        ImageButton ibSearchFilter = view.findViewById(R.id.ib_search_filter);
+        ibSearchFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                //bundle.putParcelable(EXTRA_FILTER, filter);
+                SearchFilterFragment bottomSheet = new SearchFilterFragment();
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(getActivity().getSupportFragmentManager(), bottomSheet.getTag());
+            }
+        });
     }
 
     private void getData() {

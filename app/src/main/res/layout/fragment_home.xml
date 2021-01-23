@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,17 +16,41 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="Investasi yang Tersedia" />
 
-    <SearchView
-        android:id="@+id/search_proyek"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_search_proyek"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:queryHint="Cari proyek"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginHorizontal="@dimen/dimen_32"
-        android:layout_below="@+id/toolbar1"/>
+        android:layout_below="@+id/toolbar1">
+
+        <SearchView
+            android:id="@+id/search_proyek"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:queryHint="Cari proyek"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ib_search_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ib_search_filter" />
+
+        <ImageButton
+            android:id="@+id/ib_search_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button_primary"
+            android:padding="12dp"
+            android:src="@drawable/ic_filter_list"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
-        android:layout_below="@+id/search_proyek"
+        android:layout_below="@+id/layout_search_proyek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -34,14 +59,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_proyek"/>
-
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerKelola"
         android:layout_width="match_parent"
-        android:layout_below="@+id/search_proyek"
+        android:layout_below="@+id/layout_search_proyek"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -57,6 +80,4 @@
             <include layout="@layout/item_proyek_shimmer"/>
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
-
-
 </RelativeLayout>

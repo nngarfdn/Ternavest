@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pull"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        tools:ignore="ContentDescription" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/tv_title_sf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_md"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/tv_reset_sf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Setel ulang"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/font_nm"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+            <CheckBox
+                android:id="@+id/cb_provinces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Provinsi" />
+
+            <Spinner
+                android:id="@+id/sp_provinces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/hint_select_province"
+                android:spinnerMode="dialog" />
+
+            <CheckBox
+                android:id="@+id/cb_regencies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kabupaten" />
+
+            <Spinner
+                android:id="@+id/sp_regencies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/hint_select_regency"
+                android:spinnerMode="dialog" />
+
+            <CheckBox
+                android:id="@+id/cb_districts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kecamatan" />
+
+            <Spinner
+                android:id="@+id/sp_districts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/hint_select_district"
+                android:spinnerMode="dialog" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_approve_sf"
+                style="@style/Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Filter" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
