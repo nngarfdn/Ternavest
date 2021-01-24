@@ -18,6 +18,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.ternavest.R;
 import com.example.ternavest.testing.MainActivity;
 import com.example.ternavest.ui.both.login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.jetbrains.annotations.NotNull;
 
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
@@ -140,6 +142,17 @@ public class WelcomeActivity extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, @NotNull Object object) {
             View view = (View) object;
             container.removeView(view);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser()!=null){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }

@@ -73,18 +73,7 @@ public class ProfileRepository {
                         if (task.isSuccessful()){
                             Profile profile;
 
-                            if (!task.getResult().exists()) { // Kalau belum ada profil di Firestore
-                                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                profile = new Profile(
-                                        firebaseUser.getUid(),
-                                        firebaseUser.getDisplayName(),
-                                        firebaseUser.getEmail(),
-                                        LEVEL_PETERNAK,
-                                        VERIF_PENDING,
-                                        null
-                                );
-                                insert(profile);
-                            } else profile = snapshotToObject(task.getResult());
+                            profile = snapshotToObject(task.getResult());
 
                             resultData.postValue(profile);
                             Log.d(TAG, "query: " + profile.getName());

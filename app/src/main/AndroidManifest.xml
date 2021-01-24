@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.both.login.LoginActivity"></activity>
+        <activity android:name=".ui.both.login.ResetPasswordActivity"></activity>
+        <activity android:name=".ui.both.login.RegisterActivity" />
+        <activity android:name=".ui.both.login.LoginActivity" />
         <activity android:name=".ui.welcome.WelcomeActivity" />
         <activity android:name=".testing.MainActivity" />
         <activity android:name=".ui.investor.portfolio.PaymentActivity" />
