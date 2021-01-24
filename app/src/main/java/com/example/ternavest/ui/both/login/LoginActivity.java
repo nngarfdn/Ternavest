@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import static com.example.ternavest.ui.both.login.RegisterActivity.EXTRA_LEVEL;
 import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tvPasswordReset.setOnClickListener(this);
         tvRegister.setOnClickListener(this);
 
-        level = getIntent().getStringExtra("EXTRA_LEVEL");
+        level = getIntent().getStringExtra(EXTRA_LEVEL);
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
     }
 
@@ -100,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.tv_register:
                  Intent intent_register = new Intent(this,RegisterActivity.class);
-                 intent_register.putExtra("EXTRA_LEVEL", level);
+                 intent_register.putExtra(EXTRA_LEVEL, level);
                  startActivity(intent_register);
                  break;
 
@@ -212,7 +213,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void launchMain(){
         Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all previous activities
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);  // Clear all previous activities
         startActivity(intent);
     }
 }

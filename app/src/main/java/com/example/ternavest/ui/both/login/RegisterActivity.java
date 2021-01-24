@@ -29,12 +29,16 @@ import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class RegisterActivity extends AppCompatActivity {
-    private String level;
+    public static final String EXTRA_LEVEL = "extra_level";
     private final String TAG = getClass().getSimpleName();
+
     private FirebaseAuth firebaseAuth;
     private LoadingDialog loadingDialog;
-    private EditText edtName, edtEmail, edtPassword, edtKonfirmPass;
     private ProfileViewModel profileViewModel;
+
+    private EditText edtName, edtEmail, edtPassword, edtKonfirmPass;
+
+    private String level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        level = getIntent().getStringExtra("EXTRA_LEVEL");
+        level = getIntent().getStringExtra(EXTRA_LEVEL);
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
     }
 
@@ -138,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void launchMain(){
         Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all previous activities
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);  // Clear all previous activities
         startActivity(intent);
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,18 @@ import com.example.ternavest.viewmodel.SearchViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import static com.example.ternavest.ui.investor.home.SearchFilterFragment.EXTRA_FILTER;
+import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class HomeFragment extends Fragment implements SearchFilterFragment.SearchFilterListener {
-    private RecyclerView recyclerView;
+    private static final String TAG = HomeFragment.class.getSimpleName();
+
     private ProyekInvestorAdapter adapter;
+    private Filter filter;
+    private SearchViewModel searchViewModel;
+
+    private RecyclerView recyclerView;
     private ShimmerFrameLayout shimmerKelola;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private SearchViewModel searchViewModel;
-    private Filter filter;
 
     public HomeFragment() {}
 
@@ -57,6 +62,8 @@ public class HomeFragment extends Fragment implements SearchFilterFragment.Searc
             shimmerKelola.stopShimmerAnimation();
             adapter = new ProyekInvestorAdapter(result);
             recyclerView.setAdapter(adapter);
+
+            if (result.isEmpty()) showToast(getContext(), "Proyek yang kamu cari tidak ada.");
         });
 
         filter = new Filter();
@@ -104,5 +111,6 @@ public class HomeFragment extends Fragment implements SearchFilterFragment.Searc
     public void receiveData(Filter result) {
         filter = result;
         getData(filter);
+        Log.d(TAG, filter.getNamaProvinsi());
     }
 }

@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
+import static com.example.ternavest.ui.both.login.RegisterActivity.EXTRA_LEVEL;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 
@@ -93,7 +94,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchLogin(String level) {
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("EXTRA_LEVEL", level);
+        intent.putExtra(EXTRA_LEVEL, level);
         startActivity(intent);
     }
 
