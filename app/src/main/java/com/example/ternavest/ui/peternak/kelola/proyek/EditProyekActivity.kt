@@ -25,8 +25,7 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
 import com.example.ternavest.model.Proyek
-import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
-import com.example.ternavest.ui.peternak.main.PeternakActivity
+import com.example.ternavest.ui.both.main.MainActivity
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.gms.tasks.Task
@@ -88,7 +87,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             .setNegativeButton("Tidak", null)
                             .setPositiveButton("Ya") { dialogInterface, i ->
                                 proyekViewModel.delete(p.id!!)
-                                startActivity(Intent(this, PeternakActivity::class.java))
+                                startActivity(Intent(this, MainActivity::class.java))
                             }.create().show()
 
                     true

@@ -9,6 +9,6 @@ import com.example.ternavest.R
 
 class FragmentIntroC : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_introc, container, false)
+        return inflater.inflate(R.layout.fragment_intro_c, container, false)
     }
 }

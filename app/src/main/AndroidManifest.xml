@@ -17,7 +17,7 @@
         <activity android:name=".ui.both.login.RegisterActivity" />
         <activity android:name=".ui.both.login.LoginActivity" />
         <activity android:name=".ui.both.welcome.WelcomeActivity" />
-        <activity android:name=".testing.MainActivity" />
+        <activity android:name=".ui.both.main.MainActivity" />
         <activity android:name=".ui.investor.portfolio.PaymentActivity" />
         <activity android:name=".ui.both.portfolio.AddUpdatePortfolioActivity" />
         <activity android:name=".ui.both.portfolio.DetailPortfolioActivity" />
@@ -28,8 +28,6 @@
         <activity android:name=".ui.both.profile.SettingsActivity" />
         <activity android:name=".ui.investor.home.LaporanHomeActivity" />
         <activity android:name=".ui.both.profile.DetailProfileActivity" />
-        <activity android:name=".ui.peternak.main.PeternakActivity" />
-        <activity android:name=".ui.investor.main.InvestorActivity" />
         <activity android:name=".testing.WilayahTest" />
         <activity android:name=".ui.peternak.kelola.proyek.TambahProyekActivity" />
         <activity android:name="com.example.ternavest.ui.both.welcome.SplashActivity">

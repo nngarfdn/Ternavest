@@ -7,11 +7,18 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.ternavest.ui.both.portfolio.PortfolioFragment;
 import com.example.ternavest.ui.both.profile.ProfileFragment;
+import com.example.ternavest.ui.investor.home.HomeFragment;
 import com.example.ternavest.ui.peternak.kelola.proyek.KelolaFragment;
 
-public class PeternakPagerAdapter extends FragmentPagerAdapter {
-    public PeternakPagerAdapter(@NonNull FragmentManager fm) {
+import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
+import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
+
+public class MainPagerAdapter extends FragmentPagerAdapter {
+    private final String USER_LEVEL;
+
+    public MainPagerAdapter(@NonNull FragmentManager fm, String userLevel) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        this.USER_LEVEL = userLevel;
     }
 
     @NonNull
@@ -20,7 +27,8 @@ public class PeternakPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new KelolaFragment();
+                if (USER_LEVEL.equals(LEVEL_PETERNAK)) fragment = new KelolaFragment();
+                else if (USER_LEVEL.equals(LEVEL_INVESTOR)) fragment = new HomeFragment();
                 break;
 
             case 1:

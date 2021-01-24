@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".testing.MainActivity">
+    tools:context=".ui.both.main.MainActivity">
 
-    <Button
-        android:id="@+id/btn_testwilayah"
-        android:layout_margin="32dp"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Test Wilayah"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/bn_main"
+        android:overScrollMode="never"/>
 
-    <Button
-        android:id="@+id/btn_peternak"
-        style="@style/Button.Primary"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="8dp"
-        android:layout_below="@id/btn_testwilayah"
+    <com.iammert.library.readablebottombar.ReadableBottomBar
+        android:id="@+id/bn_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Peternak Activity"/>
-
-    <Button
-        android:id="@+id/btn_investor"
-        style="@style/Button.Secondary"
-        android:layout_marginHorizontal="32dp"
-        android:layout_below="@id/btn_peternak"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Investor Activity"/>
+        android:layout_height="56dp"
+        app:rbb_tabs="@xml/tabs_investor"
+        android:layout_alignParentBottom="true"
+        app:rbb_activeItemType="icon"/>
 </RelativeLayout>

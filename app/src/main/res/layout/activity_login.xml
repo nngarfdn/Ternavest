@@ -36,7 +36,7 @@
         android:inputType="textPassword"
         android:textSize="18sp"
         style="@style/EditText"
-        android:hint="Kata Sandi"
+        android:hint="Kata sandi"
         android:textColorHint="@color/black"/>
 
     <TextView

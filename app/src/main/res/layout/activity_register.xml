@@ -23,7 +23,7 @@
         android:inputType="textPersonName"
         android:layout_below="@+id/img_daftar"
         style="@style/EditText"
-        android:hint="Nama Lengkap"
+        android:hint="Nama lengkap sesuai KTP"
         android:textColorHint="@color/black"
         android:layout_marginBottom="16dp" />
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         style="@style/EditText"
-        android:hint="Kata Sandi"
+        android:hint="Kata sandi"
         android:textColorHint="@color/black"
         android:layout_marginBottom="16dp"/>
 

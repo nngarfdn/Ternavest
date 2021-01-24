@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.model.Profile;
+import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.both.welcome.SplashActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -203,6 +204,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                         .build();
                                 GoogleSignIn.getClient(getActivity(), gso).signOut();
                                 firebaseAuth.signOut();
+
+                                // Reset level user
+                                UserPreference userPreference = new UserPreference(view.getContext());
+                                userPreference.setUserLevel(null);
 
                                 // Restart
                                 startActivity(new Intent(getContext(), SplashActivity.class));

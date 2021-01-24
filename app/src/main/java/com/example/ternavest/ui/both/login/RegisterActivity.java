@@ -16,7 +16,7 @@ import android.widget.EditText;
 import com.example.ternavest.R;
 import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Profile;
-import com.example.ternavest.testing.MainActivity;
+import com.example.ternavest.ui.both.main.MainActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

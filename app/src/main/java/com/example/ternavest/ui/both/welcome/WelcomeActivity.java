@@ -16,7 +16,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.ternavest.R;
-import com.example.ternavest.testing.MainActivity;
+import com.example.ternavest.ui.both.main.MainActivity;
 import com.example.ternavest.ui.both.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,9 +44,9 @@ public class WelcomeActivity extends AppCompatActivity {
         // layout xml slide 1 sampai 4
         // add few more layouts if you want
         layouts = new int[]{
-                R.layout.fragment_introa,
-                R.layout.fragment_introb,
-                R.layout.fragment_introc,};
+                R.layout.fragment_intro_a,
+                R.layout.fragment_intro_b,
+                R.layout.fragment_intro_c,};
 
         // tombol dots (lingkaran kecil perpindahan slide)
         addBottomDots(0);
