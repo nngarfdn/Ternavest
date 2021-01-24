@@ -41,7 +41,7 @@
                 android:id="@+id/edt_name_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapWords"
                 android:layout_below="@+id/img_daftar"
                 style="@style/EditText"
                 android:hint="Nama lengkap sesuai KTP"
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_below="@+id/edt_konfirm_register"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:text="Daftar"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="18sp" />

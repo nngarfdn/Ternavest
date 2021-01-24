@@ -2,6 +2,7 @@ package com.example.ternavest.ui.both.profile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -74,6 +75,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         loadingDialog = new LoadingDialog(this);
         loadingDialog.show();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button btnPhoto = findViewById(R.id.btn_photo_settings);
         btnKtp = findViewById(R.id.btn_ktp_settings);
@@ -298,5 +303,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.peternak.kelola.proyek.EditProyekActivity">
 
         <androidx.appcompat.widget.Toolbar
@@ -19,8 +21,5 @@
             app:title="Edit Proyek" />
 
         <include layout="@layout/layout_add_update_proyek" />
-
     </RelativeLayout>
-
-
 </ScrollView>

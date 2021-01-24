@@ -13,7 +13,6 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -40,7 +39,7 @@ import kotlin.collections.ArrayList
 
 
 @Suppress("UNREACHABLE_CODE")
-class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private val TAG = javaClass.simpleName
 
@@ -164,38 +163,10 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                 cek = false
             }
-
-
         })
-
     }
 
-
-
-
     private fun initWilayah() {
-        cb_provinces.setEnabled(true)
-        cb_regencies.setEnabled(false)
-        cb_districts.setEnabled(false)
-        spin_provinces.setEnabled(false)
-        spin_regencies.setEnabled(false)
-        spin_districts.setEnabled(false)
-
-        cb_provinces.setOnCheckedChangeListener(this)
-        cb_regencies.setOnCheckedChangeListener(this)
-        cb_districts.setOnCheckedChangeListener(this)
-        spin_provinces.setOnItemSelectedListener(this)
-        spin_regencies.setOnItemSelectedListener(this)
-        spin_districts.setOnItemSelectedListener(this)
-        cb_provinces.isEnabled = true
-        cb_regencies.isEnabled = false
-        cb_districts.isEnabled = false
-        spin_provinces.setEnabled(false)
-        spin_regencies.setEnabled(false)
-        spin_districts.setEnabled(false)
-        cb_provinces.setOnCheckedChangeListener(this)
-        cb_regencies.setOnCheckedChangeListener(this)
-        cb_districts.setOnCheckedChangeListener(this)
         spin_provinces.setOnItemSelectedListener(this)
         spin_regencies.setOnItemSelectedListener(this)
         spin_districts.setOnItemSelectedListener(this)
@@ -288,25 +259,6 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     override fun onNothingSelected(adapterView: AdapterView<*>?) {}
 
-    override fun onCheckedChanged(compoundButton: CompoundButton, b: Boolean) {
-        when (compoundButton.id) {
-            R.id.cb_provinces -> {
-                spin_provinces.setEnabled(b)
-                cb_regencies.isEnabled = b
-                if (!b) {
-                    cb_regencies.isChecked = false
-                    cb_districts.isChecked = false
-                }
-            }
-            R.id.cb_regencies -> {
-                spin_regencies.isEnabled = b
-                cb_districts.isEnabled = b
-                if (!b) cb_districts.isChecked = false
-            }
-            R.id.cb_districts -> spin_districts.isEnabled = b
-        }
-    }
-
     private fun selectImage() {
         // Defining Implicit Intent to mobile gallery
         val intent = Intent()
@@ -332,7 +284,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     private fun uploadImage() {
         if (filePath != null) {
-            btnUploadImage.setText("Mengupload..")
+            btnUploadImage.setText("Mengupload...")
             val namaImage = UUID.randomUUID().toString() // diganti id produk di firebase
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
             val imageRef = objectStorageReference!!.child(nameOfimage)

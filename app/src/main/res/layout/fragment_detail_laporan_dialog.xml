@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,8 +22,8 @@
         android:layout_marginTop="16dp"
         android:layout_below="@id/pull"
         android:layout_marginEnd="8dp"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/imgProfile"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/imgProfile"
         android:textStyle="bold"
         android:text="Ayam Pullet Bulan"
         android:textSize="22sp" />
@@ -41,6 +41,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:layout_below="@id/txtTitle">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,8 +64,8 @@
                 android:layout_alignStart="@+id/txtTitleJenisHewan"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Rp 0"
-                android:textSize="16dp" />
+                android:text="Rp0"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/iconPemasukan"
@@ -73,7 +74,6 @@
                 android:layout_alignTop="@+id/txtTitleJenisHewan"
                 android:layout_alignBottom="@+id/txtJenisHewanDetail"
                 android:src="@drawable/ic_pemasukan" />
-
 
             <TextView
                 android:id="@+id/txtTitlePengeluaran"
@@ -92,9 +92,9 @@
                 android:layout_alignStart="@+id/txtTitlePengeluaran"
                 android:layout_marginTop="4dp"
                 android:textStyle="bold"
-                android:text="Rp 50000"
+                android:text="Rp50.000"
                 android:layout_alignParentEnd="true"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/iconPengeluaran"
@@ -112,6 +112,7 @@
                 android:layout_below="@id/txtRoiDetail"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_tanggal">
+
                 <ImageView
                     android:id="@+id/ic_time"
                     android:layout_width="wrap_content"
@@ -158,5 +159,4 @@
                 android:src="@drawable/upload"/>
         </RelativeLayout>
     </ScrollView>
-
 </RelativeLayout>

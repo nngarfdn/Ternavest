@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.peternak.kelola.proyek.TambahProyekActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbartambahpproyek"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:titleTextColor="@android:color/black"
-        android:background="@android:color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Tambah Proyek" />
+        android:layout_height="wrap_content"
+        tools:context=".ui.peternak.kelola.proyek.TambahProyekActivity">
 
-    <include layout="@layout/layout_add_update_proyek" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbartambahpproyek"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@android:color/black"
+            android:background="@android:color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:title="Tambah Proyek" />
 
-</RelativeLayout>
-
-
+        <include layout="@layout/layout_add_update_proyek" />
+    </RelativeLayout>
 </ScrollView>
