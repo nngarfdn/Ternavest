@@ -2,6 +2,7 @@ package com.example.ternavest.ui.both.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,6 +30,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reset_password);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtEmail = findViewById(R.id.edt_email_reset);
         Button btnSend = findViewById(R.id.btn_email_send);
@@ -69,5 +74,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

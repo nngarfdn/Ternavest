@@ -1,61 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.both.welcome.WelcomeActivity"
-    android:orientation="vertical">
+    android:overScrollMode="never"
+    android:fillViewport="true">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"/>
-
-    <LinearLayout
-        android:id="@+id/layoutDots"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_above="@+id/txtBtn"
-        android:layout_marginBottom="80dp"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
-    <TextView
-        android:id="@+id/txtBtn"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_peternak"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="center"
-        android:text="Silahkan pilih salah satu"
-        android:textSize="14sp" />
+        android:paddingVertical="24dp">
 
-    <Button
-        android:id="@+id/btn_peternak"
-        style="@style/Button.Primary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_invest"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="15dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Saya Adalah Peternak"
-        android:textSize="18sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/txtBtn"
+            android:layout_marginBottom="24dp"
+            android:gravity="center">
 
-    <Button
-        android:id="@+id/btn_invest"
-        style="@style/Button.Primary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="80dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Saya Ingin Investasi"
-        android:textSize="18sp" />
-</RelativeLayout>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:overScrollMode="never"
+                android:layout_above="@+id/layoutDots"/>
+
+            <LinearLayout
+                android:id="@+id/layoutDots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="horizontal" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_peternak"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:text="Silakan pilih salah satu"
+            android:textSize="14sp"
+            android:layout_marginHorizontal="24dp" />
+
+        <Button
+            android:id="@+id/btn_peternak"
+            style="@style/Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_invest"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Saya adalah Peternak"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="24dp"/>
+
+        <Button
+            android:id="@+id/btn_invest"
+            style="@style/Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Saya Ingin Investasi"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="24dp"/>
+    </RelativeLayout>
+</ScrollView>

@@ -3,6 +3,7 @@ package com.example.ternavest.ui.both.login;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -35,6 +36,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import static com.example.ternavest.ui.both.login.RegisterActivity.EXTRA_LEVEL;
+import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
+import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
@@ -65,6 +68,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Initialize view
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         edtEmail = findViewById(R.id.edt_email_login);
         edtPassword = findViewById(R.id.edt_password_login);
 
@@ -79,6 +86,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tvRegister.setOnClickListener(this);
 
         level = getIntent().getStringExtra(EXTRA_LEVEL);
+        if (level.equals(LEVEL_PETERNAK)) toolbar.setTitle("Masuk sebagai Peternak");
+        else if (level.equals(LEVEL_INVESTOR)) toolbar.setTitle("Masuk sebagai Investor");
+
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
     }
 
@@ -104,7 +114,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                  intent_register.putExtra(EXTRA_LEVEL, level);
                  startActivity(intent_register);
                  break;
-
         }
     }
 
@@ -215,5 +224,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);  // Clear all previous activities
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

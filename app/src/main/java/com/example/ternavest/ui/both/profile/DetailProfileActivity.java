@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.ProyekAdapter;
 import com.example.ternavest.model.Portfolio;
@@ -140,7 +139,6 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
             tvEmail.setText(profile.getEmail());
         }
     }
-    
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -198,6 +196,4 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
                 break;
         }
     }
-
-
 }
