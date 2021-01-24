@@ -15,7 +15,7 @@
         app:titleTextColor="@android:color/black"
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Portfolio" />
+        app:title="Portofolio" />
 
     <ImageView
         android:id="@+id/img_ilustrasi"

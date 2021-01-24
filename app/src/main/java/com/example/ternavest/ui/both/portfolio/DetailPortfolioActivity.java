@@ -65,6 +65,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     private Button btnUpdate, btnPayment;
     private CardView cvProfile, cvPortfolio;
     private CircleImageView civProfile;
+    private MenuItem menuDelete;
     private TextView tvProject, tvTotalCost, tvCount, tvAction, tvProfile, tvStatusProject, tvStatusPayment, tvLevel, tvPayment;
     private Toolbar toolbar;
 
@@ -93,25 +94,22 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_delete:
-                        new AlertDialog.Builder(DetailPortfolioActivity.this)
-                                .setTitle("Batalkan investasi")
-                                .setMessage("Apakah Anda yakin ingin membatalkan investasi pada proyek ini?")
-                                .setNegativeButton("Tidak", null)
-                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        portfolioViewModel.delete(portfolio); // Hapus portofolio
-                                        for (Payment payment : paymentList){ // Hapus pembayaran + foto bukti
-                                            paymentViewModel.delete(portfolio.getId(), payment.getId());
-                                            paymentViewModel.deleteImage(payment.getImage());
-                                        }
-                                        onBackPressed();
+                if (item.getItemId() == R.id.action_delete) {
+                    new AlertDialog.Builder(DetailPortfolioActivity.this)
+                            .setTitle("Batalkan investasi")
+                            .setMessage("Apakah Anda yakin ingin membatalkan investasi pada proyek ini?")
+                            .setNegativeButton("Tidak", null)
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    portfolioViewModel.delete(portfolio); // Hapus portofolio
+                                    for (Payment payment : paymentList) { // Hapus pembayaran + foto bukti
+                                        paymentViewModel.delete(portfolio.getId(), payment.getId());
+                                        paymentViewModel.deleteImage(payment.getImage());
                                     }
-                                }).create().show();
-                        break;
-
+                                    onBackPressed();
+                                }
+                            }).create().show();
                 }
                 return false;
             }
@@ -228,32 +226,34 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         if (lastStatus.equals(PAY_EMPTY)) tvPayment.setVisibility(View.INVISIBLE);
         else tvPayment.setVisibility(View.VISIBLE);
 
-        Menu menu = toolbar.getMenu();
-        MenuItem menuDelete = menu.findItem(R.id.action_delete);
+        switch (lastStatus) {
+            case PAY_APPROVED:
+                tvStatusPayment.setText("Disetujui");
+                tvStatusPayment.setTextColor(getResources().getColor(R.color.blue));
+                tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
+                tvStatusProject.setVisibility(View.VISIBLE);
 
-        if (lastStatus.equals(PAY_APPROVED)){
-            tvStatusPayment.setText("Disetujui");
-            tvStatusPayment.setTextColor(getResources().getColor(R.color.blue));
-            tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
-            tvStatusProject.setVisibility(View.VISIBLE);
+                menuDelete.setVisible(false);
+                btnUpdate.setVisibility(View.INVISIBLE);
+                btnPayment.setVisibility(View.INVISIBLE);
+                break;
+            case PAY_PENDING:
+                tvStatusPayment.setText("Menunggu persetujuan");
+                tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+                tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
 
-            menuDelete.setVisible(false);
-            btnUpdate.setVisibility(View.INVISIBLE);
-            btnPayment.setVisibility(View.INVISIBLE);
-        } else if (lastStatus.equals(PAY_PENDING)){
-            tvStatusPayment.setText("Menunggu persetujuan");
-            tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-            tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
+                menuDelete.setVisible(false);
+                btnUpdate.setVisibility(View.INVISIBLE);
+                btnPayment.setVisibility(View.INVISIBLE);
+                break;
+            case PAY_REJECT:
+            case PAY_EMPTY:
+                tvStatusPayment.setText("Belum bayar");
+                tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
+                tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
-            menuDelete.setVisible(false);
-            btnUpdate.setVisibility(View.INVISIBLE);
-            btnPayment.setVisibility(View.INVISIBLE);
-        } else if (lastStatus.equals(PAY_REJECT) || lastStatus.equals(PAY_EMPTY)){
-            tvStatusPayment.setText("Belum bayar");
-            tvStatusPayment.setTextColor(getResources().getColor(R.color.orange));
-            tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
-
-            menuDelete.setVisible(true);
+                if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) menuDelete.setVisible(true);
+                break;
         }
     }
 
@@ -342,10 +342,9 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_delete, menu);
 
-        if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) {
-            MenuItem item = menu.findItem(R.id.action_delete);
-            item.setVisible(false);
-        }
+        menuDelete = menu.findItem(R.id.action_delete);
+        if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) menuDelete.setVisible(false);
+        else if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) menuDelete.setVisible(true);
 
         return true;
     }
