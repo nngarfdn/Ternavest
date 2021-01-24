@@ -3,6 +3,7 @@ package com.example.ternavest.ui.both.login;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,7 +18,9 @@ import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.customview.LoadingDialog;
+import com.example.ternavest.model.Profile;
 import com.example.ternavest.testing.MainActivity;
+import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,12 +31,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
     private String level;
     private final String TAG = getClass().getSimpleName();
     private static final int RC_SIGN_IN = 9001;
@@ -41,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
     private LoadingDialog loadingDialog;
+    private ProfileViewModel profileViewModel;
 
     private EditText edtEmail, edtPassword;
 
@@ -73,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tvRegister.setOnClickListener(this);
 
         level = getIntent().getStringExtra("EXTRA_LEVEL");
+        profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -137,6 +143,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()){
                             // Sign in success, update UI with the signed-in user's informationZ
                             Log.d(TAG, "signInWithCredential: success");
+
+                            // Insert ke database jika pengguna baru/email baru saja terdaftar
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                Profile profile = new Profile(
+                                        firebaseUser.getUid(),
+                                        firebaseUser.getDisplayName(),
+                                        firebaseUser.getEmail(),
+                                        level,
+                                        VERIF_PENDING,
+                                        null);
+                                profileViewModel.insert(profile);
+                            }
+
                             launchMain();
                         } else {
                             // If sign in fails, display a message to the user
@@ -192,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void launchMain(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all previous activities
         startActivity(intent);
-        finish();
     }
 }

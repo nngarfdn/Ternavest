@@ -25,12 +25,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private String level;
     private final String TAG = getClass().getSimpleName();
     private FirebaseAuth firebaseAuth;
@@ -89,15 +87,17 @@ public class RegisterActivity extends AppCompatActivity {
                                             Log.d(TAG, "User profile updated.");
                                         }
                                     });
-                           Profile profile = new Profile(
+
+                            // Insert ke database
+                            Profile profile = new Profile(
                                     firebaseUser.getUid(),
                                     name,
                                     firebaseUser.getEmail(),
                                     level,
                                     VERIF_PENDING,
-                                    null
-                            );
+                                    null);
                             profileViewModel.insert(profile);
+
                             Log.d(TAG, "createUserWithEmail: success");
                             launchMain();
                         } else {
@@ -128,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (TextUtils.isEmpty(konfirm) || !password.equals(konfirm)) { // Syarat Firebase Auth
+        if (!password.equals(konfirm)) {
             edtKonfirmPass.setError("Konfirmasi kata sandi tidak sama");
             valid = false;
         }
@@ -138,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void launchMain(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all previous activities
         startActivity(intent);
-        finish();
     }
 }

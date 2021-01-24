@@ -19,9 +19,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.ternavest.testing.MainActivity;
 import com.example.ternavest.R;
 import com.example.ternavest.model.Profile;
+import com.example.ternavest.ui.splash.SplashActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -205,7 +205,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 firebaseAuth.signOut();
 
                                 // Restart
-                                startActivity(new Intent(getContext(), MainActivity.class));
+                                startActivity(new Intent(getContext(), SplashActivity.class));
                                 getActivity().finish();
                             }
                         })
