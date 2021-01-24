@@ -8,7 +8,6 @@
     android:gravity="center"
     tools:context=".ui.both.login.LoginActivity">
 
-
     <ImageView
         android:id="@+id/img_masuk"
         android:layout_width="140dp"
@@ -119,10 +118,5 @@
             android:text="Daftar"
             android:textColor="@color/green_dark"
             android:textSize="18sp" />
-
-
     </LinearLayout>
-
-
-
 </RelativeLayout>

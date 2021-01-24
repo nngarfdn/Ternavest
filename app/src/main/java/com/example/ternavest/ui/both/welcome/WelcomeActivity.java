@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.welcome;
+package com.example.ternavest.ui.both.welcome;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.example.ternavest.R;
 import com.example.ternavest.testing.MainActivity;
 import com.example.ternavest.ui.both.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -67,9 +68,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 launchLogin(LEVEL_INVESTOR);
             }
         });
-        
-        TextView tvTesting = findViewById(R.id.tv_testing_welcome);
-        tvTesting.setOnClickListener(view -> startActivity(new Intent(WelcomeActivity.this, MainActivity.class)));
     }
 
     private void addBottomDots(int currentPage) {
@@ -148,8 +146,8 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser()!=null){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

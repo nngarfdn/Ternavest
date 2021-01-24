@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.model.Profile;
-import com.example.ternavest.ui.splash.SplashActivity;
+import com.example.ternavest.ui.both.welcome.SplashActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

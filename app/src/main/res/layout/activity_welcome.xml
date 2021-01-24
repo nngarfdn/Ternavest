@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.welcome.WelcomeActivity"
+    tools:context=".ui.both.welcome.WelcomeActivity"
     android:orientation="vertical">
 
     <androidx.viewpager.widget.ViewPager
@@ -58,16 +58,4 @@
         android:fontFamily="@font/poppins_regular"
         android:text="Saya Ingin Investasi"
         android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tv_testing_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buka testing"
-        android:textColor="@color/green"
-        android:textSize="@dimen/font_nm"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

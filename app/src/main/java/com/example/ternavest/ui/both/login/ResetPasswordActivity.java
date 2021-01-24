@@ -3,7 +3,6 @@ package com.example.ternavest.ui.both.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,9 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class ResetPasswordActivity extends AppCompatActivity {
-
     private final String TAG = getClass().getSimpleName();
-    private AlertDialog dialog;
     private FirebaseAuth firebaseAuth;
     private EditText edtEmail;
 
@@ -54,11 +51,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
                             Log.d(TAG, "Email sent.");
                             showToast(getApplicationContext(), "Permintaan setel ulang kata sandi telah dikirim ke email.");
+                            finish();
                         } else {
                             Log.d(TAG, "Email sent failed.");
-                            showToast(getApplicationContext(), "Email tidak terdaftar atau koneksi sedang bermasalah.");
+                            showToast(getApplicationContext(), "Email tidak terdaftar.");
                         }
-                        dialog.dismiss();
                     }
                 });
     }

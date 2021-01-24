@@ -1,4 +1,4 @@
-package com.example.ternavest.ui.welcome.intro
+package com.example.ternavest.ui.both.welcome.intro
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ternavest.R
 
-class FragmentIntrob : Fragment() {
+class FragmentIntroA : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_introb, container, false)
+        return inflater.inflate(R.layout.fragment_introa, container, false)
     }
 }
