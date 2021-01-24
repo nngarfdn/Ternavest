@@ -40,7 +40,6 @@ public class ProfileRepository {
     private final FirebaseFirestore database = FirebaseFirestore.getInstance();
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    private final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public final CollectionReference reference = database.collection("profil");
 
     private final MutableLiveData<Profile> resultData = new MutableLiveData<>();
@@ -65,6 +64,7 @@ public class ProfileRepository {
     }
 
     public void query(){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         reference.document(userId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -95,6 +95,7 @@ public class ProfileRepository {
     }
 
     public void insert(Profile profile){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         reference.document(userId)
                 .set(objectToHashMapForInsert(profile))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -107,6 +108,7 @@ public class ProfileRepository {
     }
 
     public void update(Profile profile){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         reference.document(userId)
                 .update(objectToHashMap(profile))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -120,6 +122,7 @@ public class ProfileRepository {
 
     // Khusus ganti foto profil
     public void update(String photo){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         reference.document(userId)
                 .update("foto", photo)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -133,6 +136,7 @@ public class ProfileRepository {
 
     // Khusus verifikasi KTP
     public void sendVerification(String ktp){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         reference.document(userId)
                 .update(
                         "ktp", ktp,
