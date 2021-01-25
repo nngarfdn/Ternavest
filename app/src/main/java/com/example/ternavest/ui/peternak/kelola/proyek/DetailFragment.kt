@@ -123,6 +123,8 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
 
 }
 
+
+
 internal interface ProfileCallback {
     fun onFinish(listItem: ArrayList<Profile>)
 }
