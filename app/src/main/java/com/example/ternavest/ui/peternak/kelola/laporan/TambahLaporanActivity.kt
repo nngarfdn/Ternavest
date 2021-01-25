@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK
+import com.example.ternavest.utils.DateUtils.DATE_FORMAT
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -62,7 +63,7 @@ class TambahLaporanActivity : AppCompatActivity() {
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+        dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.US)
         txtTanggalLaporan.setInputType(InputType.TYPE_NULL)
         txtTanggalLaporan.requestFocus()
         setDateTimeField()

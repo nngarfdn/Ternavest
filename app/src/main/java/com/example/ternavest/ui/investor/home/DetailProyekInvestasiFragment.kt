@@ -18,6 +18,7 @@ import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT
 import com.example.ternavest.ui.both.profile.DetailProfileActivity
 import com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE
+import com.example.ternavest.utils.DateUtils.getFullDate
 import com.example.ternavest.viewmodel.PortfolioViewModel
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
@@ -26,6 +27,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.*
 import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.*
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.imgDeskripsiLaporan
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.imgLaporanProyek
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.imgProfile
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtDeskripsi
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtJenisHewanDetail
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtRoiDetail
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtTanggalDetail
+import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtTitle
 
 class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
 
@@ -95,7 +104,7 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
         view.txtDeskripsi.setText(p?.deskripsiProyek)
         view.txtJenisHewanDetail.setText(p?.jenisHewan)
         view.txtRoiDetail.setText("${p?.roi}%")
-        view.txtTanggalDetail.setText("${p?.waktuMulai} - ${p?.waktuSelesai}")
+        view.txtTanggalDetail.setText("${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}")
 
         Picasso.get()
                 .load(p?.photoProyek)

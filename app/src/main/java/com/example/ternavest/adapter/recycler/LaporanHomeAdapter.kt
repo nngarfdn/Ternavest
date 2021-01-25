@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.ui.investor.home.DetailLaporanHomeDialogFragment
+import com.example.ternavest.utils.DateUtils.getFullDate
 import kotlinx.android.synthetic.main.item_laporan.view.*
 
 class LaporanHomeAdapter (private val list: List<Laporan>) : RecyclerView.Adapter<LaporanHomeAdapter.ViewHolder>() {
@@ -23,7 +24,7 @@ class LaporanHomeAdapter (private val list: List<Laporan>) : RecyclerView.Adapte
 
 
         holder.itemView.txtJudulLaporan.text = list[position].judulLaporan
-        holder.itemView.txtTanggalLaporan.text = list[position].tanggal
+        holder.itemView.txtTanggalLaporan.text = getFullDate(list[position].tanggal, false)
 
         holder.itemView.setOnClickListener {
             val args = Bundle()

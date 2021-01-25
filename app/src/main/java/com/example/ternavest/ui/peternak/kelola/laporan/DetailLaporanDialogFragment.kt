@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
 import com.example.ternavest.utils.AppUtils.getRupiahFormat
+import com.example.ternavest.utils.DateUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail_laporan_dialog.view.*
@@ -33,6 +34,7 @@ class DetailLaporanDialogFragment : BottomSheetDialogFragment() {
         view.txtDeskripsi.setText(p?.deskripsiLaporan)
         view.txtJenisHewanDetail.setText(p?.pemasukan?.let { getRupiahFormat(it) })
         view.txtRoiDetail.setText(p?.pengeluaran?.let { getRupiahFormat(it) })
+        view.txtTanggal.setText(DateUtils.getFullDate(p?.tanggal, false))
 
         Picasso.get()
                 .load(p?.photoLaporan) // resizes the image to these dimensions (in pixel)

@@ -13,6 +13,7 @@ import com.example.ternavest.model.Profile
 import com.example.ternavest.ui.peternak.kelola.laporan.EditLaporanActivity
 import com.example.ternavest.utils.AppUtils
 import com.example.ternavest.utils.AppUtils.getRupiahFormat
+import com.example.ternavest.utils.DateUtils.getFullDate
 import com.example.ternavest.viewmodel.PortfolioViewModel
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
@@ -45,11 +46,9 @@ class DetailLaporanHomeDialogFragment : BottomSheetDialogFragment() {
 
         view.txtTitle.setText( p?.judulLaporan)
         view.txtDeskripsi.setText(p?.deskripsiLaporan)
-        view.txtJenisHewanDetail.setText(p?.pemasukan?.let {
-            AppUtils.getRupiahFormat(it
-        )
-        })
+        view.txtJenisHewanDetail.setText(p?.pemasukan?.let { getRupiahFormat(it) })
         view.txtRoiDetail.setText(p?.pengeluaran?.let { getRupiahFormat(it) })
+        view.txtTanggal.setText(getFullDate(p?.tanggal, false))
 
         Picasso.get()
                 .load(p?.photoLaporan) // resizes the image to these dimensions (in pixel)

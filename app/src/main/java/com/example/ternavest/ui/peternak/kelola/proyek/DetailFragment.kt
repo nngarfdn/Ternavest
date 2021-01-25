@@ -15,6 +15,7 @@ import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
 import com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK
+import com.example.ternavest.utils.DateUtils.getFullDate
 import com.example.ternavest.viewmodel.PortfolioViewModel
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
@@ -90,7 +91,7 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
         view.txtDeskripsi.setText(p?.deskripsiProyek)
         view.txtJenisHewanDetail.setText(p?.jenisHewan)
         view.txtRoiDetail.setText("${p?.roi}%")
-        view.txtTanggalDetail.setText("${p?.waktuMulai} - ${p?.waktuSelesai}")
+        view.txtTanggalDetail.setText("${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}")
 
         Picasso.get()
                 .load(p?.photoProyek)

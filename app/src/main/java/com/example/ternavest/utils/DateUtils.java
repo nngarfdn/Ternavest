@@ -9,7 +9,7 @@ import java.util.Date;
 import static com.example.ternavest.utils.AppUtils.locale;
 
 public class DateUtils {
-    public static final String DATE_FORMAT = "dd-MM-yyyy";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm";
 
     public static String getCurrentDate(){
@@ -29,7 +29,7 @@ public class DateUtils {
             int[] arrayDate = getArrayDate(date);
             String month = new DateFormatSymbols().getMonths()[(arrayDate[1])];
             if (isSimple) month = month.substring(0,3);
-            return arrayDate[0] + " " + month + " " + arrayDate[2];
+            return arrayDate[2] + " " + month + " " + arrayDate[0];
         } else return "-1";
     }
 

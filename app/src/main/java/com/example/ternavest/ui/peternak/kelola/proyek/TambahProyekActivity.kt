@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.utils.DateUtils.DATE_FORMAT
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.gms.tasks.Task
@@ -77,7 +78,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
         
 
-        dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+        dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.US)
         txtWaktuMulai.setInputType(InputType.TYPE_NULL)
         txtWaktuMulai.requestFocus()
         txtWaktuSelesai.setInputType(InputType.TYPE_NULL)

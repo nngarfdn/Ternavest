@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +40,7 @@ import static com.example.ternavest.utils.AppUtils.createIdFromCurrentDate;
 import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
+import static com.example.ternavest.utils.DateUtils.differenceOfDates;
 import static com.example.ternavest.utils.DateUtils.getCurrentDate;
 import static com.example.ternavest.utils.DateUtils.getCurrentTime;
 
@@ -117,6 +120,21 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 tvNominal.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
 
                 Log.d(getClass().getSimpleName(), "onCreate: " + getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
+
+                // Proyek sudah mulai atau selesai
+                if (!(differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0)){
+                    new AlertDialog.Builder(this)
+                            .setCancelable(false)
+                            .setTitle("Proyek sudah dimulai")
+                            .setMessage("Kamu sudah tidak bisa mengajukan pembayaran.")
+                            .setPositiveButton("Kembali", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    onBackPressed();
+                                }
+                            })
+                            .create().show();
+                }
             }
 
             profileViewModel.loadData(portfolio.getBreederId());
