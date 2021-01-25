@@ -84,7 +84,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
         @SuppressLint("SetTextI18n")
         public void bind(Portfolio portfolio) {
-            tvCount.setText(" / " + (portfolio.getCount()) + " ekor");
+            tvCount.setText("/ " + (portfolio.getCount()) + " ekor");
 
             reference.document(portfolio.getProjectId()).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()){

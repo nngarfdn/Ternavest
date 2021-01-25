@@ -48,8 +48,8 @@
                     app:cardUseCompatPadding="true"
                     app:contentPaddingBottom="16dp"
                     app:contentPaddingTop="@dimen/dimen_16"
-                    app:contentPaddingLeft="4dp"
-                    app:contentPaddingRight="4dp" >
+                    app:contentPaddingLeft="8dp"
+                    app:contentPaddingRight="8dp" >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Biaya per ekor ternak"
-                            android:textStyle="bold"
+                            android:textColor="@color/black"
                             app:layout_constraintStart_toEndOf="@+id/img_icon_cost_aup"
                             app:layout_constraintTop_toTopOf="@+id/img_icon_cost_aup" />
 
@@ -80,6 +80,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/loading_rupiah"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/font_md"
+                            android:textColor="@color/black"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_title_cost_aup" />
                     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,10 +17,9 @@
             android:id="@+id/img_icon_total_cost_payment"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/peminat"
+            android:src="@drawable/ic_rupiah"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/green" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_title_total_cost_payment"
@@ -40,6 +39,7 @@
             android:text="@string/loading_rupiah"
             android:textStyle="bold"
             android:textColor="@color/black"
+            android:textSize="@dimen/font_md"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title_total_cost_payment" />
     </androidx.constraintlayout.widget.ConstraintLayout>

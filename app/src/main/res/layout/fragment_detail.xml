@@ -130,7 +130,7 @@
                 android:layout_alignTop="@+id/txtTitlePengeluaran"
                 android:layout_alignBottom="@+id/txtRoiDetail"
                 android:layout_toStartOf="@+id/txtTitlePengeluaran"
-                android:src="@drawable/ic_pengeluaran" />
+                android:src="@drawable/ic_roi" />
 
             <RelativeLayout
                 android:id="@+id/rel_tanggal"

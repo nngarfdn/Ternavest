@@ -42,6 +42,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/loading_rupiah"
             android:textColor="@color/white"
+            android:textSize="@dimen/font_md"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_project_portfolio" />
 

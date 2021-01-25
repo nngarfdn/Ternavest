@@ -17,7 +17,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="Portofolio" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
@@ -25,13 +25,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingVertical="@dimen/dimen_16"
             android:layout_marginHorizontal="@dimen/dimen_16">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_alignParentTop="true"
                 android:layout_above="@+id/btn_update_dpf">
@@ -87,7 +87,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_payment_dpf"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:overScrollMode="never"/>
             </LinearLayout>
 
@@ -109,5 +109,5 @@
                 android:text="Lanjut Pembayaran"
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

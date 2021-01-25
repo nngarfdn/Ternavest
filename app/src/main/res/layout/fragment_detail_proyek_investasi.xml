@@ -130,7 +130,7 @@
                 android:layout_alignTop="@+id/txtTitlePengeluaran"
                 android:layout_alignBottom="@+id/txtRoiDetail"
                 android:layout_toStartOf="@+id/txtTitlePengeluaran"
-                android:src="@drawable/ic_pengeluaran" />
+                android:src="@drawable/ic_roi" />
 
             <RelativeLayout
                 android:id="@+id/rel_tanggal"
@@ -203,6 +203,7 @@
                 android:layout_below="@id/txtPeminat"
                 android:layout_marginTop="8dp"
                 android:text="Belum ada peminat"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_peminat"
                 android:layout_width="match_parent"

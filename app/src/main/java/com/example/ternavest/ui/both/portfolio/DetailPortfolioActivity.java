@@ -140,8 +140,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
 
         tvAction.setText("Lihat proyek");
         if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
-            btnUpdate.setVisibility(View.INVISIBLE);
-            btnPayment.setVisibility(View.INVISIBLE);
+            btnUpdate.setVisibility(View.GONE);
+            btnPayment.setVisibility(View.GONE);
         }
         cvProfile.setEnabled(false); // Tunggu selesai query dulu
         tvPayment.setVisibility(View.INVISIBLE);
@@ -176,7 +176,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         if (intent.hasExtra(EXTRA_PORTFOLIO)){
             portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
-            tvCount.setText(" / " + portfolio.getCount() + " ekor");
+            tvCount.setText("/ " + portfolio.getCount() + " ekor");
 
             if (intent.hasExtra(EXTRA_PROJECT)){
                 project = intent.getParcelableExtra(EXTRA_PROJECT);
@@ -222,8 +222,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 tvStatusProject.setVisibility(View.VISIBLE);
 
                 menuDelete.setVisible(false);
-                btnUpdate.setVisibility(View.INVISIBLE);
-                btnPayment.setVisibility(View.INVISIBLE);
+                btnUpdate.setVisibility(View.GONE);
+                btnPayment.setVisibility(View.GONE);
                 break;
             case PAY_PENDING:
                 tvStatusPayment.setText("Menunggu persetujuan");
@@ -231,8 +231,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 tvTotalCost.setText(getRupiahFormat(portfolio.getTotalCost()));
 
                 menuDelete.setVisible(false);
-                btnUpdate.setVisibility(View.INVISIBLE);
-                btnPayment.setVisibility(View.INVISIBLE);
+                btnUpdate.setVisibility(View.GONE);
+                btnPayment.setVisibility(View.GONE);
                 break;
             case PAY_REJECT:
             case PAY_EMPTY:
@@ -286,7 +286,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         if (data != null){
             if (requestCode == RC_UPDATE_PORTFOLIO && resultCode == RC_UPDATE_PORTFOLIO){
                 portfolio = data.getParcelableExtra(EXTRA_PORTFOLIO);
-                tvCount.setText(" / " + portfolio.getCount() + " ekor");
+                tvCount.setText("/ " + portfolio.getCount() + " ekor");
                 tvTotalCost.setText(getRupiahFormat(portfolio.getCount() * project.getBiayaHewan()));
             } else if (requestCode == RC_ADD_PAYMENT && resultCode == RC_ADD_PAYMENT){
                 Payment payment = data.getParcelableExtra(EXTRA_PAYMENT);

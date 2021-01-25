@@ -159,7 +159,8 @@
             android:layout_height="wrap_content"
             android:minHeight="50dp"
             android:prompt="@string/hint_select_province"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            android:background="@drawable/bg_edit_text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -173,7 +174,8 @@
             android:layout_height="wrap_content"
             android:minHeight="50dp"
             android:prompt="@string/hint_select_regency"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            android:background="@drawable/bg_edit_text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -187,6 +189,7 @@
             android:layout_height="wrap_content"
             android:minHeight="50dp"
             android:prompt="@string/hint_select_district"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            android:background="@drawable/bg_edit_text" />
     </LinearLayout>
 </merge>

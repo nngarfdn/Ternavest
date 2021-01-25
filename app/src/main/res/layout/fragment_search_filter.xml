@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
@@ -67,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:prompt="@string/hint_select_province"
                 android:spinnerMode="dialog"
-                android:minHeight="48dp"/>
+                android:minHeight="48dp"
+                android:background="@drawable/bg_edit_text"/>
 
             <CheckBox
                 android:id="@+id/cb_regencies_sf"
@@ -81,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:prompt="@string/hint_select_regency"
                 android:spinnerMode="dialog"
-                android:minHeight="48dp"/>
+                android:minHeight="48dp"
+                android:background="@drawable/bg_edit_text"/>
 
             <CheckBox
                 android:id="@+id/cb_districts_sf"
@@ -95,7 +96,8 @@
                 android:layout_height="wrap_content"
                 android:prompt="@string/hint_select_district"
                 android:spinnerMode="dialog"
-                android:minHeight="48dp"/>
+                android:minHeight="48dp"
+                android:background="@drawable/bg_edit_text"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_filter_sf"

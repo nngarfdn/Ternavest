@@ -25,12 +25,17 @@ import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.android.synthetic.main.fragment_detail.view.*
+import kotlinx.android.synthetic.main.fragment_detail.view.imgDeskripsiLaporan
+import kotlinx.android.synthetic.main.fragment_detail.view.imgLaporanProyek
+import kotlinx.android.synthetic.main.fragment_detail.view.imgProfile
+import kotlinx.android.synthetic.main.fragment_detail.view.txtAlamatLengkap
+import kotlinx.android.synthetic.main.fragment_detail.view.txtDeskripsi
+import kotlinx.android.synthetic.main.fragment_detail.view.txtJenisHewanDetail
+import kotlinx.android.synthetic.main.fragment_detail.view.txtRoiDetail
+import kotlinx.android.synthetic.main.fragment_detail.view.txtTanggalDetail
+import kotlinx.android.synthetic.main.fragment_detail.view.txtTitle
 
 class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
-    // TODO: Rename and change types of parameters
-
-
     companion object{
         private const val TAG = "DetailFragment"
     }
@@ -40,22 +45,15 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
     private lateinit var profileViewModel: ProfileViewModel
     private var listProfile : ArrayList<Profile> = ArrayList()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
+        arguments?.let {}
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
         val p: Proyek? = arguments?.getParcelable("proyek")
-
 
         proyekViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProyekViewModel::class.java)
         portfolioViewModel = ViewModelProvider(this, NewInstanceFactory()).get(PortfolioViewModel::class.java)
@@ -72,20 +70,13 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
                     Log.d(TAG, "onCreateView: load profile ${profil.name}")
                     Log.d(TAG, "onCreateView: list profile $b")
 
-                    if (b.isNotEmpty()){
-                        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.layoutManager = layoutManager
-                        val adapter = PeminatAdapter(b)
-                        rv_peminat.adapter = adapter
-                        txtPeminatKosong.visibility = View.INVISIBLE
-                    } else {
-                        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.layoutManager = layoutManager
-                        val adapter = PeminatAdapter(b)
-                        rv_peminat.adapter = adapter
-                        txtPeminatKosong.visibility = View.VISIBLE
-                    }
+                    val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
+                    rv_peminat.layoutManager = layoutManager
+                    val adapter = PeminatAdapter(b)
+                    rv_peminat.adapter = adapter
 
+                    if (b.isNotEmpty()) txtPeminatKosong.visibility = View.INVISIBLE
+                    else txtPeminatKosong.visibility = View.VISIBLE
                 })
             }
 
@@ -96,6 +87,7 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
         view.txtJenisHewanDetail.text = p?.jenisHewan
         view.txtRoiDetail.text = "${p?.roi}%"
         view.txtTanggalDetail.text = "${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}"
+        view.txtAlamatLengkap.text = p?.alamatLengkap + ", " + p?.kecamatan + ", " + p?.kabupaten + ", " + p?.provinsi
 
         Picasso.get()
                 .load(p?.photoProyek)
@@ -109,6 +101,7 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
             intent.putExtra("proyek", p)
             startActivity(intent)
         }
+
         view.imgLaporanProyek.setOnClickListener {
             val intent = Intent(context, LaporanActivity::class.java)
             intent.putExtra("level", LEVEL_PETERNAK)
@@ -118,7 +111,6 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
 
         return view
     }
-
 
     override fun onFinish(listItem: ArrayList<Profile>) {
         for (item in listItem) {

@@ -7,13 +7,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.both.profile.TentangAplikasi"></activity>
+        <activity android:name=".ui.both.profile.TentangAplikasi"/>
         <activity android:name=".ui.both.login.ResetPasswordActivity" />
         <activity android:name=".ui.both.login.RegisterActivity" />
         <activity android:name=".ui.both.login.LoginActivity" />

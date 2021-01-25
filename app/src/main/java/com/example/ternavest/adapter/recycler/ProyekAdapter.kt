@@ -33,7 +33,7 @@ class ProyekAdapter (private val list: List<Proyek>) : RecyclerView.Adapter<Proy
 
         holder.itemView.txtNamaProyek.text = list[position].namaProyek
         holder.itemView.txtJenisHewan.text = list[position].jenisHewan
-        holder.itemView.txtROI.text = "${list[position].roi} %"
+        holder.itemView.txtROI.text = "${list[position].roi}%"
 
         holder.itemView.setOnClickListener {
             val args = Bundle()

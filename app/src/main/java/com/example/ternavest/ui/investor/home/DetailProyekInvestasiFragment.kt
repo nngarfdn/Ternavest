@@ -38,12 +38,10 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
 
     private var database: FirebaseFirestore? = null
 
-
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var portfolioViewModel: PortfolioViewModel
     private lateinit var profileViewModel: ProfileViewModel
     private var listProfile : ArrayList<Profile> = ArrayList()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +50,7 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail_proyek_investasi, container, false)
     }
 
@@ -80,19 +76,13 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
                     Log.d(TAG, "onCreateView: load profile ${profil.name}")
                     Log.d(TAG, "onCreateView: list profile $b")
 
-                    if (b.isNotEmpty()){
-                        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.layoutManager = layoutManager
-                        val adapter = PeminatAdapter(b)
-                        rv_peminat.adapter = adapter
-                        txtPeminatKosong.visibility = View.INVISIBLE
-                    } else {
-                        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.layoutManager = layoutManager
-                        val adapter = PeminatAdapter(b)
-                        rv_peminat.adapter = adapter
-                        txtPeminatKosong.visibility = View.VISIBLE
-                    }
+                    val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
+                    rv_peminat.layoutManager = layoutManager
+                    val adapter = PeminatAdapter(b)
+                    rv_peminat.adapter = adapter
+
+                    if (b.isNotEmpty()) txtPeminatKosong.visibility = View.INVISIBLE
+                    else txtPeminatKosong.visibility = View.VISIBLE
                 })
             }
 
@@ -103,6 +93,7 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
         view.txtJenisHewanDetail.text = p?.jenisHewan
         view.txtRoiDetail.text = "${p?.roi}%"
         view.txtTanggalDetail.text = "${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}"
+        view.txtAlamatLengkap.text = p?.alamatLengkap + ", " + p?.kecamatan + ", " + p?.kabupaten + ", " + p?.provinsi
 
         Picasso.get()
                 .load(p?.photoProyek)
@@ -110,7 +101,6 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
                 .centerCrop()
                 .placeholder(R.drawable.load_image)
                 .into(view.imgDeskripsiLaporan)
-
 
         profileViewModel.loadData(p?.uuid)
         profileViewModel.data.observe(viewLifecycleOwner, Observer { result ->
@@ -132,6 +122,7 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
             })
 
         }
+
         view.imgLaporanProyek.setOnClickListener {
             val intent = Intent(context, LaporanHomeActivity::class.java)
             intent.putExtra("level", "investor")
@@ -145,6 +136,4 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
             startActivity(intent)
         }
     }
-
 }
-
