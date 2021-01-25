@@ -6,7 +6,7 @@
 
     <tab
         drawable="@drawable/peminat"
-        text="@string/peminat" />
+        text="@string/project" />
 
     <tab
         drawable="@drawable/person"

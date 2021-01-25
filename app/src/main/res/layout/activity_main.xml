@@ -18,7 +18,7 @@
         android:id="@+id/bn_main"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        app:rbb_tabs="@xml/tabs_investor"
+        app:rbb_tabs="@xml/tabs"
         android:layout_alignParentBottom="true"
         app:rbb_activeItemType="icon"/>
 </RelativeLayout>

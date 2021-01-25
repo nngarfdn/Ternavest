@@ -5,7 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,8 +32,9 @@ public class PortfolioFragment extends Fragment {
     private PortfolioViewModel portfolioViewModel;
     private UserPreference userPreference;
 
-    private ImageView imgIlustrasi;
+    private LinearLayout layoutEmpty;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvEmpty;
 
     public PortfolioFragment() {}
 
@@ -49,7 +51,8 @@ public class PortfolioFragment extends Fragment {
         userPreference = new UserPreference(getContext());
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_portfolio_portfolio);
-        imgIlustrasi = view.findViewById(R.id.img_ilustrasi);
+        layoutEmpty = view.findViewById(R.id.layout_empty_portfolio);
+        tvEmpty = view.findViewById(R.id.tv_empty_portfolio);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
@@ -64,8 +67,12 @@ public class PortfolioFragment extends Fragment {
         portfolioViewModel.loadData(userPreference.getUserLevel());
         portfolioViewModel.getData().observe(this, portfolioList -> {
             adapter.setData(portfolioList);
-            if (portfolioList.isEmpty()) imgIlustrasi.setVisibility(View.VISIBLE);
-            else imgIlustrasi.setVisibility(View.INVISIBLE);
+            if (portfolioList.isEmpty()) {
+                layoutEmpty.setVisibility(View.VISIBLE);
+                if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) tvEmpty.setText("Kamu belum pernah investasi");
+                else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) tvEmpty.setText("Belum ada peminat");
+            }
+            else layoutEmpty.setVisibility(View.INVISIBLE);
         });
         portfolioViewModel.getReference().addSnapshotListener((value, error) -> {
             if (error != null) Log.w(TAG, "Listen failed", error);

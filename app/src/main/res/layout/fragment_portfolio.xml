@@ -17,13 +17,27 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="Portofolio" />
 
-    <ImageView
-        android:id="@+id/img_ilustrasi"
+    <LinearLayout
+        android:id="@+id/layout_empty_portfolio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_peminat_kosong"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_peminat_kosong"/>
+
+        <TextView
+            android:id="@+id/tv_empty_portfolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum ada"
+            android:textSize="@dimen/font_lg"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
