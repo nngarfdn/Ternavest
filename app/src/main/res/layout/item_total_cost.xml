@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
-    android:layout_marginHorizontal="@dimen/dimen_32"
-    app:cardElevation="2dp"
+    app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
     app:contentPadding="16dp">
 
@@ -29,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Total biaya yang dibayar"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/img_icon_total_cost_payment"
             app:layout_constraintTop_toTopOf="@+id/img_icon_total_cost_payment" />
 
@@ -39,6 +39,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/loading_rupiah"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title_total_cost_payment" />
     </androidx.constraintlayout.widget.ConstraintLayout>

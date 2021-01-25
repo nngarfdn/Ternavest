@@ -15,8 +15,7 @@
         app:titleTextColor="@android:color/black"
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="@string/loading"
-        android:layout_marginTop="@dimen/dimen_16" />
+        app:title="@string/loading" />
 
     <ScrollView
         android:layout_width="match_parent"

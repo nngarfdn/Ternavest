@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginHorizontal="@dimen/dimen_32"
-        android:layout_below="@+id/toolbar1">
+        android:layout_below="@+id/toolbar1"
+        android:layout_marginBottom="16dp">
 
         <SearchView
             android:id="@+id/search_proyek"
@@ -33,7 +34,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ib_search_filter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ib_search_filter" />
+            app:layout_constraintTop_toTopOf="@+id/ib_search_filter"
+            android:background="@drawable/bg_edit_text"/>
 
         <ImageButton
             android:id="@+id/ib_search_filter"
