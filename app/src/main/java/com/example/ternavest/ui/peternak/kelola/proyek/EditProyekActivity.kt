@@ -84,9 +84,9 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         p = intent.getParcelableExtra("proyek")!!
 
-        portfolioViewModel.queryPeminat(p?.id)
+        portfolioViewModel.queryPeminat(p.id)
         portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>>{ portfolioList ->
-            if (portfolioList.isEmpty()) menuDelete?.setVisible(true) else menuDelete?.setVisible(false)
+            menuDelete?.isVisible = portfolioList.isEmpty()
         })
         setSupportActionBar(toolbartambahpproyek)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -101,7 +101,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             .setTitle("Hapus Proyek")
                             .setMessage("Apakah kamu yakin ingin menghapus ?")
                             .setNegativeButton("Tidak", null)
-                            .setPositiveButton("Ya") { dialogInterface, i ->
+                            .setPositiveButton("Ya") { _, _ ->
                                 proyekViewModel.delete(p.id!!)
                                 startActivity(Intent(this, MainActivity::class.java))
                             }.create().show()
@@ -122,16 +122,16 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
 
         dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.US)
-        txtWaktuMulai.setInputType(InputType.TYPE_NULL)
+        txtWaktuMulai.inputType = InputType.TYPE_NULL
         txtWaktuMulai.requestFocus()
-        txtWaktuSelesai.setInputType(InputType.TYPE_NULL)
+        txtWaktuSelesai.inputType = InputType.TYPE_NULL
         setDateTimeField()
         initWilayah()
         loadProvinces()
         setEditText(p)
 
         Picasso.get()
-                .load(p?.photoProyek)
+                .load(p.photoProyek)
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.load_image)
@@ -148,9 +148,8 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 //            val roiInt = roi.toInt()
             val waktuMulai = txtWaktuMulai.text.toString()
             val waktuSelesai = txtWaktuSelesai.text.toString()
-            val alamat: String = txtAlamatLengkap.getText().toString()
-            var kecamatan: String?
-            kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
+            val alamat: String = txtAlamatLengkap.text.toString()
+            val kecamatan: String? = if (spin_districts != null && spin_districts.selectedItem != null) {
                 spin_districts.selectedItem as String
             } else {
                 "-"
@@ -161,8 +160,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 "-"
             }
 
-            var prov: String? = null
-            prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
+            val prov: String? = if (spin_provinces != null && spin_provinces.selectedItem != null) {
                 spin_provinces.selectedItem as String
             } else {
                 "-"
@@ -208,7 +206,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
 
             if (TextUtils.isEmpty(alamat)) {
-                txtAlamatLengkap.setError("Masukkan alamat lengkap proyek")
+                txtAlamatLengkap.error = "Masukkan alamat lengkap proyek"
                 cek = false
             }
 
@@ -269,7 +267,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         fromDatePickerDialog = DatePickerDialog(this, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             val newDate: Calendar = Calendar.getInstance()
             newDate.set(year, monthOfYear, dayOfMonth)
-            txtWaktuMulai.setText(dateFormatter!!.format(newDate.getTime()))
+            txtWaktuMulai.setText(dateFormatter!!.format(newDate.time))
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH))
 
         toDatePickerDialog = DatePickerDialog(this, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -373,7 +371,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     private fun getExtension(uri: Uri): String? {
         try {
-            val objectContentResolver: ContentResolver = Objects.requireNonNull(this).getContentResolver()
+            val objectContentResolver: ContentResolver = Objects.requireNonNull(this).contentResolver
             val objectMimeTypeMap = MimeTypeMap.getSingleton()
             return objectMimeTypeMap.getExtensionFromMimeType(objectContentResolver.getType(uri))
         } catch (e: Exception) {
@@ -382,16 +380,19 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         return null
     }
 
+    @SuppressLint("SetTextI18n")
     private fun uploadImage() {
         if (filePath != null) {
-            btnUploadImage.setText("Mengupload...")
+            btnUploadImage.text = "Mengupload..."
             val namaImage = UUID.randomUUID().toString() // diganti id produk di firebase
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
             val imageRef = objectStorageReference!!.child(nameOfimage)
             val objectUploadTask = imageRef.putFile(filePath!!)
             objectUploadTask.continueWithTask { task: Task<UploadTask.TaskSnapshot?> ->
                 if (!task.isSuccessful) {
-                    throw Objects.requireNonNull(task.exception)!!
+                    val requireNonNull = Objects.requireNonNull(task.exception)
+                    throw requireNonNull
+                            ?: throw NullPointerException("Expression 'Objects.requireNonNull(task.exception)' must not be null")
                 }
                 imageRef.downloadUrl
             }.addOnCompleteListener { task: Task<Uri?> ->
@@ -410,13 +411,12 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                         val biayaHewan = txtBiayaPengelolaan.text.toString()
                         val biayaPengelolahan = biayaHewan.toLong()
                         val alamat: String = txtAlamatLengkap.text.toString()
-                        val kecamatan: String? = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
+                        val kecamatan: String? = if (spin_districts != null && spin_districts.selectedItem != null) {
                             spin_districts.selectedItem as String } else { "-" }
-                        val kabupaten: String? = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
-                            spin_regencies.getSelectedItem() as String
+                        val kabupaten: String? = if (spin_regencies != null && spin_regencies.selectedItem != null) {
+                            spin_regencies.selectedItem as String
                         } else { "-" }
-                        val prov: String?
-                        prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
+                        val prov: String? = if (spin_provinces != null && spin_provinces.selectedItem != null) {
                             spin_provinces.selectedItem as String } else { "-" }
                         var cek = true
                         if (namaProyek.isEmpty()) {
@@ -444,11 +444,11 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             cek = false
                         }
                         if (TextUtils.isEmpty(biayaHewan)) {
-                            txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
+                            txtBiayaPengelolaan.error = "Masukkan biaya perhewan"
                             cek = false
                         }
                         if (TextUtils.isEmpty(alamat)) {
-                            txtAlamatLengkap.setError("Masukkan alamat lengkap proyek")
+                            txtAlamatLengkap.error = "Masukkan alamat lengkap proyek"
                             cek = false
                         }
                         if (TextUtils.isEmpty(p.photoProyek)) {

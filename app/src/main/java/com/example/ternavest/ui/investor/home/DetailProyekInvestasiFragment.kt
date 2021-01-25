@@ -1,12 +1,12 @@
 package com.example.ternavest.ui.investor.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
@@ -29,19 +29,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.*
 import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.*
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.imgDeskripsiLaporan
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.imgLaporanProyek
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.imgProfile
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtDeskripsi
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtJenisHewanDetail
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtRoiDetail
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtTanggalDetail
-import kotlinx.android.synthetic.main.fragment_detail_proyek_investasi.view.txtTitle
 
 class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
 
+    companion object{
+        private const val TAG = "DetailProyekInvestasiFr"
+    }
+
     private var database: FirebaseFirestore? = null
-    private val TAG = "DetailProyekInvestasiFr"
+
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var portfolioViewModel: PortfolioViewModel
@@ -62,6 +58,7 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
         return inflater.inflate(R.layout.fragment_detail_proyek_investasi, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,15 +82,15 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
 
                     if (b.isNotEmpty()){
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.setLayoutManager(layoutManager)
+                        rv_peminat.layoutManager = layoutManager
                         val adapter = PeminatAdapter(b)
-                        rv_peminat.setAdapter(adapter)
+                        rv_peminat.adapter = adapter
                         txtPeminatKosong.visibility = View.INVISIBLE
                     } else {
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.setLayoutManager(layoutManager)
+                        rv_peminat.layoutManager = layoutManager
                         val adapter = PeminatAdapter(b)
-                        rv_peminat.setAdapter(adapter)
+                        rv_peminat.adapter = adapter
                         txtPeminatKosong.visibility = View.VISIBLE
                     }
                 })
@@ -101,11 +98,11 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
 
         })
 
-        view.txtTitle.setText(p?.namaProyek)
-        view.txtDeskripsi.setText(p?.deskripsiProyek)
-        view.txtJenisHewanDetail.setText(p?.jenisHewan)
-        view.txtRoiDetail.setText("${p?.roi}%")
-        view.txtTanggalDetail.setText("${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}")
+        view.txtTitle.text = p?.namaProyek
+        view.txtDeskripsi.text = p?.deskripsiProyek
+        view.txtJenisHewanDetail.text = p?.jenisHewan
+        view.txtRoiDetail.text = "${p?.roi}%"
+        view.txtTanggalDetail.text = "${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}"
 
         Picasso.get()
                 .load(p?.photoProyek)

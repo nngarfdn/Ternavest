@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_detail_laporan_dialog.view.*
 
 class DetailLaporanDialogFragment : BottomSheetDialogFragment() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -29,10 +28,10 @@ class DetailLaporanDialogFragment : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_detail_laporan_dialog, container, false)
         val p: Laporan? = arguments?.getParcelable("laporan")
 
-        view.txtTitle.setText( p?.judulLaporan)
-        view.txtDeskripsi.setText(p?.deskripsiLaporan)
-        view.txtJenisHewanDetail.setText(p?.pemasukan?.let { getRupiahFormat(it) })
-        view.txtRoiDetail.setText(p?.pengeluaran?.let { getRupiahFormat(it) })
+        view.txtTitle.text = p?.judulLaporan
+        view.txtDeskripsi.text = p?.deskripsiLaporan
+        view.txtJenisHewanDetail.text = p?.pemasukan?.let { getRupiahFormat(it) }
+        view.txtRoiDetail.text = p?.pengeluaran?.let { getRupiahFormat(it) }
 
         Picasso.get()
                 .load(p?.photoLaporan) // resizes the image to these dimensions (in pixel)

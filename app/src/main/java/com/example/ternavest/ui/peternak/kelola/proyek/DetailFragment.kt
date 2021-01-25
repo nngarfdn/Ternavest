@@ -1,5 +1,6 @@
 package com.example.ternavest.ui.peternak.kelola.proyek
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,17 +23,17 @@ import com.example.ternavest.viewmodel.PortfolioViewModel
 import com.example.ternavest.viewmodel.ProfileViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 
 class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
     // TODO: Rename and change types of parameters
-    private val TAG = "DetailFragment"
-    private var param1: String? = null
-    private var param2: String? = null
 
+
+    companion object{
+        private const val TAG = "DetailFragment"
+    }
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var portfolioViewModel: PortfolioViewModel
@@ -47,6 +48,7 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -72,15 +74,15 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
 
                     if (b.isNotEmpty()){
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.setLayoutManager(layoutManager)
+                        rv_peminat.layoutManager = layoutManager
                         val adapter = PeminatAdapter(b)
-                        rv_peminat.setAdapter(adapter)
+                        rv_peminat.adapter = adapter
                         txtPeminatKosong.visibility = View.INVISIBLE
                     } else {
                         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                        rv_peminat.setLayoutManager(layoutManager)
+                        rv_peminat.layoutManager = layoutManager
                         val adapter = PeminatAdapter(b)
-                        rv_peminat.setAdapter(adapter)
+                        rv_peminat.adapter = adapter
                         txtPeminatKosong.visibility = View.VISIBLE
                     }
 
@@ -89,11 +91,11 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
 
         })
 
-        view.txtTitle.setText(p?.namaProyek)
-        view.txtDeskripsi.setText(p?.deskripsiProyek)
-        view.txtJenisHewanDetail.setText(p?.jenisHewan)
-        view.txtRoiDetail.setText("${p?.roi}%")
-        view.txtTanggalDetail.setText("${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}")
+        view.txtTitle.text = p?.namaProyek
+        view.txtDeskripsi.text = p?.deskripsiProyek
+        view.txtJenisHewanDetail.text = p?.jenisHewan
+        view.txtRoiDetail.text = "${p?.roi}%"
+        view.txtTanggalDetail.text = "${getFullDate(p?.waktuMulai, true)} s.d. ${getFullDate(p?.waktuSelesai, true)}"
 
         Picasso.get()
                 .load(p?.photoProyek)
@@ -120,7 +122,7 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
 
     override fun onFinish(listItem: ArrayList<Profile>) {
         for (item in listItem) {
-            Log.d(TAG, "onFinish: nama peminat ${item?.name}")
+            Log.d(TAG, "onFinish: nama peminat ${item.name}")
         }
     }
 

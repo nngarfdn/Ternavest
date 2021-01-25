@@ -1,5 +1,6 @@
 package com.example.ternavest.ui.peternak.kelola.laporan
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.ContentResolver
 import android.content.Intent
@@ -31,15 +32,17 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("DEPRECATION")
 class TambahLaporanActivity : AppCompatActivity() {
 
-    private val TAG = javaClass.simpleName
-
+    companion object{
+        private const val PICK_IMAGE_REQUEST = 22
+    }
     private var fromDatePickerDialog: DatePickerDialog? = null
-    private val PICK_IMAGE_REQUEST = 22
+
     private var dateFormatter: SimpleDateFormat? = null
-    var objectStorageReference: StorageReference? = null
-    var objectFirebaseFirestore: FirebaseFirestore? = null
+    private var objectStorageReference: StorageReference? = null
+    private var objectFirebaseFirestore: FirebaseFirestore? = null
     private var firebaseUser: FirebaseUser? = null
 
     private lateinit var laporanViewModel: LaporanViewModel
@@ -63,7 +66,7 @@ class TambahLaporanActivity : AppCompatActivity() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
-        txtTanggalLaporan.setInputType(InputType.TYPE_NULL)
+        txtTanggalLaporan.inputType = InputType.TYPE_NULL
         txtTanggalLaporan.requestFocus()
         setDateTimeField()
 
@@ -71,7 +74,6 @@ class TambahLaporanActivity : AppCompatActivity() {
         txtRoiDetail.setText("0")
 
         btnSimpanLaporan.setOnClickListener {
-            val photo = ""
             val judul = txtJudulLaporan.text.toString()
             val deskripsi = txtDeskripsiLaporan.text.toString()
             val tanggal = txtTanggalLaporan.text.toString()
@@ -84,31 +86,32 @@ class TambahLaporanActivity : AppCompatActivity() {
             validasiStringEditText(tanggal, "Masukan tanggal", txtTanggalLaporan)
             validasiStringEditText(pemasukan, "Masukan pemasukan", txtJenisHewanDetail)
             validasiStringEditText(pengeluaran, "Masukan Pengeluaran", txtRoiDetail)
-            if (photo.equals("")) {
-                Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
         }
 
         btnUploadImageLaporan.setOnClickListener { selectImage() }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun uploadImage() {
         if (filePath != null) {
-            btnUploadImageLaporan.setText("Mengupload..")
+            btnUploadImageLaporan.text = "Mengupload.."
             val namaImage = UUID.randomUUID().toString() // diganti id produk di firebase
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
             val imageRef = objectStorageReference!!.child(nameOfimage)
             val objectUploadTask = imageRef.putFile(filePath!!)
             objectUploadTask.continueWithTask { task: Task<UploadTask.TaskSnapshot?> ->
                 if (!task.isSuccessful) {
-                    throw Objects.requireNonNull(task.exception)!!
+                    val requireNonNull = Objects.requireNonNull(task.exception)
+                    throw requireNonNull
+                            ?: throw NullPointerException("Expression 'Objects.requireNonNull(task.exception)' must not be null")
                 }
                 imageRef.downloadUrl
             }.addOnCompleteListener { task: Task<Uri?> ->
                 if (task.isSuccessful) {
                     btnUploadImageLaporan.visibility = View.INVISIBLE
                     Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
-                    btnSimpanLaporan.setOnClickListener(View.OnClickListener { v: View? ->
+                    btnSimpanLaporan.setOnClickListener {
                         val photo = Objects.requireNonNull(task.result).toString()
                         val judul = txtJudulLaporan.text.toString()
                         val deskripsi = txtDeskripsiLaporan.text.toString()
@@ -123,7 +126,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                         val vPemasukan = validasiStringEditText(pemasukan, "Masukan pemasukan", txtJenisHewanDetail)
                         val vPengeluaran = validasiStringEditText(pengeluaran, "Masukan Pengeluaran", txtRoiDetail)
 
-                        var vPhoto : Boolean = true
+                        var vPhoto = true
                         if (TextUtils.isEmpty(photo)) {
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             vPhoto = false
@@ -139,7 +142,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                             i.putExtra("proyek",p)
                             startActivity(i)
                         }
-                    })
+                    }
                 } else if (!task.isSuccessful) {
                     Toast.makeText(this, Objects.requireNonNull(task.exception).toString(), Toast.LENGTH_SHORT).show()
                 }
@@ -159,6 +162,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                 PICK_IMAGE_REQUEST)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
@@ -168,10 +172,10 @@ class TambahLaporanActivity : AppCompatActivity() {
                 // Setting image on image view using Bitmap
                 val bitmap = MediaStore.Images.Media
                         .getBitmap(
-                                Objects.requireNonNull(this).getContentResolver(),
+                                Objects.requireNonNull(this).contentResolver,
                                 filePath)
                 imgUploadLaporan.setImageBitmap(bitmap)
-                btnUploadImageLaporan.setText("Upload")
+                btnUploadImageLaporan.text = "Upload"
                 btnUploadImageLaporan.setOnClickListener{ uploadImage() }
             } catch (e: IOException) {
                 // Log the exception
@@ -181,7 +185,7 @@ class TambahLaporanActivity : AppCompatActivity() {
     }
     private fun getExtension(uri: Uri): String? {
         try {
-            val objectContentResolver: ContentResolver = Objects.requireNonNull(this).getContentResolver()
+            val objectContentResolver: ContentResolver = Objects.requireNonNull(this).contentResolver
             val objectMimeTypeMap = MimeTypeMap.getSingleton()
             return objectMimeTypeMap.getExtensionFromMimeType(objectContentResolver.getType(uri))
         } catch (e: Exception) {
@@ -191,22 +195,20 @@ class TambahLaporanActivity : AppCompatActivity() {
     }
 
 
-    fun validasiStringEditText(string: String, textError : String, edt : EditText) : Boolean {
-        var cek: Boolean
-        if (TextUtils.isEmpty(string)) {
-            edt.setError(textError)
-            cek = false
-        } else cek = true
+    private fun validasiStringEditText(string: String, textError : String, edt : EditText) : Boolean {
 
-        return cek
+        return if (TextUtils.isEmpty(string)) {
+            edt.error = textError
+            false
+        } else true
     }
 
     private fun setDateTimeField() {
         val newCalendar: Calendar = Calendar.getInstance()
-        fromDatePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        fromDatePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             val newDate: Calendar = Calendar.getInstance()
             newDate.set(year, monthOfYear, dayOfMonth)
-            txtTanggalLaporan.setText(dateFormatter!!.format(newDate.getTime()))
+            txtTanggalLaporan.setText(dateFormatter!!.format(newDate.time))
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH))
 
 
