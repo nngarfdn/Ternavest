@@ -271,18 +271,10 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
                 break;
 
             case R.id.btn_payment_dpf:
-                if (differenceOfDates(project.getWaktuMulai(), getCurrentDate()) > 0){ // Proyek masih belum mulai
-                    Intent intentPayment = new Intent(this, PaymentActivity.class);
-                    intentPayment.putExtra(EXTRA_PORTFOLIO, portfolio);
-                    intentPayment.putExtra(EXTRA_PROJECT, project);
-                    startActivityForResult(intentPayment, RC_ADD_PAYMENT);
-                } else { // Proyek sudah mulai atau selesai
-                    new AlertDialog.Builder(this)
-                            .setTitle("Proyek sudah dimulai")
-                            .setMessage("Anda sudah tidak bisa mengajukan pembayaran.")
-                            .setPositiveButton("Tutup", null)
-                            .create().show();
-                }
+                Intent intentPayment = new Intent(this, PaymentActivity.class);
+                intentPayment.putExtra(EXTRA_PORTFOLIO, portfolio);
+                intentPayment.putExtra(EXTRA_PROJECT, project);
+                startActivityForResult(intentPayment, RC_ADD_PAYMENT);
                 break;
         }
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.ternavest.model.Laporan
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.util.*
 private const val TAG = "LaporanRepository"
 class LaporanRepository {
@@ -23,6 +24,7 @@ class LaporanRepository {
         val db = FirebaseFirestore.getInstance()
         val savedProdukList = ArrayList<Laporan>()
         db.collection("laporan")
+                .orderBy("tanggal", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {

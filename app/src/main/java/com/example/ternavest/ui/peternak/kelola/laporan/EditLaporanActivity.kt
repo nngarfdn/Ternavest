@@ -1,12 +1,11 @@
 package com.example.ternavest.ui.peternak.kelola.laporan
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore.Images.Media.getBitmap
+import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
 import android.view.Menu
@@ -35,22 +34,21 @@ import kotlinx.android.synthetic.main.add_edit_laporan.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-@Suppress("DEPRECATION")
 class EditLaporanActivity : AppCompatActivity() {
 
+    private val TAG = javaClass.simpleName
+
     private var fromDatePickerDialog: DatePickerDialog? = null
-
-
-
-    companion object{
-        private const val PICK_IMAGE_REQUEST = 22
-    }
+    private var toDatePickerDialog: DatePickerDialog? = null
+    private val PICK_IMAGE_REQUEST = 22
     private var dateFormatter: SimpleDateFormat? = null
-    private var objectStorageReference: StorageReference? = null
-    private var objectFirebaseFirestore: FirebaseFirestore? = null
+    var objectStorageReference: StorageReference? = null
+    var objectFirebaseFirestore: FirebaseFirestore? = null
     private var firebaseUser: FirebaseUser? = null
+    private val listProyekId: MutableList<Int> = ArrayList()
 
     private lateinit var laporanViewModel: LaporanViewModel
     private var filePath: Uri? = null
@@ -73,24 +71,24 @@ class EditLaporanActivity : AppCompatActivity() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
-        txtTanggalLaporan.inputType = InputType.TYPE_NULL
+        txtTanggalLaporan.setInputType(InputType.TYPE_NULL)
         txtTanggalLaporan.requestFocus()
         setDateTimeField()
 
-        txtJudulLaporan.setText(p.judulLaporan)
-        txtDeskripsiLaporan.setText(p.deskripsiLaporan)
-        txtTanggalLaporan.setText(p.tanggal)
-        txtJenisHewanDetail.setText(p.pemasukan.toString())
-        txtRoiDetail.setText(p.pengeluaran.toString())
+        txtJudulLaporan.setText(p?.judulLaporan)
+        txtDeskripsiLaporan.setText(p?.deskripsiLaporan)
+        txtTanggalLaporan.setText(p?.tanggal)
+        txtJenisHewanDetail.setText(p?.pemasukan.toString())
+        txtRoiDetail.setText(p?.pengeluaran.toString())
 
         Picasso.get()
-                .load(p.photoLaporan) // resizes the image to these dimensions (in pixel)
+                .load(p?.photoLaporan) // resizes the image to these dimensions (in pixel)
                 .placeholder(R.drawable.load_image)
                 .into(imgUploadLaporan)
 
 
         btnSimpanLaporan.setOnClickListener {
-            val photo = p.photoLaporan
+            val photo = p?.photoLaporan
             val judul = txtJudulLaporan.text.toString()
             val deskripsi = txtDeskripsiLaporan.text.toString()
             val tanggal = txtTanggalLaporan.text.toString()
@@ -122,14 +120,14 @@ class EditLaporanActivity : AppCompatActivity() {
         btnUploadImageLaporan.setOnClickListener { selectImage() }
 
         toolbartambahLaporan.setOnMenuItemClickListener {item ->
-            when (item.itemId) {
+            when (item.getItemId()) {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
                             .setTitle("Setel ulang kata sandi")
                             .setMessage("Apakah kamu yakin ingin menghapus ?")
                             .setNegativeButton("Tidak", null)
-                            .setPositiveButton("Ya") { _, _ ->
-                                val proyekId = p.idProyek
+                            .setPositiveButton("Ya") { dialogInterface, i ->
+                                val proyekId = p?.idProyek
                                 laporanViewModel.delete(p.id!!)
                                 val intent = Intent(this, LaporanActivity::class.java)
                                 intent.putExtra("level", LEVEL_PETERNAK)
@@ -146,25 +144,23 @@ class EditLaporanActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("SetTextI18n")
     private fun uploadImage() {
         if (filePath != null) {
-            btnUploadImageLaporan.text = "Mengupload.."
+            btnUploadImageLaporan.setText("Mengupload..")
             val namaImage = UUID.randomUUID().toString() // diganti id produk di firebase
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
             val imageRef = objectStorageReference!!.child(nameOfimage)
             val objectUploadTask = imageRef.putFile(filePath!!)
             objectUploadTask.continueWithTask { task: Task<UploadTask.TaskSnapshot?> ->
                 if (!task.isSuccessful) {
-                    val requireNonNull = Objects.requireNonNull(task.exception)
-                    throw requireNonNull ?: throw NullPointerException("Expression 'requireNonNull' must not be null")
+                    throw Objects.requireNonNull(task.exception)!!
                 }
                 imageRef.downloadUrl
             }.addOnCompleteListener { task: Task<Uri?> ->
                 if (task.isSuccessful) {
                     btnUploadImageLaporan.visibility = View.INVISIBLE
                     Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
-                    btnSimpanLaporan.setOnClickListener {
+                    btnSimpanLaporan.setOnClickListener(View.OnClickListener { v: View? ->
                         val photo = Objects.requireNonNull(task.result).toString()
                         val judul = txtJudulLaporan.text.toString()
                         val deskripsi = txtDeskripsiLaporan.text.toString()
@@ -179,7 +175,7 @@ class EditLaporanActivity : AppCompatActivity() {
                         val vPemasukan = validasiStringEditText(pemasukan, "Masukan pemasukan", txtJenisHewanDetail)
                         val vPengeluaran = validasiStringEditText(pengeluaran, "Masukan Pengeluaran", txtRoiDetail)
 
-                        var vPhoto = true
+                        var vPhoto : Boolean = true
                         if (TextUtils.isEmpty(photo)) {
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             vPhoto = false
@@ -194,7 +190,7 @@ class EditLaporanActivity : AppCompatActivity() {
                             i.putExtra("id",p.idProyek)
                             startActivity(i)
                         }
-                    }
+                    })
                 } else if (!task.isSuccessful) {
                     Toast.makeText(this, Objects.requireNonNull(task.exception).toString(), Toast.LENGTH_SHORT).show()
                 }
@@ -214,7 +210,6 @@ class EditLaporanActivity : AppCompatActivity() {
                 PICK_IMAGE_REQUEST)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
@@ -222,11 +217,12 @@ class EditLaporanActivity : AppCompatActivity() {
             filePath = data.data
             try {
                 // Setting image on image view using Bitmap
-                val bitmap = getBitmap(
-                                Objects.requireNonNull(this).contentResolver,
+                val bitmap = MediaStore.Images.Media
+                        .getBitmap(
+                                Objects.requireNonNull(this).getContentResolver(),
                                 filePath)
                 imgUploadLaporan.setImageBitmap(bitmap)
-                btnUploadImageLaporan.text = "Upload"
+                btnUploadImageLaporan.setText("Upload")
                 btnUploadImageLaporan.setOnClickListener{ uploadImage() }
             } catch (e: IOException) {
                 // Log the exception
@@ -236,7 +232,7 @@ class EditLaporanActivity : AppCompatActivity() {
     }
     private fun getExtension(uri: Uri): String? {
         try {
-            val objectContentResolver: ContentResolver = Objects.requireNonNull(this).contentResolver
+            val objectContentResolver: ContentResolver = Objects.requireNonNull(this).getContentResolver()
             val objectMimeTypeMap = MimeTypeMap.getSingleton()
             return objectMimeTypeMap.getExtensionFromMimeType(objectContentResolver.getType(uri))
         } catch (e: Exception) {
@@ -246,20 +242,22 @@ class EditLaporanActivity : AppCompatActivity() {
     }
 
 
-    private fun validasiStringEditText(string: String, textError : String, edt : EditText) : Boolean {
+    fun validasiStringEditText(string: String, textError : String, edt : EditText) : Boolean {
+        var cek: Boolean
+        if (TextUtils.isEmpty(string)) {
+            edt.setError(textError)
+            cek = false
+        } else cek = true
 
-        return if (TextUtils.isEmpty(string)) {
-            edt.error = textError
-            false
-        } else true
+        return cek
     }
 
     private fun setDateTimeField() {
         val newCalendar: Calendar = Calendar.getInstance()
-        fromDatePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+        fromDatePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             val newDate: Calendar = Calendar.getInstance()
             newDate.set(year, monthOfYear, dayOfMonth)
-            txtTanggalLaporan.setText(dateFormatter!!.format(newDate.time))
+            txtTanggalLaporan.setText(dateFormatter!!.format(newDate.getTime()))
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH))
 
 

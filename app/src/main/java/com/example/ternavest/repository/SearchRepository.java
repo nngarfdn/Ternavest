@@ -14,6 +14,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import static com.example.ternavest.utils.DateUtils.getCurrentDate;
+
 public class SearchRepository {
     private final String TAG = getClass().getSimpleName();
     private final FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -24,14 +26,14 @@ public class SearchRepository {
     }
 
     public void query(Filter filter) {
-        Query query = database.collection("proyek");
+        Query query = database.collection("proyek").whereGreaterThan("waktuMulai", getCurrentDate());
 
         // Filter lokasi
         if (filter.isProvinsi()) query = query.whereEqualTo("provinsi", filter.getNamaProvinsi());
         if (filter.isKabupaten()) query = query.whereEqualTo("kabupaten", filter.getNamaKabupaten());
         if (filter.isKecamatan()) query = query.whereEqualTo("kecamatan", filter.getNamaKecamatan());
 
-        query.orderBy("namaProyek")
+        query.orderBy("waktuMulai", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
