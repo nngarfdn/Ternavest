@@ -39,6 +39,7 @@
     <string name="btn_two">Button 2</string>
     <string name="btn_three">Button 3</string>
     <string name="loading_rupiah">Rp0</string>
+    <string name="notification_channel_id">default</string>
 
     <string-array name="ref_rejection_note_payment">
         <item>Bukti tidak sah</item>

@@ -3,25 +3,38 @@ package com.example.ternavest.ui.peternak.kelola.proyek
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
 import com.example.ternavest.model.Proyek
+import com.example.ternavest.ui.both.main.MainActivity
+import com.example.ternavest.utils.Constan
 import com.example.ternavest.utils.DateUtils.DATE_FORMAT
 import com.example.ternavest.viewmodel.LocationViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
@@ -29,12 +42,19 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_tambah_proyek.*
 import kotlinx.android.synthetic.main.layout_add_update_proyek.*
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -43,9 +63,14 @@ import kotlin.collections.ArrayList
 @Suppress("UNREACHABLE_CODE", "DEPRECATION")
 class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
+    private val AUTH_KEY = Constan.SERVER_KEY
+    private val mTextView: TextView? = null
+    private var token: String? = null
+
 
     companion object{
         private const val PICK_IMAGE_REQUEST = 22
+        private const val TAG = "TambahProyekActivity"
     }
 
     private var fromDatePickerDialog: DatePickerDialog? = null
@@ -90,6 +115,16 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         loadProvinces()
 
         btnUploadImage.setOnClickListener { selectImage() }
+
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                token = task.exception!!.message
+                Log.w("FCM TOKEN Failed", task.exception)
+            } else {
+                token = task.result!!.token
+                Log.i("FCM TOKEN", token!!)
+            }
+        }
 
         btnSimpan.setOnClickListener {
             val photo = ""
@@ -152,7 +187,49 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
             }
         }
+
+
     }
+
+    private fun sendNotification(messageBody: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT)
+
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+        var notificationBuilder: NotificationCompat.Builder? = null
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                    packageName,
+                    packageName,
+                    NotificationManager.IMPORTANCE_DEFAULT
+            )
+            channel.description = packageName
+            notificationManager.createNotificationChannel(channel)
+            if (notificationBuilder == null) {
+                notificationBuilder = NotificationCompat.Builder(application, packageName)
+            }
+        } else {
+            if (notificationBuilder == null) {
+                notificationBuilder = NotificationCompat.Builder(application,packageName)
+            }
+        }
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(messageBody)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent)
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+    }
+
+
+
 
     private fun initWilayah() {
         spin_provinces.onItemSelectedListener = this
@@ -351,7 +428,8 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
                         if (cek) {
                             proyekViewModel.insert(p)
-                            Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
+                            sendNotification("${firebaseUser?.displayName} : $namaProyek")
+                            Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                     }
