@@ -1,11 +1,10 @@
 package com.example.ternavest.ui.both.main;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Bundle;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.pager.MainPagerAdapter;
@@ -16,7 +15,6 @@ import com.example.ternavest.viewmodel.ProfileViewModel;
 import com.iammert.library.readablebottombar.ReadableBottomBar;
 
 public class MainActivity extends AppCompatActivity {
-    private final String TAG = getClass().getSimpleName();
 
     private LoadingDialog loadingDialog;
     private Profile profile;
@@ -31,14 +29,11 @@ public class MainActivity extends AppCompatActivity {
         userPreference = new UserPreference(this);
 
         ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
-        profileViewModel.getData().observe(this, new Observer<Profile>() {
-            @Override
-            public void onChanged(Profile result) {
-                profile = result;
-                userPreference.setUserLevel(profile.getLevel());
-                setBottomBar(userPreference.getUserLevel());
-                loadingDialog.dismiss();
-            }
+        profileViewModel.getData().observe(this, result -> {
+            profile = result;
+            userPreference.setUserLevel(profile.getLevel());
+            setBottomBar(userPreference.getUserLevel());
+            loadingDialog.dismiss();
         });
 
         if (userPreference.getUserLevel() == null){
@@ -56,12 +51,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
         ReadableBottomBar bottomBar = findViewById(R.id.bn_main);
-        bottomBar.setOnItemSelectListener(new ReadableBottomBar.ItemSelectListener() {
-            @Override
-            public void onItemSelected(int index) {
-                viewPager.setCurrentItem(index);
-            }
-        });
+        bottomBar.setOnItemSelectListener(viewPager::setCurrentItem);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

@@ -1,20 +1,14 @@
 package com.example.ternavest.repository;
 
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.example.ternavest.model.Portfolio;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,22 +37,19 @@ public class PortfolioRepository {
         if (userLevel.equals(LEVEL_PETERNAK)) query = query.whereEqualTo("idPeternak", userId);
         else if (userLevel.equals(LEVEL_INVESTOR)) query = query.whereEqualTo("idInvestor", userId);
 
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    ArrayList<Portfolio> portfolioList = new ArrayList<>();
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                ArrayList<Portfolio> portfolioList = new ArrayList<>();
 
-                    for (DocumentSnapshot snapshot : task.getResult()){
-                        Portfolio portfolio = snapshotToObject(snapshot);
-                        portfolioList.add(portfolio);
-                        Log.d(TAG, "query: " + portfolio.getId());
-                    }
+                for (DocumentSnapshot snapshot : task.getResult()){
+                    Portfolio portfolio = snapshotToObject(snapshot);
+                    portfolioList.add(portfolio);
+                    Log.d(TAG, "query: " + portfolio.getId());
+                }
 
-                    resultData.postValue(portfolioList);
-                    Log.d(TAG, "Document was queried");
-                } else Log.w(TAG, "Error querying document", task.getException());
-            }
+                resultData.postValue(portfolioList);
+                Log.d(TAG, "Document was queried");
+            } else Log.w(TAG, "Error querying document", task.getException());
         });
     }
 
@@ -68,31 +59,26 @@ public class PortfolioRepository {
         if (userLevel.equals(LEVEL_PETERNAK)) query = query.whereEqualTo("idPeternak", userId);
         else if (userLevel.equals(LEVEL_INVESTOR)) query = query.whereEqualTo("idInvestor", userId);
 
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    ArrayList<Portfolio> portfolioList = new ArrayList<>();
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                ArrayList<Portfolio> portfolioList = new ArrayList<>();
 
-                    for (DocumentSnapshot snapshot : task.getResult()){
-                        Portfolio portfolio = snapshotToObject(snapshot);
-                        portfolioList.add(portfolio);
-                        Log.d(TAG, "query: " + portfolio.getId());
-                    }
+                for (DocumentSnapshot snapshot : task.getResult()){
+                    Portfolio portfolio = snapshotToObject(snapshot);
+                    portfolioList.add(portfolio);
+                    Log.d(TAG, "query: " + portfolio.getId());
+                }
 
-                    resultData.postValue(portfolioList);
-                    Log.d(TAG, "Document was queried");
-                } else Log.w(TAG, "Error querying document", task.getException());
-            }
+                resultData.postValue(portfolioList);
+                Log.d(TAG, "Document was queried");
+            } else Log.w(TAG, "Error querying document", task.getException());
         });
     }
 
     // Dipanggil di detail proyek
     public void queryPeminat(String projectId){ // Investor, peternak
         reference.whereEqualTo("status", PAY_APPROVED).whereEqualTo("idProyek", projectId)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         ArrayList<Portfolio> portfolioList = new ArrayList<>();
 
@@ -105,8 +91,7 @@ public class PortfolioRepository {
                         resultData.postValue(portfolioList);
                         Log.d(TAG, "Document was queried");
                     } else Log.w(TAG, "Error querying document", task.getException());
-                }
-            });
+                });
     }
 
     // Jangan simpan biaya dulu karena ada kemungkinan biaya diedit oleh peternak, hanya lakukan pembayaran dengan biaya ter-update
@@ -114,12 +99,9 @@ public class PortfolioRepository {
         portfolio.setId(reference.document().getId()); // Id otomatis
         reference.document(portfolio.getId())
                 .set(objectToHashMap(portfolio))
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was added");
-                        else Log.w(TAG, "Error adding document", task.getException());
-                    }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) Log.d(TAG, "Document was added");
+                    else Log.w(TAG, "Error adding document", task.getException());
                 });
     }
 
@@ -127,12 +109,9 @@ public class PortfolioRepository {
     public void update(String portfolioId, int count){  // Peternak
         reference.document(portfolioId)
                 .update("jumlahEkor", count)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated: jumlahEkor");
-                        else Log.w(TAG, "Error updating document: jumlahEkor", task.getException());
-                    }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) Log.d(TAG, "Document was updated: jumlahEkor");
+                    else Log.w(TAG, "Error updating document: jumlahEkor", task.getException());
                 });
     }
 
@@ -141,12 +120,9 @@ public class PortfolioRepository {
     public void update(String portfolioId, long cost, long totalCost){  // Investor
         reference.document(portfolioId)
                 .update("biaya", cost, "totalBiaya", totalCost)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated: biaya");
-                        else Log.w(TAG, "Error updating document: biaya", task.getException());
-                    }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) Log.d(TAG, "Document was updated: biaya");
+                    else Log.w(TAG, "Error updating document: biaya", task.getException());
                 });
     }
 
@@ -154,24 +130,18 @@ public class PortfolioRepository {
     public void update(String portfolioId, String status){  // Investor
         reference.document(portfolioId)
                 .update("status", status)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was updated: status");
-                        else Log.w(TAG, "Error updating document: status", task.getException());
-                    }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) Log.d(TAG, "Document was updated: status");
+                    else Log.w(TAG, "Error updating document: status", task.getException());
                 });
     }
 
     public void delete(Portfolio portfolio){ // Investor
         reference.document(portfolio.getId())
                 .delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Log.d(TAG, "Document was deleted");
-                        else Log.w(TAG, "Error deleting document", task.getException());
-                    }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) Log.d(TAG, "Document was deleted");
+                    else Log.w(TAG, "Error deleting document", task.getException());
                 });
     }
 

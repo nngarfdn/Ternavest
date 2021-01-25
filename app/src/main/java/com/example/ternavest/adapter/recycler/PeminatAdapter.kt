@@ -20,7 +20,7 @@ class PeminatAdapter (private val list: List<Profile>) : RecyclerView.Adapter<Pe
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Picasso.get()
-                .load(list?.get(position)?.photo)
+                .load(list[position].photo)
                 .resize(39, 39) // resizes the image to these dimensions (in pixel)
                 .centerCrop()
                 .placeholder(R.drawable.ic_baseline_autorenew_24)

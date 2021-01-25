@@ -27,10 +27,10 @@ class LaporanHomeAdapter (private val list: List<Laporan>) : RecyclerView.Adapte
 
         holder.itemView.setOnClickListener {
             val args = Bundle()
-            args.putParcelable("laporan",list.get(position))
+            args.putParcelable("laporan", list[position])
             val bottomSheet = DetailLaporanHomeDialogFragment()
-            bottomSheet.setArguments(args)
-            bottomSheet.show((holder.itemView.context as FragmentActivity).supportFragmentManager, bottomSheet.getTag())
+            bottomSheet.arguments = args
+            bottomSheet.show((holder.itemView.context as FragmentActivity).supportFragmentManager, bottomSheet.tag)
         }
     }
 }

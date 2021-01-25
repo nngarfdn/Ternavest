@@ -1,21 +1,19 @@
 package com.example.ternavest.ui.both.profile;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.ProyekAdapter;
@@ -27,7 +25,6 @@ import com.example.ternavest.viewmodel.ProyekViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,11 +39,9 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
     private Profile profile;
     private ProyekAdapter adapter;
 
-    private Button btnKtp, btnPhone, btnWhatsApp;
-    private TextView tvLevel, tvAddress;
-
     private final ArrayList<Proyek> projectList = new ArrayList<>();
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,14 +59,14 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
 
         CircleImageView imgPhoto = findViewById(R.id.img_photo_profile);
         TextView tvName = findViewById(R.id.tv_name_profile);
-        tvLevel = findViewById(R.id.tv_level_profile);
+        TextView tvLevel = findViewById(R.id.tv_level_profile);
         TextView tvEmail = findViewById(R.id.tv_email_profile);
-        tvAddress = findViewById(R.id.tv_address_profile);
+        TextView tvAddress = findViewById(R.id.tv_address_profile);
         TextView tvProject = findViewById(R.id.tv_project_profile);
 
-        btnKtp = findViewById(R.id.btn_ktp_profile);
-        btnPhone = findViewById(R.id.btn_phone_profile);
-        btnWhatsApp = findViewById(R.id.btn_whatsapp_profile);
+        Button btnKtp = findViewById(R.id.btn_ktp_profile);
+        Button btnPhone = findViewById(R.id.btn_phone_profile);
+        Button btnWhatsApp = findViewById(R.id.btn_whatsapp_profile);
         btnKtp.setOnClickListener(this);
         btnPhone.setOnClickListener(this);
         btnWhatsApp.setOnClickListener(this);
@@ -79,30 +74,23 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         btnKtp.setVisibility(View.GONE);
 
         ProyekViewModel projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
-        projectViewModel.getResultByUUID().observe(this, new Observer<List<Proyek>>() { // Buat peternak
-            @Override
-            public void onChanged(List<Proyek> proyeks) {
-                projectList.clear();
-                projectList.addAll(proyeks);
-                adapter.notifyDataSetChanged();
-            }
+        // Buat peternak
+        projectViewModel.getResultByUUID().observe(this, proyeks -> {
+            projectList.clear();
+            projectList.addAll(proyeks);
+            adapter.notifyDataSetChanged();
         });
 
         PortfolioViewModel portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
-        portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
-            @Override
-            public void onChanged(ArrayList<Portfolio> portfolioList) {
-                for (Portfolio portfolio : portfolioList){
-                    projectViewModel.loadResultByID(portfolio.getProjectId()); // Buat investor
-                }
+        portfolioViewModel.getData().observe(this, portfolioList -> {
+            for (Portfolio portfolio : portfolioList){
+                projectViewModel.loadResultByID(portfolio.getProjectId()); // Buat investor
             }
         });
-        projectViewModel.getResultByID().observe(this, new Observer<List<Proyek>>() { // Buat investor
-            @Override
-            public void onChanged(List<Proyek> proyeks) {
-                projectList.addAll(proyeks);
-                adapter.notifyDataSetChanged();
-            }
+        // Buat investor
+        projectViewModel.getResultByID().observe(this, proyeks -> {
+            projectList.addAll(proyeks);
+            adapter.notifyDataSetChanged();
         });
 
         Intent intent = getIntent();
@@ -155,13 +143,10 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
                         .setTitle("Panggil nomor telepon")
                         .setMessage("Pilih ya untuk memanggil nomor pengguna ini.")
                         .setNegativeButton("Tidak", null)
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String phone = "tel:" + profile.getPhone();
-                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(phone));
-                                startActivity(intent);
-                            }
+                        .setPositiveButton("Ya", (dialogInterface, i) -> {
+                            String phone = "tel:" + profile.getPhone();
+                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(phone));
+                            startActivity(intent);
                         }).create().show();
                 break;
 
@@ -170,13 +155,10 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
                         .setTitle("Buka WhatsApp")
                         .setMessage("Pilih ya untuk membuka akun WhatsApp pengguna ini.")
                         .setNegativeButton("Tidak", null)
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String url = "https://wa.me/" + profile.getWhatsApp();
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                startActivity(intent);
-                            }
+                        .setPositiveButton("Ya", (dialogInterface, i) -> {
+                            String url = "https://wa.me/" + profile.getWhatsApp();
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            startActivity(intent);
                         }).create().show();
                 break;
 

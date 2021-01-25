@@ -21,7 +21,10 @@ import kotlinx.android.synthetic.main.activity_laporan.*
 class LaporanHomeActivity : AppCompatActivity() {
 
 
-    private val TAG = "LaporanActivity"
+    companion object{
+        private const val TAG = "LaporanActivity"
+    }
+
     private lateinit var laporanViewModel: LaporanViewModel
     private lateinit var proyekViewModel: ProyekViewModel
     private var p: Proyek? = null
@@ -34,7 +37,7 @@ class LaporanHomeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        p = intent?.getParcelableExtra<Proyek>("proyek")
+        p = intent?.getParcelableExtra("proyek")
         id = intent?.getStringExtra("id")
         val level : String? = intent?.getStringExtra("level")
 
@@ -64,18 +67,18 @@ class LaporanHomeActivity : AppCompatActivity() {
                             shimmerKelola.visibility = View.INVISIBLE
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
-                            rv_laporan.setLayoutManager(layoutManager)
+                            rv_laporan.layoutManager = layoutManager
                             val adapter = LaporanHomeAdapter(result)
-                            rv_laporan.setAdapter(adapter)
+                            rv_laporan.adapter = adapter
                         } else {
                             imgLaporanKosong.visibility = View.VISIBLE
                             txtProyekKosong.visibility = View.VISIBLE
                             shimmerKelola.visibility = View.INVISIBLE
                             shimmerKelola.stopShimmerAnimation()
                             val layoutManager = LinearLayoutManager(this)
-                            rv_laporan.setLayoutManager(layoutManager)
+                            rv_laporan.layoutManager = layoutManager
                             val adapter = LaporanHomeAdapter(result)
-                            rv_laporan.setAdapter(adapter)
+                            rv_laporan.adapter = adapter
 
                         }
 
@@ -95,9 +98,9 @@ class LaporanHomeActivity : AppCompatActivity() {
                 Log.d(TAG, "onCreate: $result")
                 imgLaporanKosong.visibility = View.INVISIBLE
                 val layoutManager = LinearLayoutManager(this)
-                rv_laporan.setLayoutManager(layoutManager)
+                rv_laporan.layoutManager = layoutManager
                 val adapter = LaporanHomeAdapter(result)
-                rv_laporan.setAdapter(adapter)
+                rv_laporan.adapter = adapter
             })
 
         }

@@ -3,12 +3,6 @@ package com.example.ternavest.ui.investor.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +14,14 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.ternavest.R;
 import com.example.ternavest.model.Filter;
 import com.example.ternavest.model.Location;
 import com.example.ternavest.response.Attributes;
-import com.example.ternavest.response.Districts;
-import com.example.ternavest.response.Provinces;
-import com.example.ternavest.response.Regencies;
 import com.example.ternavest.viewmodel.LocationViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -178,56 +173,47 @@ public class SearchFilterFragment extends BottomSheetDialogFragment implements V
     }
 
     private void setLocationViewModelGetData() {
-        locationViewModel.getProvinces().observe(this, new Observer<Provinces>() {
-            @Override
-            public void onChanged(Provinces provinces) {
-                if (provinces != null){
-                    listProvinces = new ArrayList<>();
-                    List<String> itemList = new ArrayList<>();
-                    for (Attributes attributes : provinces.getProvinces()){ // Fix nama provinsi
-                        if (attributes.getId() == 31) listProvinces.add(new Location(attributes.getId(), "DKI Jakarta"));
-                        else if (attributes.getId() == 34) listProvinces.add(new Location(attributes.getId(), "DI Yogyakarta"));
-                        else listProvinces.add(new Location(attributes.getId(), attributes.getName()));
-                    }
-                    for (Location location : listProvinces) itemList.add(location.getName());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spProvince.setAdapter(adapter);
-                    if (!isNull(filter.getNamaProvinsi())) spProvince.setSelection(adapter.getPosition(filter.getNamaProvinsi()));
+        locationViewModel.getProvinces().observe(this, provinces -> {
+            if (provinces != null){
+                listProvinces = new ArrayList<>();
+                List<String> itemList = new ArrayList<>();
+                for (Attributes attributes : provinces.getProvinces()){ // Fix nama provinsi
+                    if (attributes.getId() == 31) listProvinces.add(new Location(attributes.getId(), "DKI Jakarta"));
+                    else if (attributes.getId() == 34) listProvinces.add(new Location(attributes.getId(), "DI Yogyakarta"));
+                    else listProvinces.add(new Location(attributes.getId(), attributes.getName()));
                 }
+                for (Location location : listProvinces) itemList.add(location.getName());
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spProvince.setAdapter(adapter);
+                if (!isNull(filter.getNamaProvinsi())) spProvince.setSelection(adapter.getPosition(filter.getNamaProvinsi()));
             }
         });
 
-        locationViewModel.getRegencies().observe(this, new Observer<Regencies>() {
-            @Override
-            public void onChanged(Regencies regencies) {
-                if (regencies != null){
-                    listRegencies = new ArrayList<>();
-                    List<String> itemList = new ArrayList<>();
-                    for (Attributes attributes : regencies.getRegencies()) listRegencies.add(new Location(attributes.getId(), attributes.getName()));
-                    for (Location location : listRegencies) itemList.add(location.getName());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spRegency.setAdapter(adapter);
-                    if (!isNull(filter.getNamaKabupaten())) spRegency.setSelection(adapter.getPosition(filter.getNamaKabupaten()));
-                }
+        locationViewModel.getRegencies().observe(this, regencies -> {
+            if (regencies != null){
+                listRegencies = new ArrayList<>();
+                List<String> itemList = new ArrayList<>();
+                for (Attributes attributes : regencies.getRegencies()) listRegencies.add(new Location(attributes.getId(), attributes.getName()));
+                for (Location location : listRegencies) itemList.add(location.getName());
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spRegency.setAdapter(adapter);
+                if (!isNull(filter.getNamaKabupaten())) spRegency.setSelection(adapter.getPosition(filter.getNamaKabupaten()));
             }
         });
 
-        locationViewModel.getDistricts().observe(this, new Observer<Districts>() {
-            @Override
-            public void onChanged(Districts districts) {
-                if (districts != null){
-                    listDistricts = new ArrayList<>();
-                    List<String> itemList = new ArrayList<>();
-                    for (Attributes attributes : districts.getDistricts()) listDistricts.add(new Location(attributes.getId(), attributes.getName()));
-                    for (Location location : listDistricts) itemList.add(location.getName());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spDistrict.setAdapter(adapter);
-                    if (!isNull(filter.getNamaKecamatan())) spDistrict.setSelection(adapter.getPosition(filter.getNamaKecamatan()));
-                    btnFilter.setEnabled(true);
-                }
+        locationViewModel.getDistricts().observe(this, districts -> {
+            if (districts != null){
+                listDistricts = new ArrayList<>();
+                List<String> itemList = new ArrayList<>();
+                for (Attributes attributes : districts.getDistricts()) listDistricts.add(new Location(attributes.getId(), attributes.getName()));
+                for (Location location : listDistricts) itemList.add(location.getName());
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spDistrict.setAdapter(adapter);
+                if (!isNull(filter.getNamaKecamatan())) spDistrict.setSelection(adapter.getPosition(filter.getNamaKecamatan()));
+                btnFilter.setEnabled(true);
             }
         });
     }

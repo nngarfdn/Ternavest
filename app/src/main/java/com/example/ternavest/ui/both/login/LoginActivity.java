@@ -1,11 +1,5 @@
 package com.example.ternavest.ui.both.login;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.ternavest.R;
 import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Profile;
@@ -27,10 +26,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -147,35 +144,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         firebaseAuth.signInWithCredential(authCredential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            // Sign in success, update UI with the signed-in user's informationZ
-                            Log.d(TAG, "signInWithCredential: success");
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()){
+                        // Sign in success, update UI with the signed-in user's informationZ
+                        Log.d(TAG, "signInWithCredential: success");
 
-                            // Insert ke database jika pengguna baru/email baru saja terdaftar
-                            if (task.getResult().getAdditionalUserInfo().isNewUser()){
-                                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                Profile profile = new Profile(
-                                        firebaseUser.getUid(),
-                                        firebaseUser.getDisplayName(),
-                                        firebaseUser.getEmail(),
-                                        level,
-                                        VERIF_PENDING,
-                                        null);
-                                profileViewModel.insert(profile);
-                            }
-
-                            launchMain();
-                        } else {
-                            // If sign in fails, display a message to the user
-                            Log.w(TAG, "signInWithCredential: failure", task.getException());
-                            showToast(getApplicationContext(), "Email gagal diautentikasi.");
+                        // Insert ke database jika pengguna baru/email baru saja terdaftar
+                        if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                            Profile profile = new Profile(
+                                    firebaseUser.getUid(),
+                                    firebaseUser.getDisplayName(),
+                                    firebaseUser.getEmail(),
+                                    level,
+                                    VERIF_PENDING,
+                                    null);
+                            profileViewModel.insert(profile);
                         }
 
-                        loadingDialog.dismiss();
+                        launchMain();
+                    } else {
+                        // If sign in fails, display a message to the user
+                        Log.w(TAG, "signInWithCredential: failure", task.getException());
+                        showToast(getApplicationContext(), "Email gagal diautentikasi.");
                     }
+
+                    loadingDialog.dismiss();
                 });
     }
 
@@ -186,21 +180,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loadingDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail: success");
-                            launchMain();
-                        } else {
-                            // If sign in fails, display a message to the user
-                            Log.w(TAG, "signInWithEmail: failure", task.getException());
-                            showToast(getApplicationContext(),  "Kata sandi salah.");
-                        }
-
-                        loadingDialog.dismiss();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()){
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail: success");
+                        launchMain();
+                    } else {
+                        // If sign in fails, display a message to the user
+                        Log.w(TAG, "signInWithEmail: failure", task.getException());
+                        showToast(getApplicationContext(),  "Kata sandi salah.");
                     }
+
+                    loadingDialog.dismiss();
                 });
     }
 

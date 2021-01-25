@@ -1,5 +1,6 @@
 package com.example.ternavest.ui.peternak.kelola.proyek
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.ContentResolver
@@ -42,18 +43,20 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Suppress("DEPRECATION")
 class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val TAG = javaClass.simpleName
+    companion object{
+        private const val PICK_IMAGE_REQUEST = 22
+    }
 
     private var fromDatePickerDialog: DatePickerDialog? = null
     private var toDatePickerDialog: DatePickerDialog? = null
-    private val PICK_IMAGE_REQUEST = 22
+
     private var dateFormatter: SimpleDateFormat? = null
-    var objectStorageReference: StorageReference? = null
-    var objectFirebaseFirestore: FirebaseFirestore? = null
+    private var objectStorageReference: StorageReference? = null
+    private var objectFirebaseFirestore: FirebaseFirestore? = null
     private var firebaseUser: FirebaseUser? = null
-    private val listProyekId: MutableList<Int> = ArrayList()
 
     private lateinit var proyekViewModel: ProyekViewModel
     private lateinit var lvm: LocationViewModel
@@ -70,7 +73,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_proyek)
 
-        p = intent.getParcelableExtra<Proyek>("proyek")!!
+        p = intent.getParcelableExtra("proyek")!!
 
         setSupportActionBar(toolbartambahpproyek)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -78,7 +81,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         toolbartambahpproyek.setOnMenuItemClickListener {item ->
 
-            when (item.getItemId()) {
+            when (item.itemId) {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
                             .setTitle("Hapus Proyek")
@@ -122,7 +125,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         btnUploadImage.setOnClickListener { selectImage() }
 
-        btnSimpan.setOnClickListener(View.OnClickListener { v: View? ->
+        btnSimpan.setOnClickListener {
             val photo = p.photoProyek
             val namaProyek = txtNamaProyek.text.toString()
             val deskripsiProyek = txtDeskripsiProyek.text.toString()
@@ -132,54 +135,53 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val waktuMulai = txtWaktuMulai.text.toString()
             val waktuSelesai = txtWaktuSelesai.text.toString()
             val alamat: String = txtAlamatLengkap.getText().toString()
-            var kecamatan: String? = null
+            var kecamatan: String?
             kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
-                spin_districts.getSelectedItem() as String
+                spin_districts.selectedItem as String
             } else {
                 "-"
             }
-            var kabupaten: String? = null
-            kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
-                spin_regencies.getSelectedItem() as String
+            val kabupaten: String? = if (spin_regencies != null && spin_regencies.selectedItem != null) {
+                spin_regencies.selectedItem as String
             } else {
                 "-"
             }
 
             var prov: String? = null
             prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
-                spin_provinces.getSelectedItem() as String
+                spin_provinces.selectedItem as String
             } else {
                 "-"
             }
 
             var cek = true
-            if (namaProyek.length <= 0) {
-                txtNamaProyek.setError("Masukkan nama proyek")
+            if (namaProyek.isEmpty()) {
+                txtNamaProyek.error = "Masukkan nama proyek"
                 cek = false
             }
 
             if (TextUtils.isEmpty(deskripsiProyek)) {
-                txtDeskripsiProyek.setError("Masukkan deskripsi proyek")
+                txtDeskripsiProyek.error = "Masukkan deskripsi proyek"
                 cek = false
             }
 
             if (TextUtils.isEmpty(jenisHewan)) {
-                txtJenisHewan.setError("Masukkan jenis hewan")
+                txtJenisHewan.error = "Masukkan jenis hewan"
                 cek = false
             }
 
             if (TextUtils.isEmpty(roi)) {
-                txtRoi.setError("Masukkan ROI")
+                txtRoi.error = "Masukkan ROI"
                 cek = false
             }
 
             if (TextUtils.isEmpty(waktuMulai)) {
-                txtWaktuMulai.setError("Masukkan tanggal mulai")
+                txtWaktuMulai.error = "Masukkan tanggal mulai"
                 cek = false
             }
 
             if (TextUtils.isEmpty(waktuSelesai)) {
-                txtWaktuSelesai.setError("Masukkan tanggal selesai")
+                txtWaktuSelesai.error = "Masukkan tanggal selesai"
                 cek = false
             }
 
@@ -187,7 +189,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val biayaPengelolahana = biayaHewan.toLong()
 
             if (TextUtils.isEmpty(biayaHewan)) {
-                txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
+                txtBiayaPengelolaan.error = "Masukkan biaya perhewan"
                 cek = false
             }
 
@@ -206,13 +208,13 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             val roiInt = roii.toInt()
 
             if (TextUtils.isEmpty(roi)) {
-                txtRoi.setError("Masukkan ROI")
+                txtRoi.error = "Masukkan ROI"
                 cek = false
             }
 
 
             if (TextUtils.isEmpty(biayaHewan)) {
-                txtBiayaPengelolaan.setError("Masukkan biaya perhewan")
+                txtBiayaPengelolaan.error = "Masukkan biaya perhewan"
                 cek = false
             }
 
@@ -225,7 +227,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 finish()
             }
 
-        })
+        }
 
     }
 
@@ -242,24 +244,24 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
     private fun initWilayah() {
-        spin_provinces.setOnItemSelectedListener(this)
-        spin_regencies.setOnItemSelectedListener(this)
-        spin_districts.setOnItemSelectedListener(this)
+        spin_provinces.onItemSelectedListener = this
+        spin_regencies.onItemSelectedListener = this
+        spin_districts.onItemSelectedListener = this
     }
 
     private fun setDateTimeField() {
 
         val newCalendar: Calendar = Calendar.getInstance()
-        fromDatePickerDialog = DatePickerDialog(this, OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        fromDatePickerDialog = DatePickerDialog(this, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             val newDate: Calendar = Calendar.getInstance()
             newDate.set(year, monthOfYear, dayOfMonth)
             txtWaktuMulai.setText(dateFormatter!!.format(newDate.getTime()))
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH))
 
-        toDatePickerDialog = DatePickerDialog(this, OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        toDatePickerDialog = DatePickerDialog(this, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             val newDate: Calendar = Calendar.getInstance()
             newDate.set(year, monthOfYear, dayOfMonth)
-            txtWaktuSelesai.setText(dateFormatter!!.format(newDate.getTime()))
+            txtWaktuSelesai.setText(dateFormatter!!.format(newDate.time))
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH))
 
         txtWaktuMulai.setOnClickListener{ fromDatePickerDialog?.show() }
@@ -283,8 +285,8 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 for (location in listProvinces) itemList.add(location.name)
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spin_provinces.setAdapter(adapter)
-                if (p?.provinsi != "-"){
+                spin_provinces.adapter = adapter
+                if (p.provinsi != "-"){
                     spin_provinces.setSelection(adapter.getPosition(p.provinsi))
                 }
             }
@@ -301,7 +303,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 for (location in listRegencies) itemList.add(location.name)
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spin_regencies.setAdapter(adapter)
+                spin_regencies.adapter = adapter
                 if (p.kabupaten != "-"){
                     spin_regencies.setSelection(adapter.getPosition(p.kabupaten))
                 }
@@ -319,7 +321,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 for (location in listDistricts) itemList.add(location.name)
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spin_districts.setAdapter(adapter)
+                spin_districts.adapter = adapter
                 if (p.kecamatan != "-"){
                     spin_districts.setSelection(adapter.getPosition(p.kecamatan))
                 }
@@ -382,7 +384,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 if (task.isSuccessful) {
                     btnUploadImage.visibility = View.INVISIBLE
                     Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
-                    btnSimpan.setOnClickListener(View.OnClickListener { v: View? ->
+                    btnSimpan.setOnClickListener {
                         val photo = Objects.requireNonNull(task.result).toString()
                         val namaProyek = txtNamaProyek.text.toString()
                         val deskripsiProyek = txtDeskripsiProyek.text.toString()
@@ -393,40 +395,38 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                         val waktuSelesai = txtWaktuSelesai.text.toString()
                         val biayaHewan = txtBiayaPengelolaan.text.toString()
                         val biayaPengelolahan = biayaHewan.toLong()
-                        val alamat: String = txtAlamatLengkap.getText().toString()
-                        var kecamatan: String? = null
-                        kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
-                            spin_districts.getSelectedItem() as String } else { "-" }
-                        var kabupaten: String? = null
-                        kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
+                        val alamat: String = txtAlamatLengkap.text.toString()
+                        val kecamatan: String? = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
+                            spin_districts.selectedItem as String } else { "-" }
+                        val kabupaten: String? = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
                             spin_regencies.getSelectedItem() as String
                         } else { "-" }
-                        var prov: String? = null
+                        val prov: String?
                         prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
-                            spin_provinces.getSelectedItem() as String } else { "-" }
+                            spin_provinces.selectedItem as String } else { "-" }
                         var cek = true
-                        if (namaProyek.length <= 0) {
-                            txtNamaProyek.setError("Masukkan nama proyek")
+                        if (namaProyek.isEmpty()) {
+                            txtNamaProyek.error = "Masukkan nama proyek"
                             cek = false
                         }
                         if (TextUtils.isEmpty(deskripsiProyek)) {
-                            txtDeskripsiProyek.setError("Masukkan deskripsi proyek")
+                            txtDeskripsiProyek.error = "Masukkan deskripsi proyek"
                             cek = false
                         }
                         if (TextUtils.isEmpty(jenisHewan)) {
-                            txtJenisHewan.setError("Masukkan jenis hewan")
+                            txtJenisHewan.error = "Masukkan jenis hewan"
                             cek = false
                         }
                         if (TextUtils.isEmpty(roi)) {
-                            txtRoi.setError("Masukkan ROI")
+                            txtRoi.error = "Masukkan ROI"
                             cek = false
                         }
                         if (TextUtils.isEmpty(waktuMulai)) {
-                            txtWaktuMulai.setError("Masukkan tanggal mulai")
+                            txtWaktuMulai.error = "Masukkan tanggal mulai"
                             cek = false
                         }
                         if (TextUtils.isEmpty(waktuSelesai)) {
-                            txtWaktuSelesai.setError("Masukkan tanggal selesai")
+                            txtWaktuSelesai.error = "Masukkan tanggal selesai"
                             cek = false
                         }
                         if (TextUtils.isEmpty(biayaHewan)) {
@@ -449,7 +449,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
                             finish()
                         }
-                    })
+                    }
                 } else if (!task.isSuccessful) {
                     Toast.makeText(this, Objects.requireNonNull(task.exception).toString(), Toast.LENGTH_SHORT).show()
                 }
@@ -457,6 +457,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
@@ -466,10 +467,10 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 // Setting image on image view using Bitmap
                 val bitmap = MediaStore.Images.Media
                         .getBitmap(
-                                Objects.requireNonNull(this).getContentResolver(),
+                                Objects.requireNonNull(this).contentResolver,
                                 filePath)
                 imgUpload.setImageBitmap(bitmap)
-                btnUploadImage.setText("Upload")
+                btnUploadImage.text = "Upload"
                 btnUploadImage.setOnClickListener{ uploadImage() }
             } catch (e: IOException) {
                 // Log the exception

@@ -7,11 +7,11 @@ import com.example.ternavest.model.Laporan
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
-
+private const val TAG = "LaporanRepository"
 class LaporanRepository {
 
-    private val TAG = "LaporanRepository"
     private val database = FirebaseFirestore.getInstance()
+
     private var resultProyekByID: MutableLiveData<List<Laporan>> = MutableLiveData()
     private var resultProyekByProyekID: MutableLiveData<List<Laporan>> = MutableLiveData()
 

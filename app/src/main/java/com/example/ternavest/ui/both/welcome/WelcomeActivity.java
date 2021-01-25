@@ -37,10 +37,10 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        btnPeternak = (Button) findViewById(R.id.btn_peternak);
-        btnInvest = (Button) findViewById(R.id.btn_invest);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        dotsLayout = findViewById(R.id.layoutDots);
+        btnPeternak = findViewById(R.id.btn_peternak);
+        btnInvest = findViewById(R.id.btn_invest);
 
         // layout xml slide 1 sampai 4
         // add few more layouts if you want
@@ -56,19 +56,9 @@ public class WelcomeActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        btnPeternak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchLogin(LEVEL_PETERNAK);
-            }
-        });
+        btnPeternak.setOnClickListener(v -> launchLogin(LEVEL_PETERNAK));
 
-        btnInvest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchLogin(LEVEL_INVESTOR);
-            }
-        });
+        btnInvest.setOnClickListener(v -> launchLogin(LEVEL_INVESTOR));
     }
 
     private void addBottomDots(int currentPage) {

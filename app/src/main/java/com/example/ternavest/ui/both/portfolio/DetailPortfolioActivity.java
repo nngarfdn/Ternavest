@@ -1,27 +1,23 @@
 package com.example.ternavest.ui.both.portfolio;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.Menu;
 import android.view.MenuInflater;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.PaymentAdapter;
@@ -63,11 +59,15 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     public static final String PAY_EMPTY = "belum_ada_pembayaran";
 
     private Button btnUpdate, btnPayment;
-    private CardView cvProfile, cvPortfolio;
+    private CardView cvProfile;
     private CircleImageView civProfile;
     private MenuItem menuDelete;
-    private TextView tvProject, tvTotalCost, tvCount, tvAction, tvProfile, tvStatusProject, tvStatusPayment, tvLevel, tvPayment;
-    private Toolbar toolbar;
+    private TextView tvTotalCost;
+    private TextView tvCount;
+    private TextView tvProfile;
+    private TextView tvStatusProject;
+    private TextView tvStatusPayment;
+    private TextView tvPayment;
 
     private LoadingDialog loadingDialog;
     private PaymentAdapter adapter;
@@ -75,44 +75,37 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     private Portfolio portfolio;
     private PortfolioViewModel portfolioViewModel;
     private Profile profile;
-    private ProfileViewModel profileViewModel;
     private Proyek project;
     private UserPreference userPreference;
 
     private ArrayList<Payment> paymentList = new ArrayList<>();
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_portfolio);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar); //No Problerm
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_delete) {
-                    new AlertDialog.Builder(DetailPortfolioActivity.this)
-                            .setTitle("Batalkan investasi")
-                            .setMessage("Apakah Anda yakin ingin membatalkan investasi pada proyek ini?")
-                            .setNegativeButton("Tidak", null)
-                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    portfolioViewModel.delete(portfolio); // Hapus portofolio
-                                    for (Payment payment : paymentList) { // Hapus pembayaran + foto bukti
-                                        paymentViewModel.delete(portfolio.getId(), payment.getId());
-                                        paymentViewModel.deleteImage(payment.getImage());
-                                    }
-                                    onBackPressed();
-                                }
-                            }).create().show();
-                }
-                return false;
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_delete) {
+                new AlertDialog.Builder(DetailPortfolioActivity.this)
+                        .setTitle("Batalkan investasi")
+                        .setMessage("Apakah Anda yakin ingin membatalkan investasi pada proyek ini?")
+                        .setNegativeButton("Tidak", null)
+                        .setPositiveButton("Ya", (dialogInterface, i) -> {
+                            portfolioViewModel.delete(portfolio); // Hapus portofolio
+                            for (Payment payment : paymentList) { // Hapus pembayaran + foto bukti
+                                paymentViewModel.delete(portfolio.getId(), payment.getId());
+                                paymentViewModel.deleteImage(payment.getImage());
+                            }
+                            onBackPressed();
+                        }).create().show();
             }
+            return false;
         });
 
         userPreference = new UserPreference(this);
@@ -125,18 +118,18 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         adapter = new PaymentAdapter();
         recyclerView.setAdapter(adapter);
 
-        tvProject = findViewById(R.id.tv_project_portfolio);
+        TextView tvProject = findViewById(R.id.tv_project_portfolio);
         tvTotalCost = findViewById(R.id.tv_total_cost_portfolio);
         tvCount = findViewById(R.id.tv_count_portfolio);
-        tvAction = findViewById(R.id.tv_status_portfolio);
+        TextView tvAction = findViewById(R.id.tv_status_portfolio);
         tvStatusPayment = findViewById(R.id.tv_status_payment_dpf);
         tvStatusProject = findViewById(R.id.tv_status_project_dpf);
-        tvLevel = findViewById(R.id.tv_level_dpf);
+        TextView tvLevel = findViewById(R.id.tv_level_dpf);
         tvPayment = findViewById(R.id.tv_payment_dpf);
         tvProfile = findViewById(R.id.tv_name_profile);
         civProfile = findViewById(R.id.civ_photo_profile);
 
-        cvPortfolio = findViewById(R.id.cv_portfolio_portfolio);
+        CardView cvPortfolio = findViewById(R.id.cv_portfolio_portfolio);
         cvProfile = findViewById(R.id.cv_profile_profile);
         btnUpdate = findViewById(R.id.btn_update_dpf);
         btnPayment = findViewById(R.id.btn_payment_dpf);
@@ -153,35 +146,29 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         cvProfile.setEnabled(false); // Tunggu selesai query dulu
         tvPayment.setVisibility(View.INVISIBLE);
 
-        profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
-        profileViewModel.getData().observe(this, new Observer<Profile>() {
-            @Override
-            public void onChanged(Profile result) {
-                profile = result;
+        ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
+        profileViewModel.getData().observe(this, result -> {
+            profile = result;
 
-                tvProfile.setText(profile.getName());
-                loadImageFromUrl(civProfile, profile.getPhoto());
-                cvProfile.setEnabled(true);
+            tvProfile.setText(profile.getName());
+            loadImageFromUrl(civProfile, profile.getPhoto());
+            cvProfile.setEnabled(true);
 
-                loadingDialog.dismiss();
-            }
+            loadingDialog.dismiss();
         });
 
         paymentViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PaymentViewModel.class);
-        paymentViewModel.getData().observe(this, new Observer<ArrayList<Payment>>() {
-            @Override
-            public void onChanged(ArrayList<Payment> result) {
-                paymentList = result;
-                adapter.setData(paymentList);
+        paymentViewModel.getData().observe(this, result -> {
+            paymentList = result;
+            adapter.setData(paymentList);
 
-                // Atur status pembayaran terakhir
-                if (adapter.getItemCount() > 0){
-                    setLastPaymentStatus(adapter.getData().get(adapter.getItemCount()-1).getStatus());
-                    tvPayment.setVisibility(View.VISIBLE);
-                } else {
-                    setLastPaymentStatus(PAY_EMPTY);
-                    tvPayment.setVisibility(View.INVISIBLE);
-                }
+            // Atur status pembayaran terakhir
+            if (adapter.getItemCount() > 0){
+                setLastPaymentStatus(adapter.getData().get(adapter.getItemCount()-1).getStatus());
+                tvPayment.setVisibility(View.VISIBLE);
+            } else {
+                setLastPaymentStatus(PAY_EMPTY);
+                tvPayment.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -222,6 +209,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setLastPaymentStatus(String lastStatus) {
         if (lastStatus.equals(PAY_EMPTY)) tvPayment.setVisibility(View.INVISIBLE);
         else tvPayment.setVisibility(View.VISIBLE);
@@ -299,6 +287,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

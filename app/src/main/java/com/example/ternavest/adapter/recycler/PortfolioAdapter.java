@@ -1,5 +1,6 @@
 package com.example.ternavest.adapter.recycler;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,10 +16,7 @@ import com.example.ternavest.R;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -84,58 +82,53 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             cvStatus = view.findViewById(R.id.cv_status_portfolio);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(Portfolio portfolio) {
             tvCount.setText(" / " + (portfolio.getCount()) + " ekor");
 
-            reference.document(portfolio.getProjectId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()){
-                        project = Objects.requireNonNull(task.getResult()).toObject(Proyek.class);
+            reference.document(portfolio.getProjectId()).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    project = Objects.requireNonNull(task.getResult()).toObject(Proyek.class);
 
-                        if (project != null) {
-                            tvProject.setText(project.getNamaProyek());
-                        }
-
-                        String status = portfolio.getStatus();
-                        long totalCost = 0;
-                        switch (status) {
-                            case PAY_APPROVED:
-                                status = "Disetujui";
-                                totalCost = portfolio.getTotalCost();
-                                cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.blue));
-                                break;
-                            case PAY_REJECT:
-                                status = "Ditolak";
-                                totalCost = project.getBiayaHewan()*portfolio.getCount();
-                                cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.red));
-                                break;
-                            case PAY_PENDING:
-                                status = "Pending";
-                                if (portfolio.getTotalCost() != 0) totalCost = portfolio.getTotalCost(); // Ada pembayaran pending
-                                else totalCost = project.getBiayaHewan()*portfolio.getCount(); // Tidak ada
-                                cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.orange));
-                                break;
-                        }
-                        tvStatus.setText(status);
-                        tvTotalCost.setText(getRupiahFormat(totalCost));
+                    if (project != null) {
+                        tvProject.setText(project.getNamaProyek());
                     }
+
+                    String status = portfolio.getStatus();
+                    long totalCost = 0;
+                    switch (status) {
+                        case PAY_APPROVED:
+                            status = "Disetujui";
+                            totalCost = portfolio.getTotalCost();
+                            cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.blue));
+                            break;
+                        case PAY_REJECT:
+                            status = "Ditolak";
+                            totalCost = project.getBiayaHewan()*portfolio.getCount();
+                            cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.red));
+                            break;
+                        case PAY_PENDING:
+                            status = "Pending";
+                            if (portfolio.getTotalCost() != 0) totalCost = portfolio.getTotalCost(); // Ada pembayaran pending
+                            else totalCost = project.getBiayaHewan()*portfolio.getCount(); // Tidak ada
+                            cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.orange));
+                            break;
+                    }
+                    tvStatus.setText(status);
+                    tvTotalCost.setText(getRupiahFormat(totalCost));
                 }
             });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (project == null){
-                        showToast(context, "Mohon tunggu...");
-                        return;
-                    }
-
-                    Intent intent = new Intent(context, DetailPortfolioActivity.class);
-                    intent.putExtra(EXTRA_PORTFOLIO, portfolio);
-                    intent.putExtra(EXTRA_PROJECT, project);
-                    context.startActivity(intent);
+            itemView.setOnClickListener(view -> {
+                if (project == null){
+                    showToast(context, "Mohon tunggu...");
+                    return;
                 }
+
+                Intent intent = new Intent(context, DetailPortfolioActivity.class);
+                intent.putExtra(EXTRA_PORTFOLIO, portfolio);
+                intent.putExtra(EXTRA_PROJECT, project);
+                context.startActivity(intent);
             });
         }
     }

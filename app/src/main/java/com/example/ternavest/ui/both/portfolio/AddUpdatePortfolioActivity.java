@@ -44,34 +44,33 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
     private Proyek project;
 
     private Button btnPayment;
-    private CardView cvProject;
     private EditText edtCount;
-    private ImageView imgProject;
-    private TextView tvProjectName, tvProjectLivestock, tvProjectROI, tvCost, tvTotalCost, tvHelper;
+    private TextView tvTotalCost;
 
     private boolean isUpdate;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update_portfolio);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar1);
+        Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar); //No Problerm
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        imgProject = findViewById(R.id.imgProyek);
-        tvProjectName = findViewById(R.id.txtNamaProyek);
-        tvProjectLivestock = findViewById(R.id.txtJenisHewan);
-        tvProjectROI = findViewById(R.id.txtROI);
-        tvCost = findViewById(R.id.tv_cost_aup);
+        ImageView imgProject = findViewById(R.id.imgProyek);
+        TextView tvProjectName = findViewById(R.id.txtNamaProyek);
+        TextView tvProjectLivestock = findViewById(R.id.txtJenisHewan);
+        TextView tvProjectROI = findViewById(R.id.txtROI);
+        TextView tvCost = findViewById(R.id.tv_cost_aup);
         tvTotalCost = findViewById(R.id.tv_total_cost_payment);
-        tvHelper = findViewById(R.id.tv_helper_aup);
+        TextView tvHelper = findViewById(R.id.tv_helper_aup);
         edtCount = findViewById(R.id.edt_count_aup);
 
-        cvProject = findViewById(R.id.cv_project_project);
+        CardView cvProject = findViewById(R.id.cv_project_project);
         btnPayment = findViewById(R.id.btn_payment_aup);
         cvProject.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
@@ -117,6 +116,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 0){ // Hitung real-time

@@ -1,12 +1,5 @@
 package com.example.ternavest.ui.investor.portfolio;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,12 +11,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.ternavest.R;
-import com.example.ternavest.callback.OnImageUploadCallback;
 import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Payment;
 import com.example.ternavest.model.Portfolio;
-import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;
 import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
@@ -47,18 +44,19 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
     private LoadingDialog loadingDialog;
     private PaymentViewModel paymentViewModel;
-    private ProfileViewModel profileViewModel;
     private Portfolio portfolio;
     private PortfolioViewModel portfolioViewModel;
     private Proyek project;
 
-    private Button btnUpload, btnSend;
-    private CardView cvPortfolio, cvStatus;
+    private Button btnSend;
     private ImageView imgPayment;
-    private TextView tvProject, tvTotalCost, tvCount, tvStatus, tvAccountName, tvAccountBank, tvAccountNumber, tvNominal;
+    private TextView tvAccountName;
+    private TextView tvAccountBank;
+    private TextView tvAccountNumber;
 
     private Uri uriPaymentImage;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,19 +69,19 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar); //No Problerm
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        cvStatus = findViewById(R.id.cv_status_portfolio);
-        tvProject = findViewById(R.id.tv_project_portfolio);
-        tvTotalCost = findViewById(R.id.tv_total_cost_portfolio);
-        tvCount = findViewById(R.id.tv_count_portfolio);
-        tvStatus = findViewById(R.id.tv_status_portfolio);
+        CardView cvStatus = findViewById(R.id.cv_status_portfolio);
+        TextView tvProject = findViewById(R.id.tv_project_portfolio);
+        TextView tvTotalCost = findViewById(R.id.tv_total_cost_portfolio);
+        TextView tvCount = findViewById(R.id.tv_count_portfolio);
+        TextView tvStatus = findViewById(R.id.tv_status_portfolio);
         tvAccountName = findViewById(R.id.tv_account_name_payment);
         tvAccountBank = findViewById(R.id.tv_account_bank_payment);
         tvAccountNumber = findViewById(R.id.tv_account_number_payment);
-        tvNominal = findViewById(R.id.tv_total_cost_payment);
+        TextView tvNominal = findViewById(R.id.tv_total_cost_payment);
         imgPayment = findViewById(R.id.img_payment_payment);
 
-        cvPortfolio = findViewById(R.id.cv_portfolio_portfolio);
-        btnUpload = findViewById(R.id.btn_upload_payment);
+        CardView cvPortfolio = findViewById(R.id.cv_portfolio_portfolio);
+        Button btnUpload = findViewById(R.id.btn_upload_payment);
         btnSend = findViewById(R.id.btn_send_payment);
         cvPortfolio.setOnClickListener(this);
         btnUpload.setOnClickListener(this);
@@ -91,14 +89,11 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
         btnSend.setEnabled(false);
 
-        profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
-        profileViewModel.getData().observe(this, new Observer<Profile>() {
-            @Override
-            public void onChanged(Profile profile) {
-                tvAccountName.setText(profile.getAccountName());
-                tvAccountBank.setText(profile.getAccountBank());
-                tvAccountNumber.setText("No. rekening: " + profile.getAccountNumber());
-            }
+        ProfileViewModel profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
+        profileViewModel.getData().observe(this, profile -> {
+            tvAccountName.setText(profile.getAccountName());
+            tvAccountBank.setText(profile.getAccountBank());
+            tvAccountNumber.setText("No. rekening: " + profile.getAccountNumber());
         });
 
         Intent intent = getIntent();
@@ -156,21 +151,18 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 loadingDialog.show();
 
                 String fileName = payment.getId() + ".jpeg";
-                paymentViewModel.uploadImage(this, portfolio.getId(), uriPaymentImage, fileName, new OnImageUploadCallback() {
-                    @Override
-                    public void onSuccess(String imageUrl) {
-                        payment.setImage(imageUrl);
-                        paymentViewModel.insert(portfolio.getId(), payment);
-                        portfolioViewModel.update(portfolio.getId(), project.getBiayaHewan(), portfolio.getCount() * project.getBiayaHewan()); // Kunci harga ke portofolio
+                paymentViewModel.uploadImage(this, portfolio.getId(), uriPaymentImage, fileName, imageUrl -> {
+                    payment.setImage(imageUrl);
+                    paymentViewModel.insert(portfolio.getId(), payment);
+                    portfolioViewModel.update(portfolio.getId(), project.getBiayaHewan(), portfolio.getCount() * project.getBiayaHewan()); // Kunci harga ke portofolio
 
-                        Intent intentResult = new Intent();
-                        intentResult.putExtra(EXTRA_PAYMENT, payment);
-                        setResult(RC_ADD_PAYMENT, intentResult);
+                    Intent intentResult = new Intent();
+                    intentResult.putExtra(EXTRA_PAYMENT, payment);
+                    setResult(RC_ADD_PAYMENT, intentResult);
 
-                        loadingDialog.dismiss();
-                        showToast(getApplicationContext(), "Pembayaran berhasil diajukan.");
-                        finish();
-                    }
+                    loadingDialog.dismiss();
+                    showToast(getApplicationContext(), "Pembayaran berhasil diajukan.");
+                    finish();
                 });
                 break;
         }

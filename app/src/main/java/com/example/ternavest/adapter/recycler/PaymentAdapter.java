@@ -1,5 +1,6 @@
 package com.example.ternavest.adapter.recycler;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -72,6 +73,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             tvStatus = view.findViewById(R.id.tv_status_payment);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(Payment payment) {
             tvDate.setText(getFullDate(payment.getDate(), false) + ", " + payment.getTime());
 
@@ -92,16 +94,13 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             }
             tvStatus.setText(status);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(EXTRA_PAYMENT, payment);
-                    DetailPaymentFragment bottomSheet = new DetailPaymentFragment();
-                    bottomSheet.setArguments(bundle);
-                    bottomSheet.show(((DetailPortfolioActivity) context)
-                            .getSupportFragmentManager(), bottomSheet.getTag());
-                }
+            itemView.setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(EXTRA_PAYMENT, payment);
+                DetailPaymentFragment bottomSheet = new DetailPaymentFragment();
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(((DetailPortfolioActivity) context)
+                        .getSupportFragmentManager(), bottomSheet.getTag());
             });
         }
     }

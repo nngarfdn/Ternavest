@@ -1,17 +1,9 @@
 package com.example.ternavest.ui.both.profile;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,8 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.ternavest.R;
-import com.example.ternavest.callback.OnImageUploadCallback;
 import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.viewmodel.ProfileViewModel;
@@ -110,33 +107,31 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.loadData();
-        profileViewModel.getData().observe(this, new Observer<Profile>() {
-            @Override
-            public void onChanged(Profile result) {
-                profile = result;
+        profileViewModel.getData().observe(this, result -> {
+            profile = result;
 
-                loadImageFromUrl(imgPhoto, profile.getPhoto());
-                loadImageFromUrl(imgKtp, profile.getKtp());
+            loadImageFromUrl(imgPhoto, profile.getPhoto());
+            loadImageFromUrl(imgKtp, profile.getKtp());
 
-                edtName.setText(profile.getName());
-                edtAddress.setText(profile.getAddress());
-                edtPhone.setText(profile.getPhone());
-                edtWhatsApp.setText(profile.getWhatsApp());
+            edtName.setText(profile.getName());
+            edtAddress.setText(profile.getAddress());
+            edtPhone.setText(profile.getPhone());
+            edtWhatsApp.setText(profile.getWhatsApp());
 
-                edtAccontBank.setText(profile.getAccountBank());
-                edtAccountNumber.setText(profile.getAccountNumber());
-                edtAccountName.setText(profile.getAccountName());
+            edtAccontBank.setText(profile.getAccountBank());
+            edtAccountNumber.setText(profile.getAccountNumber());
+            edtAccountName.setText(profile.getAccountName());
 
-                setVerificationStatus(profile.getVerificationStatus());
+            setVerificationStatus(profile.getVerificationStatus());
 
-                if (profile.getLevel().equals(LEVEL_INVESTOR)) layoutAccount.setVisibility(View.GONE);
-                else if (profile.getLevel().equals(LEVEL_PETERNAK)) layoutAccount.setVisibility(View.VISIBLE);
+            if (profile.getLevel().equals(LEVEL_INVESTOR)) layoutAccount.setVisibility(View.GONE);
+            else if (profile.getLevel().equals(LEVEL_PETERNAK)) layoutAccount.setVisibility(View.VISIBLE);
 
-                loadingDialog.dismiss();
-            }
+            loadingDialog.dismiss();
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void setVerificationStatus(String verificationStatus){
         switch (verificationStatus) {
             case VERIF_APPROVED:
@@ -178,18 +173,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                             .setMessage("Apakah Anda ingin mengunggah KTP dan mengajukan verifikasi akun?")
                             .setNeutralButton("Batal", null)
                             .setNegativeButton("Tidak", null)
-                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    ContentValues values = new ContentValues();
-                                    values.put(MediaStore.Images.Media.TITLE, "Ambil foto KTP");
-                                    values.put(MediaStore.Images.Media.DESCRIPTION, "Menggunakan kamera");
-                                    uriKTP = getContentResolver().insert(
-                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uriKTP);
-                                    startActivityForResult(intent, RC_KTP_IMAGE);
-                                }
+                            .setPositiveButton("Ya", (dialogInterface, i) -> {
+                                ContentValues values = new ContentValues();
+                                values.put(MediaStore.Images.Media.TITLE, "Ambil foto KTP");
+                                values.put(MediaStore.Images.Media.DESCRIPTION, "Menggunakan kamera");
+                                uriKTP = getContentResolver().insert(
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                                Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                intent1.putExtra(MediaStore.EXTRA_OUTPUT, uriKTP);
+                                startActivityForResult(intent1, RC_KTP_IMAGE);
                             }).create().show();
                 }
                 break;
@@ -274,12 +266,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     loadImageFromUrl(imgPhoto, uriProfileImage.toString());
 
                     String fileName = firebaseUser.getUid() + ".jpeg";
-                    profileViewModel.uploadImage(this, uriProfileImage, FOLDER_PROFILE, fileName, new OnImageUploadCallback() {
-                        @Override
-                        public void onSuccess(String imageUrl) {
-                            profileViewModel.update(imageUrl);
-                            loadingDialog.dismiss();
-                        }
+                    profileViewModel.uploadImage(this, uriProfileImage, FOLDER_PROFILE, fileName, imageUrl -> {
+                        profileViewModel.update(imageUrl);
+                        loadingDialog.dismiss();
                     });
                 }
             }
@@ -289,13 +278,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     loadImageFromUrl(imgKtp, uriKTP.toString());
                     showToast(getApplicationContext(), "Mengajukan verifikasi KTP...");
                     String fileName = firebaseUser.getUid() + ".jpeg";
-                    profileViewModel.uploadImage(this, uriKTP, FOLDER_KTP, fileName, new OnImageUploadCallback() {
-                        @Override
-                        public void onSuccess(String imageUrl) {
-                            profileViewModel.sendVerification(imageUrl);
-                            setVerificationStatus(VERIF_PENDING);
-                            showToast(getApplicationContext(), "Verifikasi KTP berhasil diajukan.");
-                        }
+                    profileViewModel.uploadImage(this, uriKTP, FOLDER_KTP, fileName, imageUrl -> {
+                        profileViewModel.sendVerification(imageUrl);
+                        setVerificationStatus(VERIF_PENDING);
+                        showToast(getApplicationContext(), "Verifikasi KTP berhasil diajukan.");
                     });
                 } catch (Exception e){
                     e.printStackTrace();

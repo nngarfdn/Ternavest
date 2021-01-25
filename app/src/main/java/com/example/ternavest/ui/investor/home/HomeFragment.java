@@ -90,15 +90,12 @@ public class HomeFragment extends Fragment implements SearchFilterFragment.Searc
         });
 
         ImageButton ibSearchFilter = view.findViewById(R.id.ib_search_filter);
-        ibSearchFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(EXTRA_FILTER, filter);
-                SearchFilterFragment bottomSheet = new SearchFilterFragment();
-                bottomSheet.setArguments(bundle);
-                bottomSheet.show(getChildFragmentManager(), bottomSheet.getTag());
-            }
+        ibSearchFilter.setOnClickListener(view1 -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(EXTRA_FILTER, filter);
+            SearchFilterFragment bottomSheet = new SearchFilterFragment();
+            bottomSheet.setArguments(bundle);
+            bottomSheet.show(getChildFragmentManager(), bottomSheet.getTag());
         });
     }
 

@@ -1,5 +1,6 @@
 package com.example.ternavest.adapter.recycler
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +21,11 @@ class ProyekAdapter (private val list: List<Proyek>) : RecyclerView.Adapter<Proy
 
     override fun getItemCount(): Int = list.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Picasso.get()
-                .load(list?.get(position)?.photoProyek)
+                .load(list[position].photoProyek)
                 .resize(100, 100) // resizes the image to these dimensions (in pixel)
                 .centerCrop()
                 .placeholder(R.drawable.ic_baseline_autorenew_24)
@@ -35,10 +37,10 @@ class ProyekAdapter (private val list: List<Proyek>) : RecyclerView.Adapter<Proy
 
         holder.itemView.setOnClickListener {
             val args = Bundle()
-            args.putParcelable("proyek",list.get(position))
+            args.putParcelable("proyek", list[position])
             val bottomSheet = DetailFragment()
-            bottomSheet.setArguments(args)
-            bottomSheet.show((holder.itemView.context as FragmentActivity).supportFragmentManager, bottomSheet.getTag())
+            bottomSheet.arguments = args
+            bottomSheet.show((holder.itemView.context as FragmentActivity).supportFragmentManager, bottomSheet.tag)
         }
     }
 }

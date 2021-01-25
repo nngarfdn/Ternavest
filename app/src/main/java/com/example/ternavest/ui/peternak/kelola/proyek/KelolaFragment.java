@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class KelolaFragment extends Fragment {
 
-    private static final String TAG = "KelolaFragment";
+
     ImageView imgProyekKosong;
     TextView txtProyekKosong;
     Button btnTambahProyek;
@@ -69,13 +69,9 @@ public class KelolaFragment extends Fragment {
         imgProyekKosong.setVisibility(View.INVISIBLE);
         btnTambahProyek.setVisibility(View.INVISIBLE);
 
-        floatingActionButton.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), TambahProyekActivity.class));
-        });
+        floatingActionButton.setOnClickListener(v -> startActivity(new Intent(getContext(), TambahProyekActivity.class)));
 
-        btnTambahProyek.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), TambahProyekActivity.class));
-        });
+        btnTambahProyek.setOnClickListener(v -> startActivity(new Intent(getContext(), TambahProyekActivity.class)));
 
         proyekViewModel.getResultByUUID().observe(getViewLifecycleOwner(), result -> {
 

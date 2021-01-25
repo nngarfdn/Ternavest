@@ -9,8 +9,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
+private const val TAG = "ProyekRepository"
 class ProyekRepository {
-    private val TAG = javaClass.simpleName
+
     private val database = FirebaseFirestore.getInstance()
     private var resultProyekByUUID: MutableLiveData<List<Proyek>> = MutableLiveData()
     private var resultProyekByID: MutableLiveData<List<Proyek>> = MutableLiveData()
@@ -138,7 +139,7 @@ class ProyekRepository {
         Log.d(TAG, "getPeminat iterator: ${iterator.next()}")
         val produkData: MutableList<Profile> = ArrayList()
         val db = FirebaseFirestore.getInstance()
-        val savedProdukList = ArrayList<Profile>()
+        ArrayList<Profile>()
         while (iterator.hasNext()) {
             db.collection("profil").document(iterator.next())
                     .get()

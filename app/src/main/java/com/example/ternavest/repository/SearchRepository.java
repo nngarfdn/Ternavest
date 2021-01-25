@@ -2,14 +2,11 @@ package com.example.ternavest.repository;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ternavest.model.Filter;
 import com.example.ternavest.model.Proyek;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -36,26 +33,23 @@ public class SearchRepository {
 
         query.orderBy("namaProyek")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            ArrayList<Proyek> listProduct = new ArrayList<>();
-                            QuerySnapshot querySnapshot = task.getResult();
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        ArrayList<Proyek> listProduct = new ArrayList<>();
+                        QuerySnapshot querySnapshot = task.getResult();
 
-                            for (DocumentSnapshot snapshot : querySnapshot) {
-                                Proyek project = snapshot.toObject(Proyek.class);
-                                if (project.getNamaProyek().toLowerCase().contains(filter.getKataKunci().toLowerCase()) ||
-                                        project.getJenisHewan().toLowerCase().contains(filter.getKataKunci().toLowerCase())){
-                                    listProduct.add(project);
-                                }
-                                Log.d(TAG, "Nama item: " + project.getNamaProyek());
+                        for (DocumentSnapshot snapshot : querySnapshot) {
+                            Proyek project = snapshot.toObject(Proyek.class);
+                            if (project.getNamaProyek().toLowerCase().contains(filter.getKataKunci().toLowerCase()) ||
+                                    project.getJenisHewan().toLowerCase().contains(filter.getKataKunci().toLowerCase())){
+                                listProduct.add(project);
                             }
+                            Log.d(TAG, "Nama item: " + project.getNamaProyek());
+                        }
 
-                            resultData.postValue(listProduct);
-                            Log.d(TAG, "Document was queried");
-                        } else Log.w(TAG, "Error querying document", task.getException());
-                    }
+                        resultData.postValue(listProduct);
+                        Log.d(TAG, "Document was queried");
+                    } else Log.w(TAG, "Error querying document", task.getException());
                 });
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
@@ -85,7 +86,6 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
                         rv_peminat.setAdapter(adapter)
                         txtPeminatKosong.visibility = View.VISIBLE
                     }
-
                 })
             }
 
@@ -140,3 +140,4 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
     }
 
 }
+

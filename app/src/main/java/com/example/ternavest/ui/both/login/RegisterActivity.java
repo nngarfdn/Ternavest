@@ -1,27 +1,22 @@
 package com.example.ternavest.ui.both.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ternavest.R;
 import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.ui.both.main.MainActivity;
 import com.example.ternavest.viewmodel.ProfileViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -63,12 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtKonfirmPass = findViewById(R.id.edt_konfirm_register);
 
         Button btnRegister = findViewById(R.id.btn_email_register);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerWithEmail(edtName.getText().toString(), edtEmail.getText().toString(), edtPassword.getText().toString(), edtKonfirmPass.getText().toString());
-            }
-        });
+        btnRegister.setOnClickListener(view -> registerWithEmail(edtName.getText().toString(), edtEmail.getText().toString(), edtPassword.getText().toString(), edtKonfirmPass.getText().toString()));
 
         level = getIntent().getStringExtra(EXTRA_LEVEL);
         if (level.equals(LEVEL_PETERNAK)) toolbar.setTitle("Daftar sebagai Peternak");
@@ -85,42 +75,34 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Start create user with email
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            // Profile updates
-                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(name)
-                                    .build();
-                            firebaseUser.updateProfile(profileUpdates)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Log.d(TAG, "User profile updated.");
-                                        }
-                                    });
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()){
+                        // Profile updates
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name)
+                                .build();
+                        firebaseUser.updateProfile(profileUpdates)
+                                .addOnCompleteListener(task1 -> Log.d(TAG, "User profile updated."));
 
-                            // Insert ke database
-                            Profile profile = new Profile(
-                                    firebaseUser.getUid(),
-                                    name,
-                                    firebaseUser.getEmail(),
-                                    level,
-                                    VERIF_PENDING,
-                                    null);
-                            profileViewModel.insert(profile);
+                        // Insert ke database
+                        Profile profile = new Profile(
+                                firebaseUser.getUid(),
+                                name,
+                                firebaseUser.getEmail(),
+                                level,
+                                VERIF_PENDING,
+                                null);
+                        profileViewModel.insert(profile);
 
-                            Log.d(TAG, "createUserWithEmail: success");
-                            launchMain();
-                        } else {
-                            // If sign in fails, display a message to the user
-                            Log.w(TAG, "createUserWithEmail: failure", task.getException());
-                            showToast(getApplicationContext(), "Email sudah terdaftar.");
-                        }
-                        loadingDialog.dismiss();
+                        Log.d(TAG, "createUserWithEmail: success");
+                        launchMain();
+                    } else {
+                        // If sign in fails, display a message to the user
+                        Log.w(TAG, "createUserWithEmail: failure", task.getException());
+                        showToast(getApplicationContext(), "Email sudah terdaftar.");
                     }
+                    loadingDialog.dismiss();
                 });
     }
 

@@ -1,33 +1,25 @@
 package com.example.ternavest.ui.both.portfolio;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.ternavest.R;
 import com.example.ternavest.adapter.recycler.PortfolioAdapter;
-import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
@@ -70,22 +62,16 @@ public class PortfolioFragment extends Fragment {
 
         portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
         portfolioViewModel.loadData(userPreference.getUserLevel());
-        portfolioViewModel.getData().observe(this, new Observer<ArrayList<Portfolio>>() {
-            @Override
-            public void onChanged(ArrayList<Portfolio> portfolioList) {
-                adapter.setData(portfolioList);
-                if (portfolioList.isEmpty()) imgIlustrasi.setVisibility(View.VISIBLE);
-                else imgIlustrasi.setVisibility(View.INVISIBLE);
-            }
+        portfolioViewModel.getData().observe(this, portfolioList -> {
+            adapter.setData(portfolioList);
+            if (portfolioList.isEmpty()) imgIlustrasi.setVisibility(View.VISIBLE);
+            else imgIlustrasi.setVisibility(View.INVISIBLE);
         });
-        portfolioViewModel.getReference().addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) Log.w(TAG, "Listen failed", error);
-                else if (value != null){
-                    portfolioViewModel.loadData(userPreference.getUserLevel());
-                    Log.d(TAG, "Changes detected");
-                }
+        portfolioViewModel.getReference().addSnapshotListener((value, error) -> {
+            if (error != null) Log.w(TAG, "Listen failed", error);
+            else if (value != null){
+                portfolioViewModel.loadData(userPreference.getUserLevel());
+                Log.d(TAG, "Changes detected");
             }
         });
 

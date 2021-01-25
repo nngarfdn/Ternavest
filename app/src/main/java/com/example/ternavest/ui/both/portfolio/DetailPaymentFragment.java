@@ -3,10 +3,7 @@ package com.example.ternavest.ui.both.portfolio;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,13 +32,8 @@ import static com.example.ternavest.utils.DateUtils.getFullDate;
 public class DetailPaymentFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     private DetailPaymentListener listener;
     private Payment payment;
-    private UserPreference userPreference;
 
-    private Button btnApprove, btnReject;
-    private CardView cvStatus;
-    private ImageView imgPayment;
     private Spinner spRejectionNote;
-    private TextView tvStatus, tvDate, tvRejectionNote;
 
     public DetailPaymentFragment(){}
 
@@ -50,22 +42,23 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
         return inflater.inflate(R.layout.fragment_detail_payment, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        userPreference = new UserPreference(getContext());
+        UserPreference userPreference = new UserPreference(getContext());
 
-        cvStatus = view.findViewById(R.id.cv_status_dp);
-        tvStatus = view.findViewById(R.id.tv_status_dp);
-        tvDate = view.findViewById(R.id.tv_date_dp);
-        tvRejectionNote = view.findViewById(R.id.tv_rejection_note_dp);
-        imgPayment = view.findViewById(R.id.img_receipt_dp);
+        CardView cvStatus = view.findViewById(R.id.cv_status_dp);
+        TextView tvStatus = view.findViewById(R.id.tv_status_dp);
+        TextView tvDate = view.findViewById(R.id.tv_date_dp);
+        TextView tvRejectionNote = view.findViewById(R.id.tv_rejection_note_dp);
+        ImageView imgPayment = view.findViewById(R.id.img_receipt_dp);
         spRejectionNote = view.findViewById(R.id.spin_reject_dp);
         tvRejectionNote.setVisibility(View.GONE);
 
-        btnApprove = view.findViewById(R.id.btn_approve_dp);
-        btnReject = view.findViewById(R.id.btn_reject_dp);
+        Button btnApprove = view.findViewById(R.id.btn_approve_dp);
+        Button btnReject = view.findViewById(R.id.btn_reject_dp);
         btnApprove.setOnClickListener(this);
         btnReject.setOnClickListener(this);
 
@@ -115,12 +108,9 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
                         .setTitle("Setujui pembayaran")
                         .setMessage("Apakah Anda yakin bukti pembayaran sudah valid?")
                         .setNegativeButton("Tidak", null)
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                listener.receiveData(payment, PAY_APPROVED, null);
-                                dismiss();
-                            }
+                        .setPositiveButton("Ya", (dialogInterface, i) -> {
+                            listener.receiveData(payment, PAY_APPROVED, null);
+                            dismiss();
                         }).create().show();
                 break;
 
@@ -129,12 +119,9 @@ public class DetailPaymentFragment extends BottomSheetDialogFragment implements 
                         .setTitle("Tolak pembayaran")
                         .setMessage("Apakah Anda yakin ingin menolak pembayaran ini?\n\nPastikan Anda memilih alasan penolakan dengan tepat.")
                         .setNegativeButton("Tidak", null)
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                listener.receiveData(payment, PAY_REJECT, spRejectionNote.getSelectedItem().toString());
-                                dismiss();
-                            }
+                        .setPositiveButton("Ya", (dialogInterface, i) -> {
+                            listener.receiveData(payment, PAY_REJECT, spRejectionNote.getSelectedItem().toString());
+                            dismiss();
                         }).create().show();
                 break;
         }
