@@ -109,8 +109,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                             break;
                         case PAY_PENDING:
                             status = "Pending";
-                            if (portfolio.getTotalCost() != 0) totalCost = portfolio.getTotalCost(); // Ada pembayaran pending
-                            else totalCost = project.getBiayaHewan()*portfolio.getCount(); // Tidak ada
+                            if (portfolio.getTotalCost() != 0 ) totalCost = portfolio.getTotalCost(); // Ada pembayaran pending
+//                            else totalCost = project.getBiayaHewan()*portfolio.getCount(); // Tidak ada
                             cvStatus.setCardBackgroundColor(context.getResources().getColor(R.color.orange));
                             break;
                     }

@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ternavest.R
 import com.example.ternavest.adapter.recycler.PeminatAdapter
+import com.example.ternavest.model.Portfolio
 import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.peternak.kelola.laporan.LaporanActivity
@@ -58,11 +60,11 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
         profileViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProfileViewModel::class.java)
 
         portfolioViewModel.queryPeminat(p?.id)
-        portfolioViewModel.data.observe(this, { portfolioList ->
+        portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>>{ portfolioList ->
 
             for (porto in portfolioList) {
                 profileViewModel.loadData(porto.investorId)
-                profileViewModel.data.observe(this, { profil ->
+                profileViewModel.data.observe(this, Observer<Profile>{ profil ->
                     listProfile.add(profil)
                     val b = listProfile.distinct()
                     Log.d(TAG, "onCreateView: load profile ${profil.name}")
