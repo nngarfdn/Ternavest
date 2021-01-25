@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ternavest"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.both.login.ResetPasswordActivity"/>
+        <activity android:name=".ui.both.profile.TentangAplikasi"></activity>
+        <activity android:name=".ui.both.login.ResetPasswordActivity" />
         <activity android:name=".ui.both.login.RegisterActivity" />
         <activity android:name=".ui.both.login.LoginActivity" />
         <activity android:name=".ui.both.welcome.WelcomeActivity" />
@@ -30,7 +31,7 @@
         <activity android:name=".ui.both.profile.DetailProfileActivity" />
         <activity android:name=".testing.WilayahTest" />
         <activity android:name=".ui.peternak.kelola.proyek.TambahProyekActivity" />
-        <activity android:name="com.example.ternavest.ui.both.welcome.SplashActivity">
+        <activity android:name=".ui.both.welcome.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

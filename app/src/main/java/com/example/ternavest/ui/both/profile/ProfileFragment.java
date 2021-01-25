@@ -170,6 +170,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_about_profile:
+                Intent intent_about = new Intent(getActivity(), TentangAplikasi.class);
+                startActivity(intent_about);
                 break;
 
             case R.id.btn_logout_profile:
