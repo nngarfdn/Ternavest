@@ -12,6 +12,7 @@ import android.text.InputType
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -24,10 +25,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.example.ternavest.R
 import com.example.ternavest.model.Location
+import com.example.ternavest.model.Portfolio
 import com.example.ternavest.model.Proyek
 import com.example.ternavest.ui.both.main.MainActivity
 import com.example.ternavest.utils.DateUtils.DATE_FORMAT
 import com.example.ternavest.viewmodel.LocationViewModel
+import com.example.ternavest.viewmodel.PortfolioViewModel
 import com.example.ternavest.viewmodel.ProyekViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -53,6 +56,9 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     private var fromDatePickerDialog: DatePickerDialog? = null
     private var toDatePickerDialog: DatePickerDialog? = null
+    private var menuDelete: MenuItem? = null
+
+    private lateinit var portfolioViewModel: PortfolioViewModel
 
     private var dateFormatter: SimpleDateFormat? = null
     private var objectStorageReference: StorageReference? = null
@@ -74,14 +80,21 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_proyek)
 
+        portfolioViewModel = ViewModelProvider(this, NewInstanceFactory()).get(PortfolioViewModel::class.java)
+
         p = intent.getParcelableExtra("proyek")!!
 
+        portfolioViewModel.queryPeminat(p?.id)
+        portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>>{ portfolioList ->
+            if (portfolioList.isEmpty()) menuDelete?.setVisible(true) else menuDelete?.setVisible(false)
+        })
         setSupportActionBar(toolbartambahpproyek)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        toolbartambahpproyek.setOnMenuItemClickListener {item ->
 
+
+        toolbartambahpproyek.setOnMenuItemClickListener {item ->
             when (item.itemId) {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
@@ -484,6 +497,9 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_delete, menu)
+
+        menuDelete = menu!!.findItem(R.id.action_delete)
+
         return true
     }
 
