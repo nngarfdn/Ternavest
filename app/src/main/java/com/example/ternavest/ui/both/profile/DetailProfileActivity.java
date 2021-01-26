@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adapter.recycler.ProyekAdapter;
+import com.example.ternavest.adapter.recycler.ProyekInvestorAdapter;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
 import com.example.ternavest.model.Proyek;
@@ -37,7 +37,7 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
     public static final String EXTRA_PROFILE = "extra_profile";
 
     private Profile profile;
-    private ProyekAdapter adapter;
+    private ProyekInvestorAdapter adapter;
 
     private final ArrayList<Proyek> projectList = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         RecyclerView recyclerView = findViewById(R.id.rv_project_profile);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ProyekAdapter(projectList);
+        adapter = new ProyekInvestorAdapter(projectList);
         recyclerView.setAdapter(adapter);
 
         CircleImageView imgPhoto = findViewById(R.id.img_photo_profile);

@@ -50,9 +50,19 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
         arguments?.let {}
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
+        return inflater.inflate(R.layout.fragment_detail, container, false)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
+        rv_peminat.layoutManager = layoutManager
+        val adapter = PeminatAdapter(listProfile)
+        rv_peminat.adapter = adapter
+
         val p: Proyek? = arguments?.getParcelable("proyek")
 
         proyekViewModel = ViewModelProvider(this, NewInstanceFactory()).get(ProyekViewModel::class.java)
@@ -61,25 +71,18 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
 
         portfolioViewModel.queryPeminat(p?.id)
         portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>>{ portfolioList ->
+            for (porto in portfolioList) profileViewModel.loadData(porto.investorId)
+        })
+        profileViewModel.data.observe(this, Observer<Profile>{ profil ->
+            listProfile.add(profil)
+            adapter.notifyDataSetChanged()
 
-            for (porto in portfolioList) {
-                profileViewModel.loadData(porto.investorId)
-                profileViewModel.data.observe(this, Observer<Profile>{ profil ->
-                    listProfile.add(profil)
-                    val b = listProfile.distinct()
-                    Log.d(TAG, "onCreateView: load profile ${profil.name}")
-                    Log.d(TAG, "onCreateView: list profile $b")
+            val b = listProfile.distinct()
+            Log.d(TAG, "onCreateView: load profile ${profil.name}")
+            Log.d(TAG, "onCreateView: list profile $b")
 
-                    val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL ,false)
-                    rv_peminat.layoutManager = layoutManager
-                    val adapter = PeminatAdapter(b)
-                    rv_peminat.adapter = adapter
-
-                    if (b.isNotEmpty()) txtPeminatKosong.visibility = View.INVISIBLE
-                    else txtPeminatKosong.visibility = View.VISIBLE
-                })
-            }
-
+            if (b.isNotEmpty()) txtPeminatKosong.visibility = View.INVISIBLE
+            else txtPeminatKosong.visibility = View.VISIBLE
         })
 
         view.txtTitle.text = p?.namaProyek
@@ -108,8 +111,6 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
             intent.putExtra("id", p?.id)
             startActivity(intent)
         }
-
-        return view
     }
 
     override fun onFinish(listItem: ArrayList<Profile>) {
@@ -117,7 +118,6 @@ class DetailFragment : BottomSheetDialogFragment(), ProfileCallback {
             Log.d(TAG, "onFinish: nama peminat ${item.name}")
         }
     }
-
 }
 
 internal interface ProfileCallback {
