@@ -166,6 +166,7 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
+
             <TextView
                 android:id="@+id/txtTitleDeskripsi"
                 android:layout_width="wrap_content"
