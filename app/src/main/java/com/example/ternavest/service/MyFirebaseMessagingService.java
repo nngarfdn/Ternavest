@@ -62,12 +62,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     //.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.win))
                     .setContentIntent(pendingIntent)
                     .setContentInfo("Hello")
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+//                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                     .setColor(getColor(R.color.green))
                     .setLights(Color.RED, 1000, 300)
                     .setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setNumber(++numMessages)
-                    .setSmallIcon(R.drawable.splash_logo);
+                    .setNumber(++numMessages);
+//                    .setSmallIcon(R.drawable.splash_logo);
         }
 
         try {

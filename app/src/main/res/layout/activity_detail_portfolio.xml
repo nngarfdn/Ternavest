@@ -42,7 +42,7 @@
                     android:id="@+id/tv_level_dpf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Peternak"
+                    android:text="@string/peternak"
                     android:textColor="@color/black"
                     android:layout_marginTop="16dp"/>
 
@@ -51,7 +51,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status"
+                    android:text="@string/status"
                     android:textColor="@color/black"
                     android:layout_marginTop="16dp"/>
 
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:text="Riwayat pembayaran"
+                    android:text="@string/riwayat_pembayaran"
                     android:textColor="@color/black"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -97,7 +97,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Informasi"
+                android:text="@string/edit_informasi"
                 android:layout_above="@+id/btn_payment_dpf"/>
 
             <com.google.android.material.button.MaterialButton
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
-                android:text="Lanjut Pembayaran"
+                android:text="@string/lanjut_pembayaran"
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

@@ -33,14 +33,15 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="@+id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/teextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
-            android:text="ternavest"
+            android:text="@string/ternavest"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"
             android:textSize="30sp"
@@ -54,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text="Tim Kami"
+            android:text="@string/tim_kami"
             android:textSize="14sp"
             android:layout_marginTop="24dp"
             android:textColor="@color/black"
@@ -84,7 +85,8 @@
                     android:src="@drawable/avatar_arif"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -93,7 +95,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Arief Zuhri"
+                    android:text="@string/arief_zuhri"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView8"
@@ -106,7 +108,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Universitas Gadjah Mada"
+                    android:text="@string/universitas_gadjah_mada"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView8"
@@ -119,7 +121,8 @@
                     android:layout_marginTop="4dp"
                     android:src="@drawable/ic_icon_instagram"
                     app:layout_constraintStart_toStartOf="@+id/textView13"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView13"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/igarif"
@@ -127,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="ariefzuhri"
+                    android:text="@string/ariefzuhri"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView9"
@@ -162,7 +165,8 @@
                     android:src="@drawable/avatar_nanang"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/textVie12"
@@ -171,7 +175,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Nanang Arifudin"
+                    android:text="@string/nanang_arifudin"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/imageVie8"
@@ -184,7 +188,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Universitas Gadjah Mada"
+                    android:text="@string/universitas_gadjah_mada"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/imageVie8"
@@ -197,7 +201,8 @@
                     android:layout_marginTop="4dp"
                     android:src="@drawable/ic_icon_instagram"
                     app:layout_constraintStart_toStartOf="@+id/textVie13"
-                    app:layout_constraintTop_toBottomOf="@+id/textVie13" />
+                    app:layout_constraintTop_toBottomOf="@+id/textVie13"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/ig"
@@ -205,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="nanangarif08"
+                    android:text="@string/nanangarif08"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageVie9"
@@ -240,7 +245,8 @@
                     android:src="@drawable/avatar_rino"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/textVi12"
@@ -249,7 +255,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Hubertus Rino Augenio"
+                    android:text="@string/hubertus_rino_augenio"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/imageVi8"
@@ -262,7 +268,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Universitas Gadjah Mada"
+                    android:text="@string/universitas_gadjah_mada"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/imageVi8"
@@ -275,7 +281,8 @@
                     android:layout_marginTop="4dp"
                     android:src="@drawable/ic_icon_instagram"
                     app:layout_constraintStart_toStartOf="@+id/textVi13"
-                    app:layout_constraintTop_toBottomOf="@+id/textVi13" />
+                    app:layout_constraintTop_toBottomOf="@+id/textVi13"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/igrino"
@@ -283,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="rinogen10"
+                    android:text="@string/rinogen10"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageVi9"
@@ -298,7 +305,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_ilustrasi_tentang"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="ContentDescription" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -317,7 +325,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="8dp"
-                android:text="API Wilayah by Fariz Ramadhan (farizdotid)"
+                android:text="@string/api_wilayah_by_fariz_ramadhan_farizdotid"
                 android:textColor="@color/black" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

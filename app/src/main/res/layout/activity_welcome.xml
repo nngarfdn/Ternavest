@@ -47,7 +47,7 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
-            android:text="Silakan pilih salah satu"
+            android:text="@string/silakan_pilih_salah_satu"
             android:textSize="14sp"
             android:layout_marginHorizontal="24dp" />
 
@@ -59,7 +59,7 @@
             android:layout_above="@+id/btn_invest"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="Saya adalah Peternak"
+            android:text="@string/saya_adalah_peternak"
             android:textSize="18sp"
             android:layout_marginHorizontal="24dp"/>
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/poppins_regular"
-            android:text="Saya Ingin Investasi"
+            android:text="@string/saya_ingin_investasi"
             android:textSize="18sp"
             android:layout_marginHorizontal="24dp"
             android:layout_marginBottom="24dp"/>

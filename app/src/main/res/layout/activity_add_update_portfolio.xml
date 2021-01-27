@@ -62,14 +62,15 @@
                             android:src="@drawable/kambing"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/green" />
+                            app:tint="@color/green"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:id="@+id/tv_title_cost_aup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Biaya per ekor ternak"
+                            android:text="@string/biaya_per_ekor_ternak"
                             android:textColor="@color/black"
                             app:layout_constraintStart_toEndOf="@+id/img_icon_cost_aup"
                             app:layout_constraintTop_toTopOf="@+id/img_icon_cost_aup" />
@@ -94,7 +95,7 @@
                     android:layout_marginHorizontal="@dimen/dimen_32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rp 50.000 adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan."/>
+                    android:text="@string/rp_50_000_adalah_biaya_satu_ekor_hewan_selama_satu_periode_proyek_silakan_masukkan_berapa_jumlah_hewan_yang_ingin_anda_investasikan"/>
 
                 <EditText
                     android:id="@+id/edt_count_aup"
@@ -103,9 +104,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:hint="Jumlah ekor ternak"
+                    android:hint="@string/jumlah_ekor_ternak"
                     android:layout_marginVertical="4dp"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    tools:ignore="Autofill" />
 
                 <include
                     layout="@layout/item_total_cost"
@@ -121,7 +123,7 @@
                 android:layout_marginHorizontal="@dimen/dimen_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lanjut Pembayaran"
+                android:text="@string/lanjut_pembayaran"
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
     </ScrollView>

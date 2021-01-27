@@ -218,7 +218,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                 notificationBuilder = NotificationCompat.Builder(application,packageName)
             }
         }
-        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
+        notificationBuilder
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(messageBody)
                 .setAutoCancel(true)

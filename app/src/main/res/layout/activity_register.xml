@@ -34,7 +34,8 @@
                 android:layout_height="140dp"
                 android:src="@drawable/ic_ilustrasi_daftar"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"/>
+                android:layout_marginBottom="30dp"
+                tools:ignore="ContentDescription" />
 
             <EditText
                 android:id="@+id/edt_name_register"
@@ -43,9 +44,10 @@
                 android:inputType="textPersonName|textCapWords"
                 android:layout_below="@+id/img_daftar"
                 style="@style/EditText"
-                android:hint="Nama lengkap sesuai KTP"
+                android:hint="@string/nama_lengkap_sesuai_ktp"
                 android:textColorHint="@color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                tools:ignore="Autofill" />
 
             <EditText
                 android:id="@+id/edt_email_register"
@@ -54,9 +56,10 @@
                 android:inputType="textEmailAddress"
                 android:layout_below="@+id/edt_name_register"
                 style="@style/EditText"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:textColorHint="@color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                tools:ignore="Autofill" />
 
             <EditText
                 android:id="@+id/edt_password_register"
@@ -65,9 +68,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 style="@style/EditText"
-                android:hint="Kata sandi"
+                android:hint="@string/kata_sandi"
                 android:textColorHint="@color/black"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                tools:ignore="Autofill" />
 
             <EditText
                 android:id="@+id/edt_konfirm_register"
@@ -76,9 +80,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 style="@style/EditText"
-                android:hint="Konfirmasi kata sandi"
+                android:hint="@string/konfirmasi_kata_sandi"
                 android:textColorHint="@color/black"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                tools:ignore="Autofill" />
 
             <Button
                 android:id="@+id/btn_email_register"
@@ -87,7 +92,7 @@
                 android:layout_height="48dp"
                 android:layout_below="@+id/edt_konfirm_register"
                 android:layout_alignParentEnd="true"
-                android:text="Daftar"
+                android:text="@string/daftar"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="18sp" />
         </RelativeLayout>

@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_laporan_kosong"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/txtProyekKosong"
@@ -34,7 +35,8 @@
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        tools:ignore="HardcodedText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_laporan"
@@ -78,5 +80,6 @@
         android:tint="@android:color/white"
         app:tint="@android:color/white"
         app:srcCompat="@android:drawable/ic_input_add"
-        android:focusable="true" />
+        android:focusable="true"
+        tools:ignore="ContentDescription" />
 </RelativeLayout>

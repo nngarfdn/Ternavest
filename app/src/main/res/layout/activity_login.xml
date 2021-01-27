@@ -35,7 +35,8 @@
                 android:layout_height="140dp"
                 android:src="@drawable/ic_ilustrasi_masuk"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"/>
+                android:layout_marginBottom="30dp"
+                tools:ignore="ContentDescription" />
 
             <EditText
                 android:id="@+id/edt_email_login"
@@ -44,10 +45,11 @@
                 android:inputType="textEmailAddress"
                 android:layout_below="@+id/img_masuk"
                 style="@style/EditText"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:textSize="18sp"
                 android:textColorHint="@color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                tools:ignore="Autofill" />
 
             <EditText
                 android:id="@+id/edt_password_login"
@@ -57,8 +59,9 @@
                 android:inputType="textPassword"
                 android:textSize="18sp"
                 style="@style/EditText"
-                android:hint="Kata sandi"
-                android:textColorHint="@color/black"/>
+                android:hint="@string/kata_sandi"
+                android:textColorHint="@color/black"
+                tools:ignore="Autofill" />
 
             <TextView
                 android:id="@+id/tv_reset_password_login"
@@ -69,7 +72,7 @@
                 android:focusable="true"
                 android:textSize="14sp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Lupa Kata Sandi"
+                android:text="@string/lupa_kata_sandi"
                 android:textColor="@color/green"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp" />
@@ -81,7 +84,7 @@
                 android:layout_height="48dp"
                 android:layout_below="@+id/tv_reset_password_login"
                 android:layout_alignParentEnd="true"
-                android:text="Masuk"
+                android:text="@string/masuk"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"/>
@@ -92,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_email_login"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Atau"
+                android:text="@string/atau"
                 android:textSize="14sp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"/>
@@ -104,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_atau"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Masuk dengan Google"
+                android:text="@string/masuk_dengan_google"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 app:icon="@drawable/ic_google"
@@ -125,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Belum punya akun?"
+                    android:text="@string/belum_punya_akun"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_nm" />
 
@@ -137,7 +140,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Daftar"
+                    android:text="@string/daftar"
                     android:textColor="@color/green_dark"
                     android:textSize="@dimen/font_nm" />
             </LinearLayout>
