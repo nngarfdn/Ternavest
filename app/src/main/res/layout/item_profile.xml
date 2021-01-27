@@ -37,7 +37,8 @@
                 android:textStyle="bold"
                 android:layout_marginHorizontal="8dp"
                 android:layout_toEndOf="@+id/civ_photo_profile"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/tv_action_profile"/>
 
             <TextView
                 android:id="@+id/tv_action_profile"

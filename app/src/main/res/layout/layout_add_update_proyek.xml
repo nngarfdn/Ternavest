@@ -94,51 +94,8 @@
         android:paddingHorizontal="8dp"
         android:inputType="number"/>
 
-    <EditText
-        android:id="@+id/txtAlamatLengkap"
-        style="@style/EditText"
-        android:layout_below="@+id/wilayah"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="32dp"
-        android:hint="Alamat lengkap proyek"
-        android:paddingHorizontal="8dp"
-        android:inputType="textCapWords"/>
-
-    <ImageView
-        android:id="@+id/imgUpload"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/txtAlamatLengkap"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/upload" />
-
-    <Button
-        android:id="@+id/btnUploadImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imgUpload"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:text="Pilih gambar" />
-
-    <Button
-        android:id="@+id/btnSimpan"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Simpan"
-        android:textColor="@color/white"
-        android:layout_below="@+id/btnUploadImage"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="32dp" />
-
-    <LinearLayout android:id="@+id/wilayah"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
+        android:id="@+id/wilayah"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
         android:layout_height="match_parent"
@@ -193,4 +150,48 @@
             android:spinnerMode="dialog"
             android:background="@drawable/bg_edit_text" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/txtAlamatLengkap"
+        style="@style/EditText"
+        android:layout_below="@+id/wilayah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:hint="Alamat lengkap proyek"
+        android:paddingHorizontal="8dp"
+        android:inputType="textCapWords"/>
+
+    <ImageView
+        android:id="@+id/imgUpload"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/txtAlamatLengkap"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/upload" />
+
+    <Button
+        android:id="@+id/btnUploadImage"
+        style="@style/Button.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgUpload"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:text="Pilih gambar" />
+
+    <Button
+        android:id="@+id/btnSimpan"
+        style="@style/Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:textColor="@color/white"
+        android:layout_below="@+id/btnUploadImage"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp" />
 </merge>

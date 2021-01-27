@@ -15,7 +15,7 @@
         android:layout_marginBottom="16dp"
         tools:ignore="ContentDescription" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never">
@@ -107,5 +107,5 @@
                 android:layout_marginTop="16dp"
                 android:text="Filter" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

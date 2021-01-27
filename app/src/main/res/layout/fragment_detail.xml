@@ -47,10 +47,10 @@
         android:src="@drawable/ic_laporan"
         tools:ignore="ContentDescription" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginVertical="16dp"
         android:layout_below="@id/txtTitle">
 
         <RelativeLayout
@@ -218,5 +218,5 @@
                 android:layout_height="60dp"
                 android:layout_below="@+id/txtPeminat"/>
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

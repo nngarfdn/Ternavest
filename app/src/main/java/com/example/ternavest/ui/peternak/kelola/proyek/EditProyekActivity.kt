@@ -99,7 +99,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
                             .setTitle("Hapus Proyek")
-                            .setMessage("Apakah kamu yakin ingin menghapus ?")
+                            .setMessage("Apakah kamu yakin ingin menghapus?")
                             .setNegativeButton("Tidak", null)
                             .setPositiveButton("Ya") { _, _ ->
                                 proyekViewModel.delete(p.id!!)

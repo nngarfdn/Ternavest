@@ -29,6 +29,7 @@ import com.example.ternavest.model.Proyek;
 import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.both.profile.DetailProfileActivity;
 import com.example.ternavest.ui.investor.home.DetailProyekInvestasiFragment;
+import com.example.ternavest.ui.investor.portfolio.AddUpdatePortfolioActivity;
 import com.example.ternavest.ui.investor.portfolio.PaymentActivity;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity.RC_UPDATE_PORTFOLIO;
+import static com.example.ternavest.ui.investor.portfolio.AddUpdatePortfolioActivity.RC_UPDATE_PORTFOLIO;
 import static com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE;
 import static com.example.ternavest.ui.investor.portfolio.PaymentActivity.RC_ADD_PAYMENT;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;

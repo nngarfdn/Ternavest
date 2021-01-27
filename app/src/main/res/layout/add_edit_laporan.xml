@@ -11,11 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="@string/judul_laporan"
+        android:hint="Judul laporan"
         android:layout_below="@+id/toolbartambahLaporan"
         android:paddingHorizontal="8dp"
-        android:inputType="textCapWords"
-        tools:ignore="Autofill" />
+        android:inputType="textCapWords"/>
 
     <EditText
         android:id="@+id/txtDeskripsiLaporan"
@@ -24,11 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="@string/deskripsi_laporan"
+        android:hint="Deskripsi laporan"
         android:layout_below="@+id/txtJudulLaporan"
         android:paddingHorizontal="8dp"
-        android:inputType="textCapSentences"
-        tools:ignore="Autofill" />
+        android:inputType="textCapSentences" />
 
     <EditText
         android:id="@+id/txtTanggalLaporan"
@@ -38,13 +36,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="@string/tanggal"
+        android:hint="Tanggal"
         android:paddingHorizontal="8dp"
         android:inputType="none"
         android:editable="false"
         android:clickable="true"
-        android:focusable="true"
-        tools:ignore="Autofill,Deprecated" />
+        android:focusable="false" />
 
     <EditText
         android:id="@+id/txtJenisHewanDetail"
@@ -54,10 +51,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="@string/pemasukan"
+        android:hint="Pemasukan"
         android:paddingHorizontal="8dp"
-        android:inputType="number"
-        tools:ignore="Autofill" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/txtRoiDetail"
@@ -67,10 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="@string/pengeluaran"
+        android:hint="Pengeluaran"
         android:paddingHorizontal="8dp"
-        android:inputType="number"
-        tools:ignore="Autofill" />
+        android:inputType="number" />
 
     <ImageView
         android:id="@+id/imgUploadLaporan"
@@ -79,24 +74,26 @@
         android:layout_below="@id/txtRoiDetail"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/upload"
-        tools:ignore="ContentDescription" />
+        android:src="@drawable/upload" />
 
     <Button
         android:id="@+id/btnUploadImageLaporan"
+        style="@style/Button.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgUploadLaporan"
         android:textColor="@color/white"
         android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
-        android:text="@string/pilih_gambar" />
+        android:layout_gravity="center_horizontal"
+        android:text="Pilih gambar" />
 
     <Button
         android:id="@+id/btnSimpanLaporan"
+        style="@style/Button.Primary"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/simpan"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
         android:layout_below="@+id/btnUploadImageLaporan"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"

@@ -95,7 +95,7 @@ class TambahLaporanActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun uploadImage() {
         if (filePath != null) {
-            btnUploadImageLaporan.text = "Mengupload.."
+            btnUploadImageLaporan.text = "Mengupload..."
             val namaImage = UUID.randomUUID().toString() // diganti id produk di firebase
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
             val imageRef = objectStorageReference!!.child(nameOfimage)
@@ -141,6 +141,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                             i.putExtra("level", LEVEL_PETERNAK)
                             i.putExtra("proyek",p)
                             startActivity(i)
+                            finish()
                         }
                     }
                 } else if (!task.isSuccessful) {

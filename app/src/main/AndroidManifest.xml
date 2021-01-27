@@ -20,7 +20,7 @@
         <activity android:name=".ui.both.welcome.WelcomeActivity" />
         <activity android:name=".ui.both.main.MainActivity" />
         <activity android:name=".ui.investor.portfolio.PaymentActivity" />
-        <activity android:name=".ui.both.portfolio.AddUpdatePortfolioActivity" />
+        <activity android:name=".ui.investor.portfolio.AddUpdatePortfolioActivity" />
         <activity android:name=".ui.both.portfolio.DetailPortfolioActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.EditLaporanActivity" />
         <activity android:name=".ui.peternak.kelola.laporan.TambahLaporanActivity" />
@@ -38,6 +38,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <service android:name=".testing.notification.service.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+    </application>
 </manifest>

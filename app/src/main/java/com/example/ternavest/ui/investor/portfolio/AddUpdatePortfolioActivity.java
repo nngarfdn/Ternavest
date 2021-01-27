@@ -1,5 +1,6 @@
-package com.example.ternavest.ui.both.portfolio;
+package com.example.ternavest.ui.investor.portfolio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -21,12 +23,29 @@ import android.widget.TextView;
 import com.example.ternavest.R;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Proyek;
-import com.example.ternavest.ui.investor.portfolio.PaymentActivity;
+/*import com.example.ternavest.testing.notification.model.Notification;
+import com.example.ternavest.testing.notification.model.Sender;
+import com.example.ternavest.testing.notification.model.Token;
+import com.example.ternavest.testing.notification.response.MyResponse;
+import com.example.ternavest.testing.notification.rest.ApiClient;
+import com.example.ternavest.testing.notification.rest.ApiService;*/
 import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
@@ -37,6 +56,7 @@ import static com.example.ternavest.utils.EditTextUtils.getFixText;
 import static com.example.ternavest.utils.EditTextUtils.isNull;
 
 public class AddUpdatePortfolioActivity extends AppCompatActivity implements View.OnClickListener {
+    private final String TAG = getClass().getSimpleName();
     public static final int RC_UPDATE_PORTFOLIO = 100;
 
     private FirebaseUser firebaseUser;
@@ -175,6 +195,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
 
                     portfolioViewModel.insert(portfolio);
                     showToast(this, "Proyek telah ditambah ke portofolio");
+                    //sendNotification(project.getUuid(), "Peminat baru", project.getNamaProyek() + " mendapat peminat baru");
 
                     Intent intent = new Intent(this, PaymentActivity.class);
                     intent.putExtra(EXTRA_PORTFOLIO, portfolio);
@@ -192,4 +213,42 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
         onBackPressed();
         return true;
     }
+
+    /*private void sendNotification(String receiverId, final String title, final String message) {
+        Log.d(TAG, "sendNotification() called");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("token");
+        // Muat token si penerima berdasarkan id pengguna
+        Query query = reference.orderByKey().equalTo(receiverId);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "sendNotification() called: success get receiver token");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Notification notification = new Notification(title, message);
+
+                    Sender sender = new Sender(notification, token.getToken());
+
+                    ApiService apiService = ApiClient.getClient("https://fcm.googleapis.com/").create(ApiService.class);
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
+                                    if (response.code() == 200){
+                                        if (response.body().success != 1){
+                                            Log.d(TAG, "sendNotification() called: failed send notification");
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(@NotNull Call<MyResponse> call, @NotNull Throwable t) {}
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }*/
 }
