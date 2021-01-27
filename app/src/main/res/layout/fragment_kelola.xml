@@ -50,7 +50,8 @@
         android:src="@drawable/ic_proyek_kosong"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/toolbar1"
-        android:layout_marginTop="128dp"/>
+        android:layout_marginTop="128dp"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/txtProyekKosong"
@@ -58,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imgProyekKosong"
         android:visibility="invisible"
-        android:text="Kamu belum mempunyai proyek"
+        android:text="@string/kamu_belum_mempunyai_proyek"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>
@@ -72,7 +73,7 @@
         android:visibility="invisible"
         android:layout_below="@id/txtProyekKosong"
         android:layout_marginTop="16dp"
-        android:text="Tambahkan Proyek"
+        android:text="@string/tambahkan_proyek"
         android:textColor="@android:color/white"
         android:background="@color/green_dark"/>
 
@@ -87,5 +88,6 @@
         app:tint="@android:color/white"
         android:layout_margin="32dp"
         android:src="@android:drawable/ic_input_add"
-        android:focusable="true" />
+        android:focusable="true"
+        tools:ignore="ContentDescription" />
 </RelativeLayout>

@@ -39,26 +39,28 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_md"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tv_reset_sf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Setel ulang"
+                    android:text="@string/setel_ulang"
                     android:textColor="@color/green"
                     android:textSize="@dimen/font_nm"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    tools:ignore="RelativeOverlap" />
             </RelativeLayout>
 
             <CheckBox
                 android:id="@+id/cb_provinces_sf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Provinsi" />
+                android:text="@string/provinsi" />
 
             <Spinner
                 android:id="@+id/sp_provinces_sf"
@@ -73,7 +75,7 @@
                 android:id="@+id/cb_regencies_sf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kabupaten" />
+                android:text="@string/kabupaten" />
 
             <Spinner
                 android:id="@+id/sp_regencies_sf"
@@ -88,7 +90,7 @@
                 android:id="@+id/cb_districts_sf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kecamatan" />
+                android:text="@string/kecamatan" />
 
             <Spinner
                 android:id="@+id/sp_districts_sf"
@@ -105,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Filter" />
+                android:text="@string/filter" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

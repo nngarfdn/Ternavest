@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
@@ -19,14 +20,15 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_rupiah"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_title_total_cost_payment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Total biaya yang dibayar"
+            android:text="@string/total_biaya_yang_dibayar"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/img_icon_total_cost_payment"
             app:layout_constraintTop_toTopOf="@+id/img_icon_total_cost_payment" />

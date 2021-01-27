@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_pull"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/txtTitle"
@@ -24,7 +25,7 @@
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/imgLaporanProyek"
         android:textStyle="bold"
-        android:text="Ayam Pullet Bulan"
+        android:text="@string/ayam_pullet_bulan"
         android:textSize="22sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -42,7 +43,8 @@
         android:layout_marginEnd="16dp"
         android:layout_alignTop="@+id/imgProfile"
         android:layout_toStartOf="@+id/imgProfile"
-        android:src="@drawable/ic_laporan" />
+        android:src="@drawable/ic_laporan"
+        tools:ignore="ContentDescription" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -59,7 +61,8 @@
                 android:id="@+id/ic_alamat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_location_red"/>
+                android:src="@drawable/ic_location_red"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/txtAlamatLengkap"
@@ -69,7 +72,7 @@
                 android:layout_toEndOf="@+id/ic_alamat"
                 android:textColor="@color/textDescription"
                 android:textStyle="bold"
-                android:text="Kukap poncosari srandakan"
+                android:text="@string/kukap_poncosari_srandakan"
                 android:textSize="@dimen/font_size_16" />
 
             <TextView
@@ -78,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iconPemasukan"
-                android:text="Jenis Hewan"
+                android:text="@string/jenis_hewan"
                 android:layout_marginStart="4dp"
                 android:textSize="14sp" />
 
@@ -90,7 +93,7 @@
                 android:layout_alignStart="@+id/txtTitleJenisHewan"
                 android:layout_marginTop="4dp"
                 android:textStyle="bold"
-                android:text="Ayam Petelur"
+                android:text="@string/ayam_petelur"
                 android:textSize="16sp" />
 
             <ImageView
@@ -99,13 +102,14 @@
                 android:layout_height="30dp"
                 android:layout_alignTop="@+id/txtTitleJenisHewan"
                 android:layout_alignBottom="@+id/txtJenisHewanDetail"
-                android:src="@drawable/laporan_detail" />
+                android:src="@drawable/laporan_detail"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/txtTitlePengeluaran"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="ROI"
+                android:text="@string/roi"
                 android:layout_below="@id/txtAlamatLengkap"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="4dp"
@@ -119,7 +123,7 @@
                 android:layout_alignStart="@+id/txtTitlePengeluaran"
                 android:layout_marginTop="4dp"
                 android:textStyle="bold"
-                android:text="16%"
+                android:text="@string/_16"
                 android:layout_alignParentEnd="true"
                 android:textSize="16sp" />
 
@@ -130,7 +134,8 @@
                 android:layout_alignTop="@+id/txtTitlePengeluaran"
                 android:layout_alignBottom="@+id/txtRoiDetail"
                 android:layout_toStartOf="@+id/txtTitlePengeluaran"
-                android:src="@drawable/ic_roi" />
+                android:src="@drawable/ic_roi"
+                tools:ignore="ContentDescription" />
 
             <RelativeLayout
                 android:id="@+id/rel_tanggal"
@@ -146,14 +151,15 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_access_time_24"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="4dp"/>
+                    android:layout_marginStart="4dp"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/txtTanggalDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/ic_time"
-                    android:text="15-01-2021"
+                    android:text="@string/_15_01_2021"
                     android:layout_marginStart="8dp"
                     android:layout_centerVertical="true"
                     android:textSize="14sp" />
@@ -166,7 +172,7 @@
                 android:textSize="14sp"
                 android:layout_below="@id/rel_tanggal"
                 android:layout_marginTop="16dp"
-                android:text="Deskripsi proyek"/>
+                android:text="@string/deskripsi_laporan"/>
 
             <TextView
                 android:id="@+id/txtDeskripsi"
@@ -176,7 +182,7 @@
                 android:textSize="14sp"
                 android:layout_below="@id/txtTitleDeskripsi"
                 android:layout_marginTop="16dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo cursus pellentesque leo massa lacus, est. Quisque varius ipsum consequat in netus quis "/>
+                android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_commodo_cursus_pellentesque_leo_massa_lacus_est_quisque_varius_ipsum_consequat_in_netus_quis"/>
 
             <ImageView
                 android:id="@+id/imgDeskripsiLaporan"
@@ -184,7 +190,8 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
                 android:layout_below="@id/txtDeskripsi"
-                android:src="@drawable/ic_baseline_photo_camera_24"/>
+                android:src="@drawable/ic_baseline_photo_camera_24"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/txtPeminat"
@@ -193,7 +200,7 @@
                 android:textSize="14sp"
                 android:layout_below="@id/imgDeskripsiLaporan"
                 android:layout_marginTop="16dp"
-                android:text="Peminat proyek"/>
+                android:text="@string/peminat_proyek"/>
 
             <TextView
                 android:id="@+id/txtPeminatKosong"
@@ -202,7 +209,7 @@
                 android:textSize="12sp"
                 android:layout_below="@id/txtPeminat"
                 android:layout_marginTop="8dp"
-                android:text="Belum ada peminat"/>
+                android:text="@string/belum_ada_peminat"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_peminat"
@@ -216,7 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rv_peminat"
-                android:text="Investasi Sekarang"
+                android:text="@string/investasi_sekarang"
                 android:layout_marginTop="@dimen/dimen_16"/>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

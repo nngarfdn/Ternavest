@@ -23,18 +23,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:gravity="center">
+        android:gravity="center"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_peminat_kosong"/>
+            android:src="@drawable/ic_peminat_kosong"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_empty_portfolio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Belum ada"
+            android:text="@string/belum_ada"
             android:textSize="@dimen/font_lg"
             android:layout_marginTop="16dp"/>
     </LinearLayout>

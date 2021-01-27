@@ -11,10 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Nama proyek"
+        android:hint="@string/nama_proyek"
         android:layout_below="@+id/toolbartambahpproyek"
         android:paddingHorizontal="8dp"
-        android:inputType="textCapWords"/>
+        android:inputType="textCapWords"
+        tools:ignore="Autofill" />
 
     <EditText
         android:id="@+id/txtDeskripsiProyek"
@@ -23,10 +24,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Deskripsi proyek"
+        android:hint="@string/deskripsi_proyek"
         android:layout_below="@+id/txtNamaProyek"
         android:paddingHorizontal="8dp"
-        android:inputType="textCapSentences"/>
+        android:inputType="textCapSentences"
+        tools:ignore="Autofill" />
 
     <EditText
         android:id="@+id/txtJenisHewan"
@@ -35,10 +37,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Jenis hewan"
+        android:hint="@string/jenis_hewan"
         android:layout_below="@+id/txtDeskripsiProyek"
         android:paddingHorizontal="8dp"
-        android:inputType="textCapWords"/>
+        android:inputType="textCapWords"
+        tools:ignore="Autofill" />
 
     <EditText
         android:id="@+id/txtRoi"
@@ -49,8 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Persentase ROI"
-        android:paddingHorizontal="8dp" />
+        android:hint="@string/persentase_roi"
+        android:paddingHorizontal="8dp"
+        tools:ignore="Autofill" />
 
     <EditText
         android:id="@+id/txtWaktuMulai"
@@ -60,12 +64,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Tanggal mulai proyek"
+        android:hint="@string/tanggal_mulai_proyek"
         android:paddingHorizontal="8dp"
         android:inputType="none"
         android:editable="false"
         android:clickable="true"
-        android:focusable="false" />
+        android:focusable="true"
+        tools:ignore="Autofill,Deprecated" />
 
     <EditText
         android:id="@+id/txtWaktuSelesai"
@@ -75,12 +80,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Tanggal selesai proyek"
+        android:hint="@string/tanggal_selesai_proyek"
         android:paddingHorizontal="8dp"
         android:inputType="none"
         android:editable="false"
         android:clickable="true"
-        android:focusable="false" />
+        android:focusable="true"
+        tools:ignore="Autofill,Deprecated" />
 
     <EditText
         android:id="@+id/txtBiayaPengelolaan"
@@ -90,9 +96,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Biaya per hewan selama periode"
+        android:hint="@string/biaya_per_hewan_selama_periode"
         android:paddingHorizontal="8dp"
-        android:inputType="number"/>
+        android:inputType="number"
+        tools:ignore="Autofill" />
 
     <LinearLayout
         android:id="@+id/wilayah"
@@ -108,7 +115,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Provinsi"
+            android:text="@string/provinsi"
             android:textColor="@color/black" />
 
         <Spinner
@@ -123,7 +130,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kabupaten"
+            android:text="@string/kabupaten"
             android:textColor="@color/black" />
 
         <Spinner
@@ -138,7 +145,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kecamatan"
+            android:text="@string/kecamatan"
             android:textColor="@color/black"/>
 
         <Spinner
@@ -159,9 +166,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
-        android:hint="Alamat lengkap proyek"
+        android:hint="@string/proyek_alamat"
         android:paddingHorizontal="8dp"
-        android:inputType="textCapWords"/>
+        android:inputType="textCapWords"
+        tools:ignore="Autofill" />
 
     <ImageView
         android:id="@+id/imgUpload"
@@ -170,7 +178,8 @@
         android:layout_below="@id/txtAlamatLengkap"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/upload" />
+        android:src="@drawable/upload"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/btnUploadImage"
@@ -181,14 +190,14 @@
         android:layout_marginTop="8dp"
         android:textColor="@color/white"
         android:layout_gravity="center_horizontal"
-        android:text="Pilih gambar" />
+        android:text="@string/pilih_gambar" />
 
     <Button
         android:id="@+id/btnSimpan"
         style="@style/Button.Primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Simpan"
+        android:text="@string/simpan"
         android:textColor="@color/white"
         android:layout_below="@+id/btnUploadImage"
         android:layout_marginHorizontal="32dp"

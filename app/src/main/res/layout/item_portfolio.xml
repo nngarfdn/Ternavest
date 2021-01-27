@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_portfolio_portfolio"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,7 +23,8 @@
             android:src="@drawable/kambing"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_project_portfolio"
