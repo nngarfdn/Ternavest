@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="@string/belum_punya_akun"
+                    android:text="@string/tidak_ada_akun"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_nm" />
 

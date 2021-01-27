@@ -34,7 +34,7 @@
                 style="@style/Button.Menu.Red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mohon verifikasi email Anda"
+                android:text="@string/mohon_verifikasi_email_anda"
                 app:icon="@drawable/ic_warning"/>
 
             <com.google.android.material.button.MaterialButton
@@ -42,7 +42,7 @@
                 style="@style/Button.Menu.White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pengaturan profil"
+                android:text="@string/pengaturan_profil"
                 app:icon="@drawable/ic_settings"/>
 
             <com.google.android.material.button.MaterialButton
@@ -50,7 +50,7 @@
                 style="@style/Button.Menu.White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ganti kata sandi"
+                android:text="@string/ganti_kata_sandi"
                 app:icon="@drawable/ic_vpn_key"/>
 
             <com.google.android.material.button.MaterialButton
@@ -58,7 +58,7 @@
                 style="@style/Button.Menu.White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tentang aplikasi"
+                android:text="@string/tentang_aplikasi"
                 app:icon="@drawable/ic_info"
                 android:layout_marginTop="24dp"/>
 
@@ -67,7 +67,7 @@
                 style="@style/Button.Menu.White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Keluar akun"
+                android:text="@string/keluar_akun"
                 app:icon="@drawable/ic_exit_to_app"
                 android:layout_marginBottom="24dp"/>
         </LinearLayout>
