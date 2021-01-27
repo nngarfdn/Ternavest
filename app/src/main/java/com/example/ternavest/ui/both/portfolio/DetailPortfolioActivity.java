@@ -31,9 +31,11 @@ import com.example.ternavest.ui.both.profile.DetailProfileActivity;
 import com.example.ternavest.ui.investor.home.DetailProyekInvestasiFragment;
 import com.example.ternavest.ui.investor.portfolio.AddUpdatePortfolioActivity;
 import com.example.ternavest.ui.investor.portfolio.PaymentActivity;
+import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
@@ -251,9 +253,13 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.cv_portfolio_portfolio:
+                BottomSheetDialogFragment bottomSheet;
+                if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) bottomSheet = new DetailFragment();
+                else if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) bottomSheet = new DetailProyekInvestasiFragment();
+                else return;
+
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("proyek", project);
-                DetailProyekInvestasiFragment bottomSheet = new DetailProyekInvestasiFragment();
                 bottomSheet.setArguments(bundle);
                 bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
                 break;
