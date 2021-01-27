@@ -10,10 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -76,6 +73,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     private var filePath: Uri? = null
     private lateinit var p : Proyek
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_proyek)
@@ -241,6 +239,9 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         }
 
+        txtDeskripsiProyek.setOnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
+            false }
     }
 
     private fun setEditText(p : Proyek?) {

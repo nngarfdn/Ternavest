@@ -17,7 +17,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="Edit Laporan" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never">
@@ -29,5 +29,5 @@
 
             <include layout="@layout/add_edit_laporan" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

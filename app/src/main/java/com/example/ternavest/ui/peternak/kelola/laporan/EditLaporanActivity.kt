@@ -11,6 +11,7 @@ import android.text.InputType
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.EditText
@@ -55,6 +56,7 @@ class EditLaporanActivity : AppCompatActivity() {
     private lateinit var p : Laporan
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_laporan)
@@ -115,7 +117,6 @@ class EditLaporanActivity : AppCompatActivity() {
                 startActivity(i)
                 finish()
             }
-
         }
 
         btnUploadImageLaporan.setOnClickListener { selectImage() }
@@ -144,6 +145,9 @@ class EditLaporanActivity : AppCompatActivity() {
             }
         }
 
+        txtDeskripsiLaporan.setOnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
+            false }
     }
 
     @SuppressLint("SetTextI18n")

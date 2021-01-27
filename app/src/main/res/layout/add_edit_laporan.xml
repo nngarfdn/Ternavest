@@ -25,8 +25,7 @@
         android:layout_marginHorizontal="32dp"
         android:hint="Deskripsi laporan"
         android:layout_below="@+id/txtJudulLaporan"
-        android:paddingHorizontal="8dp"
-        android:inputType="textCapSentences" />
+        android:paddingHorizontal="8dp" />
 
     <EditText
         android:id="@+id/txtTanggalLaporan"

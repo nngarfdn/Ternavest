@@ -81,8 +81,11 @@
         <item name="android:inputType">textMultiLine|textCapSentences</item>
         <item name="android:lines">8</item>
         <item name="android:maxLines">8</item>
+        <item name="android:singleLine">false</item>
         <item name="android:gravity">top|start</item>
         <item name="android:scrollbars">vertical</item>
+        <item name="android:overScrollMode">always</item>
+        <item name="android:scrollbarStyle">insideInset</item>
     </style>
 
     <style name="CardViewPusatBantuan">

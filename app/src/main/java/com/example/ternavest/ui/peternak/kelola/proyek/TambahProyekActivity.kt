@@ -13,12 +13,11 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -48,13 +47,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_tambah_proyek.*
 import kotlinx.android.synthetic.main.layout_add_update_proyek.*
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -90,6 +83,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     private var idDistrict = 0
     private var filePath: Uri? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_proyek)
@@ -188,7 +182,9 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             }
         }
 
-
+        txtDeskripsiProyek.setOnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
+            false }
     }
 
     private fun sendNotification(messageBody: String) {
@@ -215,7 +211,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             }
         } else {
             if (notificationBuilder == null) {
-                notificationBuilder = NotificationCompat.Builder(application,packageName)
+                notificationBuilder = NotificationCompat.Builder(application, packageName)
             }
         }
         notificationBuilder
@@ -423,8 +419,8 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                             cek = false
                         }
 
-                        val p = Proyek("",firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                                biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo,null)
+                        val p = Proyek("", firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                                biayaPengelolahan, prov, kabupaten, kecamatan, alamat, photo, null)
 
                         if (cek) {
                             proyekViewModel.insert(p)

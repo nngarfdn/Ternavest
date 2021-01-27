@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.EditText
@@ -50,6 +51,7 @@ class TambahLaporanActivity : AppCompatActivity() {
     private var p : String? = null
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_laporan)
@@ -90,6 +92,10 @@ class TambahLaporanActivity : AppCompatActivity() {
         }
 
         btnUploadImageLaporan.setOnClickListener { selectImage() }
+
+        txtDeskripsiLaporan.setOnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
+            false }
     }
 
     @SuppressLint("SetTextI18n")

@@ -27,7 +27,6 @@
         android:hint="@string/deskripsi_proyek"
         android:layout_below="@+id/txtNamaProyek"
         android:paddingHorizontal="8dp"
-        android:inputType="textCapSentences"
         tools:ignore="Autofill" />
 
     <EditText
