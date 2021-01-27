@@ -78,18 +78,21 @@
 
     <Button
         android:id="@+id/btnUploadImageLaporan"
+        style="@style/Button.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgUploadLaporan"
         android:textColor="@color/white"
         android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:text="Pilih gambar" />
 
     <Button
         android:id="@+id/btnSimpanLaporan"
+        style="@style/Button.Primary"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:text="Simpan"
         android:layout_below="@+id/btnUploadImageLaporan"
         android:layout_marginHorizontal="32dp"

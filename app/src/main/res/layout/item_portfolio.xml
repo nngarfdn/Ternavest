@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/tv_count_portfolio"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/loading"
@@ -64,6 +64,7 @@
             app:cardBackgroundColor="@color/green"
             app:cardCornerRadius="4dp"
             app:cardElevation="0dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_count_portfolio" >

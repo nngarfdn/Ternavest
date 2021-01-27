@@ -16,7 +16,7 @@ import com.example.ternavest.adapter.recycler.PeminatAdapter
 import com.example.ternavest.model.Portfolio
 import com.example.ternavest.model.Profile
 import com.example.ternavest.model.Proyek
-import com.example.ternavest.ui.both.portfolio.AddUpdatePortfolioActivity
+import com.example.ternavest.ui.investor.portfolio.AddUpdatePortfolioActivity
 import com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT
 import com.example.ternavest.ui.both.profile.DetailProfileActivity
 import com.example.ternavest.ui.both.profile.DetailProfileActivity.EXTRA_PROFILE

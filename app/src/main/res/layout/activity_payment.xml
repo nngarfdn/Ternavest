@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.both.portfolio.AddUpdatePortfolioActivity"
+    tools:context=".ui.investor.portfolio.AddUpdatePortfolioActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -20,151 +20,148 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:fillViewport="true">
+        android:overScrollMode="never">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_margin="@dimen/dimen_16">
+
+            <include layout="@layout/item_portfolio"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rekening tujuan"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/img_account_name_payment"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_person"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/green" />
+
+                    <TextView
+                        android:id="@+id/tv_account_name_payment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/loading"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_account_name_payment"
+                        app:layout_constraintStart_toEndOf="@+id/img_account_name_payment"
+                        app:layout_constraintTop_toTopOf="@+id/img_account_name_payment" />
+
+
+                    <ImageView
+                        android:id="@+id/img_account_bank_payment"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_account_balance"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_account_name_payment"
+                        app:tint="@color/green" />
+
+                    <TextView
+                        android:id="@+id/tv_account_bank_payment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/loading"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_account_bank_payment"
+                        app:layout_constraintStart_toEndOf="@+id/img_account_bank_payment"
+                        app:layout_constraintTop_toTopOf="@+id/img_account_bank_payment" />
+
+                    <TextView
+                        android:id="@+id/tv_account_number_payment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/loading"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_account_bank_payment" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <include
+                layout="@layout/item_total_cost"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentTop="true"
-                android:layout_above="@+id/btn_send_payment">
-
-                <include layout="@layout/item_portfolio"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rekening tujuan"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="16dp"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true"
-                    app:contentPadding="16dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/img_account_name_payment"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_person"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/green" />
-
-                        <TextView
-                            android:id="@+id/tv_account_name_payment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/loading"
-                            android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="@+id/img_account_name_payment"
-                            app:layout_constraintStart_toEndOf="@+id/img_account_name_payment"
-                            app:layout_constraintTop_toTopOf="@+id/img_account_name_payment" />
-
-
-                        <ImageView
-                            android:id="@+id/img_account_bank_payment"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_account_balance"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/img_account_name_payment"
-                            app:tint="@color/green" />
-
-                        <TextView
-                            android:id="@+id/tv_account_bank_payment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/loading"
-                            android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="@+id/img_account_bank_payment"
-                            app:layout_constraintStart_toEndOf="@+id/img_account_bank_payment"
-                            app:layout_constraintTop_toTopOf="@+id/img_account_bank_payment" />
-
-                        <TextView
-                            android:id="@+id/tv_account_number_payment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/loading"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/img_account_bank_payment" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <include
-                    layout="@layout/item_total_cost"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <com.ravikoradiya.zoomableimageview.ZoomableImageView
+                        android:id="@+id/img_payment_payment"
+                        android:layout_width="124dp"
+                        android:layout_height="124dp"
+                        android:src="@drawable/upload"
+                        android:scaleType="centerCrop"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:text="Bukti pembayaran"
+                        android:textColor="@color/black"/>
 
-                        <com.ravikoradiya.zoomableimageview.ZoomableImageView
-                            android:id="@+id/img_payment_payment"
-                            android:layout_width="124dp"
-                            android:layout_height="124dp"
-                            android:src="@drawable/upload"
-                            android:scaleType="centerCrop"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_upload_payment"
+                        style="@style/Button.Secondary"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Bukti pembayaran"
-                            android:textColor="@color/black"/>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_upload_payment"
-                            style="@style/Button.Secondary"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Unggah foto"/>
-                    </LinearLayout>
+                        android:text="Unggah foto"/>
                 </LinearLayout>
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_send_payment"
                 style="@style/Button.Primary"
                 android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginBottom="32dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kirim Bukti"
-                android:layout_alignParentBottom="true"/>
-        </RelativeLayout>
+                android:text="Kirim Bukti"/>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

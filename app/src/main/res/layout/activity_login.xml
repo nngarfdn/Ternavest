@@ -78,7 +78,7 @@
                 android:id="@+id/btn_email_login"
                 style="@style/Button.Rounded"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_reset_password_login"
                 android:layout_alignParentEnd="true"
                 android:text="Masuk"

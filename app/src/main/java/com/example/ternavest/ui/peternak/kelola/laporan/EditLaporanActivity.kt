@@ -113,6 +113,7 @@ class EditLaporanActivity : AppCompatActivity() {
                 i.putExtra("level", LEVEL_PETERNAK)
                 i.putExtra("id", p.idProyek)
                 startActivity(i)
+                finish()
             }
 
         }
@@ -123,8 +124,8 @@ class EditLaporanActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
-                            .setTitle("Setel ulang kata sandi")
-                            .setMessage("Apakah kamu yakin ingin menghapus ?")
+                            .setTitle("Hapus laporan")
+                            .setMessage("Apakah kamu yakin ingin menghapus?")
                             .setNegativeButton("Tidak", null)
                             .setPositiveButton("Ya") { _, _ ->
                                 val proyekId = p.idProyek
@@ -133,6 +134,7 @@ class EditLaporanActivity : AppCompatActivity() {
                                 intent.putExtra("level", LEVEL_PETERNAK)
                                 intent.putExtra("id", proyekId)
                                 startActivity(intent)
+                                finish()
                             }.create().show()
 
                     true
@@ -147,7 +149,7 @@ class EditLaporanActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun uploadImage() {
         if (filePath != null) {
-            btnUploadImageLaporan.text = "Mengupload.."
+            btnUploadImageLaporan.text = "Mengupload..."
             val namaImage = UUID.randomUUID().toString() // diganti id produk di firebase
             val nameOfimage = namaImage + "." + getExtension(filePath!!)
             val imageRef = objectStorageReference!!.child(nameOfimage)
@@ -192,6 +194,7 @@ class EditLaporanActivity : AppCompatActivity() {
                             val i = Intent(this, LaporanActivity::class.java)
                             i.putExtra("id",p.idProyek)
                             startActivity(i)
+                            finish()
                         }
                     }
                 } else if (!task.isSuccessful) {

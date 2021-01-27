@@ -16,7 +16,7 @@
         android:layout_marginBottom="16dp"
         tools:ignore="ContentDescription" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never">
@@ -144,5 +144,5 @@
                 app:layout_constraintTop_toTopOf="@+id/btn_reject_dp"
                 android:entries="@array/ref_rejection_note_payment"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
