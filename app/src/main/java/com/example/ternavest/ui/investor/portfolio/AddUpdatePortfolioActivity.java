@@ -103,7 +103,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                     .into(imgProject);
 
             tvProjectName.setText(project.getNamaProyek());
-            tvProjectLivestock.setText(project.getJenisHewan());
+//            tvProjectLivestock.setText(project.getJenisHewan());
             tvProjectROI.setText(project.getRoi() + "%");
             tvCost.setText(getRupiahFormat(project.getBiayaHewan()));
             tvHelper.setText(getRupiahFormat(project.getBiayaHewan()) + " adalah biaya satu ekor hewan selama satu periode proyek. Silakan masukkan berapa jumlah hewan yang ingin Anda investasikan.");
