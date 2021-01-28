@@ -28,6 +28,10 @@ public class PortfolioViewModel extends ViewModel {
         repository.queryPeminat(projectId);
     }
 
+    public void queryPeminatSemua(String projectId){
+        repository.queryPeminatSemua(projectId);
+    }
+
     public void insert(Portfolio portfolio){
         repository.insert(portfolio);
     }
