@@ -14,8 +14,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.InputType
-import android.text.TextUtils
+import android.text.*
+import android.text.InputFilter.LengthFilter
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -107,6 +107,21 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         setDateTimeField()
         initWilayah()
         loadProvinces()
+
+        // Batasin jumlah digit
+        txtBiayaPengelolaan.setFilters(arrayOf<InputFilter>(LengthFilter(10)))
+        txtRoi.setFilters(arrayOf<InputFilter>(LengthFilter(3)))
+        txtRoi.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun afterTextChanged(editable: Editable) {}
+            @SuppressLint("SetTextI18n")
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                if (charSequence.length > 0){
+                    if (charSequence.toString().toInt() > 100) txtRoi.setText("100")
+                    else if (charSequence.toString().toInt() == 0) txtRoi.setText("1")
+                }
+            }
+        })
 
         btnUploadImage.setOnClickListener { selectImage() }
 

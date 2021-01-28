@@ -8,6 +8,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextUtils
 import android.view.MotionEvent
@@ -75,12 +76,16 @@ class TambahLaporanActivity : AppCompatActivity() {
         txtJenisHewanDetail.setText("0")
         txtRoiDetail.setText("0")
 
+        // Batasin jumlah digit
+        txtJenisHewanDetail.setFilters(arrayOf<InputFilter>(InputFilter.LengthFilter(10)))
+        txtRoiDetail.setFilters(arrayOf<InputFilter>(InputFilter.LengthFilter(10)))
+
         btnSimpanLaporan.setOnClickListener {
             val judul = txtJudulLaporan.text.toString()
             val deskripsi = txtDeskripsiLaporan.text.toString()
             val tanggal = txtTanggalLaporan.text.toString()
             val pemasukan = txtJenisHewanDetail.text.toString()
-            val pengeluaran = txtJenisHewanDetail.text.toString()
+            val pengeluaran = txtRoiDetail.text.toString()
 
 
             validasiStringEditText(judul, "Masukan judul laporan", txtJudulLaporan)

@@ -8,8 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.InputType
-import android.text.TextUtils
+import android.text.*
 import android.view.*
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
@@ -83,7 +82,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         p = intent.getParcelableExtra("proyek")!!
 
         portfolioViewModel.queryPeminatSemua(p.id)
-        portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>>{ portfolioList ->
+        portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>> { portfolioList ->
             menuDelete?.isVisible = portfolioList.isEmpty()
         })
         setSupportActionBar(toolbar)
@@ -92,7 +91,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
 
 
-        toolbar.setOnMenuItemClickListener {item ->
+        toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
@@ -127,6 +126,21 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         initWilayah()
         loadProvinces()
         setEditText(p)
+
+        // Batasin jumlah digit
+        txtBiayaPengelolaan.setFilters(arrayOf<InputFilter>(InputFilter.LengthFilter(10)))
+        txtRoi.setFilters(arrayOf<InputFilter>(InputFilter.LengthFilter(3)))
+        txtRoi.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun afterTextChanged(editable: Editable) {}
+            @SuppressLint("SetTextI18n")
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                if (charSequence.length > 0){
+                    if (charSequence.toString().toInt() > 100) txtRoi.setText("100")
+                    else if (charSequence.toString().toInt() == 0) txtRoi.setText("1")
+                }
+            }
+        })
 
         Picasso.get()
                 .load(p.photoProyek)
@@ -228,8 +242,8 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 cek = false
             }
 
-            val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                    biayaPengelolahana,prov,kabupaten, kecamatan,alamat,photo,p.peminat)
+            val p = Proyek(p.id, firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                    biayaPengelolahana, prov, kabupaten, kecamatan, alamat, photo, p.peminat)
 
             if (cek) {
                 proyekViewModel.update(p)
@@ -245,7 +259,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             false }
     }
 
-    private fun setEditText(p : Proyek?) {
+    private fun setEditText(p: Proyek?) {
 
         txtNamaProyek.setText(p?.namaProyek)
         txtDeskripsiProyek.setText(p?.deskripsiProyek)
@@ -300,7 +314,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_provinces.adapter = adapter
-                if (p.provinsi != "-"){
+                if (p.provinsi != "-") {
                     spin_provinces.setSelection(adapter.getPosition(p.provinsi))
                 }
             }
@@ -318,7 +332,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_regencies.adapter = adapter
-                if (p.kabupaten != "-"){
+                if (p.kabupaten != "-") {
                     spin_regencies.setSelection(adapter.getPosition(p.kabupaten))
                 }
             }
@@ -336,7 +350,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_districts.adapter = adapter
-                if (p.kecamatan != "-"){
+                if (p.kecamatan != "-") {
                     spin_districts.setSelection(adapter.getPosition(p.kecamatan))
                 }
             }
@@ -458,8 +472,8 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             cek = false
                         }
-                        val p = Proyek(p.id,firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
-                                biayaPengelolahan,prov,kabupaten, kecamatan,alamat,photo,p.peminat)
+                        val p = Proyek(p.id, firebaseUser?.uid, namaProyek, deskripsiProyek, jenisHewan, roiInt, waktuMulai, waktuSelesai,
+                                biayaPengelolahan, prov, kabupaten, kecamatan, alamat, photo, p.peminat)
 
                         if (cek) {
                             proyekViewModel.update(p)

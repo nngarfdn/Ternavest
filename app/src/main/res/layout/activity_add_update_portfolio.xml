@@ -106,6 +106,12 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent" />
 
+            <include
+                layout="@layout/item_simulation"
+                android:layout_marginHorizontal="@dimen/dimen_32"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_weight="1"

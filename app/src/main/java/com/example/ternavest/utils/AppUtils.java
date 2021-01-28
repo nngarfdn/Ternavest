@@ -36,6 +36,11 @@ public class AppUtils {
         return "Rp" + NumberFormat.getNumberInstance(new Locale(language, country)).format(amount);
     }
 
+    public static String getRupiahFormat(double amount){
+        String country = "ID", language = "in";
+        return "Rp" + NumberFormat.getNumberInstance(new Locale(language, country)).format(amount);
+    }
+
     public static boolean isValidPhone(String number){
         if (number.length() < 2) return false;
         else return number.charAt(0) == '6' && number.charAt(1) == '2';

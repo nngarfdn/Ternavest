@@ -10,7 +10,7 @@
     <string name="lupa_kata_sandi">Lupa Kata Sandi</string>
     <string name="masuk">Masuk</string>
     <string name="atau">Atau</string>
-    <string name="masuk_dengan_google">Masuk dengan Google</string>
+    <string name="masuk_dengan_google">Masuk/Daftar dengan Google</string>
     <string name="daftar">Daftar</string>
     <string name="rekening_tujuan">Rekening tujuan</string>
     <string name="unggah_foto">Unggah foto</string>
@@ -96,6 +96,6 @@
     <string name="tolak">Tolak</string>
     <string name="rp0">Rp0</string>
     <string name="investasi_sekarang">Investasi Sekarang</string>
-    <string name="tidak_ada_akun">Belum punya akun</string>
+    <string name="tidak_ada_akun">Belum punya akun?</string>
     <string name="proyek_alamat">Alamat lengkap proyek</string>
 </resources>

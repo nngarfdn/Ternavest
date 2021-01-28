@@ -46,7 +46,7 @@
                 android:layout_below="@+id/img_masuk"
                 style="@style/EditText"
                 android:hint="@string/email"
-                android:textSize="18sp"
+                android:textSize="@dimen/font_nm"
                 android:textColorHint="@color/black"
                 android:layout_marginBottom="16dp"
                 tools:ignore="Autofill" />
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:textSize="18sp"
+                android:textSize="@dimen/font_nm"
                 style="@style/EditText"
                 android:hint="@string/kata_sandi"
                 android:textColorHint="@color/black"
@@ -86,7 +86,7 @@
                 android:layout_alignParentEnd="true"
                 android:text="@string/masuk"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="18sp"
+                android:textSize="@dimen/font_nm"
                 android:layout_marginTop="10dp"/>
 
             <TextView
@@ -109,7 +109,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/masuk_dengan_google"
                 android:textAllCaps="false"
-                android:textSize="18sp"
+                android:textSize="@dimen/font_nm"
                 app:icon="@drawable/ic_google"
                 app:iconGravity="textStart"
                 app:iconTint="@color/black"/>

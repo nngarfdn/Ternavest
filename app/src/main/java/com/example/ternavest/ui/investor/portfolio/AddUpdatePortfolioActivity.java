@@ -48,7 +48,7 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
 
     private Button btnPayment;
     private EditText edtCount;
-    private TextView tvTotalCost;
+    private TextView tvTotalCost, tvROI, tvKeuntungan, tvBalikModal, tvPendapatan;
 
     private boolean isUpdate;
 
@@ -85,6 +85,12 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
         cvProject.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
 
+        // Simulasi
+        tvROI = findViewById(R.id.tv_roi_simulation);
+        tvKeuntungan = findViewById(R.id.tv_keuntungan_simulation);
+        tvBalikModal = findViewById(R.id.tv_balik_modal_simulation);
+        tvPendapatan = findViewById(R.id.tv_pendapatan_simulation);
+
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_PROJECT)){
             project = intent.getParcelableExtra(EXTRA_PROJECT);
@@ -107,16 +113,19 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                 getSupportActionBar().setTitle("Edit Informasi Investasi");
                 portfolio = intent.getParcelableExtra(EXTRA_PORTFOLIO);
 
-                tvTotalCost.setText(getRupiahFormat(
-                        portfolio.getCount() * project.getBiayaHewan()));
+                long totalCost = portfolio.getCount() * project.getBiayaHewan();
+                tvTotalCost.setText(getRupiahFormat(totalCost));
                 edtCount.setText(String.valueOf(portfolio.getCount()));
+                calculateSimulation(project.getRoi(), totalCost);
                 btnPayment.setText("Simpan");
             } else {
                 getSupportActionBar().setTitle("Mulai Investasi");
                 portfolio = new Portfolio();
 
+                // Nilai default
                 tvTotalCost.setText(getRupiahFormat(project.getBiayaHewan()));
-                edtCount.setText("1"); // Nilai default
+                edtCount.setText("1");
+                calculateSimulation(project.getRoi(), project.getBiayaHewan());
                 btnPayment.setText("Lanjut Pembayaran");
             }
         }
@@ -130,10 +139,14 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 0){ // Hitung real-time
-                    tvTotalCost.setText(getRupiahFormat(
-                            Long.parseLong(getFixText(edtCount)) * project.getBiayaHewan()));
+                    long totalCost = Long.parseLong(getFixText(edtCount)) * project.getBiayaHewan();
+                    tvTotalCost.setText(getRupiahFormat(totalCost));
                     btnPayment.setEnabled(true);
-                } else tvTotalCost.setText("Rp0");
+                    calculateSimulation(project.getRoi(), totalCost);
+                } else{
+                    tvTotalCost.setText("Rp0");
+                    calculateSimulation(project.getRoi(), 0);
+                }
             }
 
             @Override
@@ -193,6 +206,16 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
                 finish();
                 break;
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void calculateSimulation(int roi, long totalBiaya){
+        tvROI.setText(roi + "%");
+        tvBalikModal.setText(getRupiahFormat(totalBiaya));
+
+        double keuntungan = ((double) roi/100) * totalBiaya;
+        tvKeuntungan.setText(getRupiahFormat(keuntungan));
+        tvPendapatan.setText(getRupiahFormat(keuntungan + totalBiaya));
     }
 
     @Override

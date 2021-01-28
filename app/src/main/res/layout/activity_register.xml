@@ -94,7 +94,7 @@
                 android:layout_alignParentEnd="true"
                 android:text="@string/daftar"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="18sp" />
+                android:textSize="@dimen/font_nm" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextUtils
 import android.view.Menu
@@ -33,6 +34,7 @@ import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_laporan.*
 import kotlinx.android.synthetic.main.add_edit_laporan.*
+import kotlinx.android.synthetic.main.layout_add_update_proyek.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -83,6 +85,10 @@ class EditLaporanActivity : AppCompatActivity() {
         txtJenisHewanDetail.setText(p.pemasukan.toString())
         txtRoiDetail.setText(p.pengeluaran.toString())
 
+        // Batasin jumlah digit
+        txtJenisHewanDetail.setFilters(arrayOf<InputFilter>(InputFilter.LengthFilter(10)))
+        txtRoiDetail.setFilters(arrayOf<InputFilter>(InputFilter.LengthFilter(10)))
+
         Picasso.get()
                 .load(p.photoLaporan) // resizes the image to these dimensions (in pixel)
                 .placeholder(R.drawable.load_image)
@@ -95,7 +101,7 @@ class EditLaporanActivity : AppCompatActivity() {
             val deskripsi = txtDeskripsiLaporan.text.toString()
             val tanggal = txtTanggalLaporan.text.toString()
             val pemasukan = txtJenisHewanDetail.text.toString()
-            val pengeluaran = txtJenisHewanDetail.text.toString()
+            val pengeluaran = txtRoiDetail.text.toString()
 
             val vJudul = validasiStringEditText(judul, "Masukan judul laporan", txtJudulLaporan)
             val vDeskripsi = validasiStringEditText(deskripsi, "Masukan deskripsi laporan", txtDeskripsiLaporan)
