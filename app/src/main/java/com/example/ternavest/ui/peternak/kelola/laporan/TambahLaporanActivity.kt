@@ -18,7 +18,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
-import com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK
+import com.example.ternavest.utils.DateUtils.DATE_FORMAT
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -67,7 +67,7 @@ class TambahLaporanActivity : AppCompatActivity() {
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+        dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.US)
         txtTanggalLaporan.inputType = InputType.TYPE_NULL
         txtTanggalLaporan.requestFocus()
         setDateTimeField()
@@ -144,11 +144,7 @@ class TambahLaporanActivity : AppCompatActivity() {
                         if (vJudul && vDeskripsi && vPemasukan && vPengeluaran && vTgl && vPhoto) {
                             laporanViewModel.insert(laporan)
                             Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
-                            val i = Intent(this, LaporanActivity::class.java)
-                            i.putExtra("level", LEVEL_PETERNAK)
-                            i.putExtra("proyek",p)
-                            startActivity(i)
-                            finish()
+                            onBackPressed()
                         }
                     }
                 } else if (!task.isSuccessful) {

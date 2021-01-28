@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.ternavest.R
 import com.example.ternavest.model.Laporan
-import com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK
+import com.example.ternavest.utils.DateUtils.DATE_FORMAT
 import com.example.ternavest.viewmodel.LaporanViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -72,7 +72,7 @@ class EditLaporanActivity : AppCompatActivity() {
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+        dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.US)
         txtTanggalLaporan.inputType = InputType.TYPE_NULL
         txtTanggalLaporan.requestFocus()
         setDateTimeField()
@@ -111,11 +111,7 @@ class EditLaporanActivity : AppCompatActivity() {
             if (vJudul && vDeskripsi && vPemasukan && vPengeluaran && vTgl) {
                 laporanViewModel.update(laporan)
                 Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
-                val i = Intent(this, LaporanActivity::class.java)
-                i.putExtra("level", LEVEL_PETERNAK)
-                i.putExtra("id", p.idProyek)
-                startActivity(i)
-                finish()
+                onBackPressed()
             }
         }
 
@@ -129,13 +125,8 @@ class EditLaporanActivity : AppCompatActivity() {
                             .setMessage("Apakah kamu yakin ingin menghapus?")
                             .setNegativeButton("Tidak", null)
                             .setPositiveButton("Ya") { _, _ ->
-                                val proyekId = p.idProyek
                                 laporanViewModel.delete(p.id!!)
-                                val intent = Intent(this, LaporanActivity::class.java)
-                                intent.putExtra("level", LEVEL_PETERNAK)
-                                intent.putExtra("id", proyekId)
-                                startActivity(intent)
-                                finish()
+                                onBackPressed()
                             }.create().show()
 
                     true
@@ -196,10 +187,7 @@ class EditLaporanActivity : AppCompatActivity() {
                         if (vJudul && vDeskripsi && vPemasukan && vPengeluaran && vTgl && vPhoto) {
                             laporanViewModel.update(laporan)
                             Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
-                            val i = Intent(this, LaporanActivity::class.java)
-                            i.putExtra("id",p.idProyek)
-                            startActivity(i)
-                            finish()
+                            onBackPressed()
                         }
                     }
                 } else if (!task.isSuccessful) {
