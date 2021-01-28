@@ -362,6 +362,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             }.addOnCompleteListener { task: Task<Uri?> ->
                 if (task.isSuccessful) {
                     btnUploadImage.visibility = View.INVISIBLE
+                    txtWarningUpload.visibility = View.INVISIBLE
                     Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
                     btnSimpan.setOnClickListener {
                         val photo = Objects.requireNonNull(task.result).toString()
@@ -451,6 +452,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
                                 filePath)
                 imgUpload.setImageBitmap(bitmap)
                 btnUploadImage.text = "Upload"
+                txtWarningUpload.visibility = View.VISIBLE
                 btnUploadImage.setOnClickListener{ uploadImage() }
             } catch (e: IOException) {
                 // Log the exception
