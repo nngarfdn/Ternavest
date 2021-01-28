@@ -87,6 +87,17 @@
         android:layout_gravity="center_horizontal"
         android:text="Pilih gambar" />
 
+        <TextView
+        android:id="@+id/txtWarningUploadL"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:text="Tekan tombol Upload"
+        android:visibility="invisible"
+        android:layout_below="@+id/btnUploadImageLaporan"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#FF9800"/>
+
     <Button
         android:id="@+id/btnSimpanLaporan"
         style="@style/Button.Primary"

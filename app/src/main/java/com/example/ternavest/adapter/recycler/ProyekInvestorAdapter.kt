@@ -38,8 +38,9 @@ class ProyekInvestorAdapter (private val list: List<Proyek>) : RecyclerView.Adap
                 .into(holder.itemView.imgProyek)
 
         holder.itemView.txtNamaProyek.text = list[position].namaProyek
-        holder.itemView.txtJenisHewan.text = list[position].jenisHewan
-        holder.itemView.txtROI.text = "${list[position].roi}%"
+//        holder.itemView.txtJenisHewan.text = list[position].jenisHewan
+        holder.itemView.txtKotaProyek.text = list[position].kabupaten
+        holder.itemView.txtROI.text = "ROI : ${list[position].roi}%"
 
         holder.itemView.setOnClickListener {
             val args = Bundle()
