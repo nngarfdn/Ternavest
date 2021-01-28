@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ternavest.R;
-import com.example.ternavest.adapter.recycler.ProyekAdapter;
 import com.example.ternavest.adapter.recycler.ProyekInvestorAdapter;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
@@ -38,8 +37,7 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
     public static final String EXTRA_PROFILE = "extra_profile";
 
     private Profile profile;
-    private ProyekInvestorAdapter adapterInvestor;
-    private ProyekAdapter adapterPeternak;
+    private ProyekInvestorAdapter adapter;
 
     private final ArrayList<Proyek> projectList = new ArrayList<>();
 
@@ -56,6 +54,8 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         RecyclerView recyclerView = findViewById(R.id.rv_project_profile);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ProyekInvestorAdapter(projectList);
+        recyclerView.setAdapter(adapter);
 
         CircleImageView imgPhoto = findViewById(R.id.img_photo_profile);
         TextView tvName = findViewById(R.id.tv_name_profile);
@@ -74,11 +74,11 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         btnKtp.setVisibility(View.GONE);
 
         ProyekViewModel projectViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProyekViewModel.class);
-        // Buat peternak
+        // Jike melihat profil peternak
         projectViewModel.getResultByUUID().observe(this, proyeks -> {
             projectList.clear();
             projectList.addAll(proyeks);
-            adapterInvestor.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         });
 
         PortfolioViewModel portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
@@ -87,10 +87,10 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
                 projectViewModel.loadResultByID(portfolio.getProjectId()); // Buat investor
             }
         });
-        // Buat investor
+        // Jika melihat profil investor
         projectViewModel.getResultByID().observe(this, proyeks -> {
             projectList.addAll(proyeks);
-            adapterPeternak.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         });
 
         Intent intent = getIntent();
@@ -108,20 +108,15 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
             }
             btnKtp.setVisibility(View.VISIBLE);
 
+            // Level dari profil yang dilihat
             if (profile.getLevel().equals(LEVEL_PETERNAK)){
                 tvLevel.setText("Peternak");
                 tvProject.setText("Daftar proyek yang diajukan");
                 projectViewModel.loadResultByUUID(profile.getId());
-
-                adapterInvestor = new ProyekInvestorAdapter(projectList);
-                recyclerView.setAdapter(adapterInvestor);
             } else if (profile.getLevel().equals(LEVEL_INVESTOR)) {
                 tvLevel.setText("Investor");
                 tvProject.setText("Daftar portofolio proyek");
                 portfolioViewModel.loadData(profile.getId(), profile.getLevel());
-
-                adapterPeternak = new ProyekAdapter(projectList);
-                recyclerView.setAdapter(adapterPeternak);
             }
 
             tvAddress.setText(profile.getAddress());

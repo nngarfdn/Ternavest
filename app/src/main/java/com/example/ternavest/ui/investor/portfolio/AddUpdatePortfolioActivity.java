@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.ternavest.R;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Proyek;
+import com.example.ternavest.preference.UserPreference;
 import com.example.ternavest.ui.investor.home.DetailProyekInvestasiFragment;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PORTFOLIO;
 import static com.example.ternavest.ui.both.portfolio.DetailPortfolioActivity.EXTRA_PROJECT;
+import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
 import static com.example.ternavest.utils.AppUtils.showToast;
@@ -60,6 +62,12 @@ public class AddUpdatePortfolioActivity extends AppCompatActivity implements Vie
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        UserPreference userPreference = new UserPreference(this);
+        if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)){
+            showToast(this, "Investasi hanya bisa dilakukan oleh investor");
+            onBackPressed();
+        }
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 

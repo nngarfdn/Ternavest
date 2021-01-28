@@ -82,7 +82,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         p = intent.getParcelableExtra("proyek")!!
 
-        portfolioViewModel.queryPeminat(p.id)
+        portfolioViewModel.queryPeminatSemua(p.id)
         portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>>{ portfolioList ->
             menuDelete?.isVisible = portfolioList.isEmpty()
         })
@@ -501,6 +501,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         inflater.inflate(R.menu.menu_delete, menu)
 
         menuDelete = menu!!.findItem(R.id.action_delete)
+        menuDelete?.isVisible = false
 
         return true
     }
