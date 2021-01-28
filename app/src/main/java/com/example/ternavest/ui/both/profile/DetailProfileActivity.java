@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ternavest.R;
+import com.example.ternavest.adapter.recycler.ProyekAdapter;
 import com.example.ternavest.adapter.recycler.ProyekInvestorAdapter;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Profile;
@@ -31,13 +32,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_APPROVED;
-import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
+import static com.example.ternavest.utils.AppUtils.loadProfilePicFromUrl;
 
 public class DetailProfileActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_PROFILE = "extra_profile";
 
     private Profile profile;
-    private ProyekInvestorAdapter adapter;
+    private ProyekInvestorAdapter adapterInvestor;
+    private ProyekAdapter adapterPeternak;
 
     private final ArrayList<Proyek> projectList = new ArrayList<>();
 
@@ -47,15 +49,13 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_profile);
 
-        Toolbar toolbar = findViewById(R.id.toolbarProfile);
-        setSupportActionBar(toolbar); //No Problerm
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.rv_project_profile);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ProyekInvestorAdapter(projectList);
-        recyclerView.setAdapter(adapter);
 
         CircleImageView imgPhoto = findViewById(R.id.img_photo_profile);
         TextView tvName = findViewById(R.id.tv_name_profile);
@@ -78,7 +78,7 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         projectViewModel.getResultByUUID().observe(this, proyeks -> {
             projectList.clear();
             projectList.addAll(proyeks);
-            adapter.notifyDataSetChanged();
+            adapterInvestor.notifyDataSetChanged();
         });
 
         PortfolioViewModel portfolioViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(PortfolioViewModel.class);
@@ -90,7 +90,7 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
         // Buat investor
         projectViewModel.getResultByID().observe(this, proyeks -> {
             projectList.addAll(proyeks);
-            adapter.notifyDataSetChanged();
+            adapterPeternak.notifyDataSetChanged();
         });
 
         Intent intent = getIntent();
@@ -112,17 +112,23 @@ public class DetailProfileActivity extends AppCompatActivity implements View.OnC
                 tvLevel.setText("Peternak");
                 tvProject.setText("Daftar proyek yang diajukan");
                 projectViewModel.loadResultByUUID(profile.getId());
+
+                adapterInvestor = new ProyekInvestorAdapter(projectList);
+                recyclerView.setAdapter(adapterInvestor);
             } else if (profile.getLevel().equals(LEVEL_INVESTOR)) {
                 tvLevel.setText("Investor");
                 tvProject.setText("Daftar portofolio proyek");
                 portfolioViewModel.loadData(profile.getId(), profile.getLevel());
+
+                adapterPeternak = new ProyekAdapter(projectList);
+                recyclerView.setAdapter(adapterPeternak);
             }
 
             tvAddress.setText(profile.getAddress());
             btnPhone.setText(profile.getPhone());
             btnWhatsApp.setText(profile.getWhatsApp());
 
-            loadImageFromUrl(imgPhoto, profile.getPhoto());
+            loadProfilePicFromUrl(imgPhoto, profile.getPhoto());
             tvName.setText(profile.getName());
             tvEmail.setText(profile.getEmail());
         }

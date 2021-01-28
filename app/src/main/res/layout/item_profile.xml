@@ -24,8 +24,7 @@
                 android:id="@+id/civ_photo_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/upload"
-                android:scaleType="centerCrop"
+                android:src="@drawable/ic_no_profile_pic"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"/>
 

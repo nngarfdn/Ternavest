@@ -50,7 +50,7 @@ import static com.example.ternavest.utils.AppUtils.PAY_APPROVED;
 import static com.example.ternavest.utils.AppUtils.PAY_PENDING;
 import static com.example.ternavest.utils.AppUtils.PAY_REJECT;
 import static com.example.ternavest.utils.AppUtils.getRupiahFormat;
-import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
+import static com.example.ternavest.utils.AppUtils.loadProfilePicFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.DateUtils.differenceOfDates;
 import static com.example.ternavest.utils.DateUtils.getCurrentDate;
@@ -89,8 +89,8 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_portfolio);
 
-        Toolbar toolbar = findViewById(R.id.toolbar1);
-        setSupportActionBar(toolbar); //No Problerm
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setOnMenuItemClickListener(item -> {
@@ -154,7 +154,7 @@ public class DetailPortfolioActivity extends AppCompatActivity implements View.O
             profile = result;
 
             tvProfile.setText(profile.getName());
-            loadImageFromUrl(civProfile, profile.getPhoto());
+            loadProfilePicFromUrl(civProfile, profile.getPhoto());
             cvProfile.setEnabled(true);
 
             loadingDialog.dismiss();

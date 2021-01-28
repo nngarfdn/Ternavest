@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.ternavest">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -39,9 +40,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".testing.notification.service.MyFirebaseMessaging"
-            android:enabled="true"
-            android:exported="true">
+        <service android:name=".testing.notification.service.MyFirebaseMessaging">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

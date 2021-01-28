@@ -56,7 +56,7 @@ class TambahLaporanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_laporan)
 
-        setSupportActionBar(toolbartambahLaporan)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -94,6 +94,7 @@ class TambahLaporanActivity : AppCompatActivity() {
         btnUploadImageLaporan.setOnClickListener { selectImage() }
 
         txtDeskripsiLaporan.setOnTouchListener { v, event ->
+            @Suppress("DEPRECATED_IDENTITY_EQUALS")
             v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
             false }
     }

@@ -8,7 +8,7 @@
     tools:context=".ui.peternak.kelola.laporan.LaporanActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar1"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@android:color/black"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         app:markerSize="100dp"
         app:lineWidth="2dp"
-        android:layout_below="@+id/toolbar1"
+        android:layout_below="@+id/toolbar"
         app:startLineColor="@color/gray"
         app:endLineColor="@color/gray"
         app:linePadding="5dp"/>
@@ -52,7 +52,7 @@
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerKelola"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar1"
+        android:layout_below="@+id/toolbar"
         android:layout_height="wrap_content">
 
         <LinearLayout

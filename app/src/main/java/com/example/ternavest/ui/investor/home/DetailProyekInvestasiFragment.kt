@@ -93,7 +93,8 @@ class DetailProyekInvestasiFragment : BottomSheetDialogFragment() {
                         .load(profil.photo)
                         .fit()
                         .centerCrop()
-                        .placeholder(R.drawable.load_image)
+                        .placeholder(R.drawable.ic_no_profile_pic)
+                        .error(R.drawable.ic_no_profile_pic)
                         .into(view.imgProfile)
             }
         })

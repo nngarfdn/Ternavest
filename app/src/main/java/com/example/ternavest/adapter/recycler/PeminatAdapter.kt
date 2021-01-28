@@ -23,7 +23,8 @@ class PeminatAdapter (private val list: List<Profile>) : RecyclerView.Adapter<Pe
                 .load(list[position].photo)
                 .resize(39, 39) // resizes the image to these dimensions (in pixel)
                 .centerCrop()
-                .placeholder(R.drawable.ic_baseline_autorenew_24)
+                .placeholder(R.drawable.ic_no_profile_pic)
+                .error(R.drawable.ic_no_profile_pic)
                 .into(holder.itemView.imgProfile)
 
         holder.itemView.setOnClickListener {

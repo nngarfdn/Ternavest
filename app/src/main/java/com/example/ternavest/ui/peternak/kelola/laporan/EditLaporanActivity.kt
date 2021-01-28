@@ -64,7 +64,7 @@ class EditLaporanActivity : AppCompatActivity() {
         p = intent.getParcelableExtra("laporan")!!
 
         laporanViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(LaporanViewModel::class.java)
-        setSupportActionBar(toolbartambahLaporan)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -121,7 +121,7 @@ class EditLaporanActivity : AppCompatActivity() {
 
         btnUploadImageLaporan.setOnClickListener { selectImage() }
 
-        toolbartambahLaporan.setOnMenuItemClickListener {item ->
+        toolbar.setOnMenuItemClickListener {item ->
             when (item.itemId) {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
@@ -146,6 +146,7 @@ class EditLaporanActivity : AppCompatActivity() {
         }
 
         txtDeskripsiLaporan.setOnTouchListener { v, event ->
+            @Suppress("DEPRECATED_IDENTITY_EQUALS")
             v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
             false }
     }

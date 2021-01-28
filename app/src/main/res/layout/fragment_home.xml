@@ -8,7 +8,7 @@
     tools:context=".ui.investor.home.HomeFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar1"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@android:color/black"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginHorizontal="@dimen/dimen_32"
-        android:layout_below="@+id/toolbar1"
+        android:layout_below="@+id/toolbar"
         android:layout_marginBottom="16dp">
 
         <SearchView

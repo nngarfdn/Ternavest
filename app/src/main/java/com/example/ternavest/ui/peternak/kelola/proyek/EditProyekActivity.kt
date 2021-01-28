@@ -86,13 +86,13 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         portfolioViewModel.data.observe(this, Observer<ArrayList<Portfolio>>{ portfolioList ->
             menuDelete?.isVisible = portfolioList.isEmpty()
         })
-        setSupportActionBar(toolbartambahpproyek)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
 
-        toolbartambahpproyek.setOnMenuItemClickListener {item ->
+        toolbar.setOnMenuItemClickListener {item ->
             when (item.itemId) {
                 R.id.action_delete -> {
                     AlertDialog.Builder(this)
@@ -240,6 +240,7 @@ class EditProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
 
         txtDeskripsiProyek.setOnTouchListener { v, event ->
+            @Suppress("DEPRECATED_IDENTITY_EQUALS")
             v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
             false }
     }

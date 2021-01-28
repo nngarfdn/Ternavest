@@ -24,7 +24,7 @@ import com.example.ternavest.customview.LoadingDialog;
 import com.example.ternavest.model.Payment;
 import com.example.ternavest.model.Portfolio;
 import com.example.ternavest.model.Proyek;
-import com.example.ternavest.ui.peternak.kelola.proyek.DetailFragment;
+import com.example.ternavest.ui.investor.home.DetailProyekInvestasiFragment;
 import com.example.ternavest.viewmodel.PaymentViewModel;
 import com.example.ternavest.viewmodel.PortfolioViewModel;
 import com.example.ternavest.viewmodel.ProfileViewModel;
@@ -67,9 +67,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
         loadingDialog = new LoadingDialog(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar1);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Pembayaran");
-        setSupportActionBar(toolbar); //No Problerm
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         CardView cvStatus = findViewById(R.id.cv_status_portfolio);
@@ -146,7 +146,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.cv_portfolio_portfolio:
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("proyek", project);
-                DetailFragment bottomSheet = new DetailFragment();
+                DetailProyekInvestasiFragment bottomSheet = new DetailProyekInvestasiFragment();
                 bottomSheet.setArguments(bundle);
                 bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
                 break;

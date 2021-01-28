@@ -9,7 +9,7 @@
     tools:context=".ui.both.profile.DetailProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarProfile"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@android:color/black"

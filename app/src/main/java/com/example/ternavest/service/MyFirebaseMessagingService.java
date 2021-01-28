@@ -66,8 +66,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setColor(getColor(R.color.green))
                     .setLights(Color.RED, 1000, 300)
                     .setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setNumber(++numMessages);
-//                    .setSmallIcon(R.drawable.splash_logo);
+                    .setNumber(++numMessages)
+                    .setSmallIcon(R.drawable.ic_logo_notif);
         }
 
         try {

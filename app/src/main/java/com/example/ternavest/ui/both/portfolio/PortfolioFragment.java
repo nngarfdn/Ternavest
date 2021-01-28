@@ -59,7 +59,7 @@ public class PortfolioFragment extends Fragment {
         adapter = new PortfolioAdapter();
         recyclerView.setAdapter(adapter);
 
-        Toolbar toolbar = view.findViewById(R.id.toolbar1);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         if (userPreference.getUserLevel().equals(LEVEL_INVESTOR)) toolbar.setTitle("Portofolio");
         else if (userPreference.getUserLevel().equals(LEVEL_PETERNAK)) toolbar.setTitle("Peminat");
 

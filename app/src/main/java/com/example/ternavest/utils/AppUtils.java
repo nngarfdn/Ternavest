@@ -49,6 +49,14 @@ public class AppUtils {
                 .into(imageView);
     }
 
+    public static void loadProfilePicFromUrl(ImageView imageView, String url){
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.ic_no_profile_pic)
+                .error(R.drawable.ic_no_profile_pic)
+                .into(imageView);
+    }
+
     public static String createIdFromCurrentDate(){
         String currentDate, currentTime;
 

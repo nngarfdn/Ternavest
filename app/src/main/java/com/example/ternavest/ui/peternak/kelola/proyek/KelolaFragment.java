@@ -35,9 +35,7 @@ public class KelolaFragment extends Fragment {
     FloatingActionButton floatingActionButton;
     ShimmerFrameLayout shimmerKelola;
 
-    public KelolaFragment() {
-        // Required empty public constructor
-    }
+    public KelolaFragment() {}
 
 
     @Override
@@ -50,8 +48,7 @@ public class KelolaFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_kelola, container, false);
         proyekViewModel.loadResultByUUID(firebaseUser.getUid());

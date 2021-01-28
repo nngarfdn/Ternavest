@@ -41,6 +41,7 @@ import static com.example.ternavest.utils.AppUtils.VERIF_PENDING;
 import static com.example.ternavest.utils.AppUtils.VERIF_REJECT;
 import static com.example.ternavest.utils.AppUtils.isValidPhone;
 import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
+import static com.example.ternavest.utils.AppUtils.loadProfilePicFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 import static com.example.ternavest.utils.EditTextUtils.getFixText;
 import static com.example.ternavest.utils.EditTextUtils.isNull;
@@ -110,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         profileViewModel.getData().observe(this, result -> {
             profile = result;
 
-            loadImageFromUrl(imgPhoto, profile.getPhoto());
+            loadProfilePicFromUrl(imgPhoto, profile.getPhoto());
             loadImageFromUrl(imgKtp, profile.getKtp());
 
             edtName.setText(profile.getName());
@@ -263,7 +264,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     loadingDialog.show();
 
                     Uri uriProfileImage = data.getData();
-                    loadImageFromUrl(imgPhoto, uriProfileImage.toString());
+                    loadProfilePicFromUrl(imgPhoto, uriProfileImage.toString());
 
                     String fileName = firebaseUser.getUid() + ".jpeg";
                     profileViewModel.uploadImage(this, uriProfileImage, FOLDER_PROFILE, fileName, imageUrl -> {

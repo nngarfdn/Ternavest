@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.example.ternavest.utils.AppUtils.LEVEL_INVESTOR;
 import static com.example.ternavest.utils.AppUtils.LEVEL_PETERNAK;
 import static com.example.ternavest.utils.AppUtils.VERIF_APPROVED;
-import static com.example.ternavest.utils.AppUtils.loadImageFromUrl;
+import static com.example.ternavest.utils.AppUtils.loadProfilePicFromUrl;
 import static com.example.ternavest.utils.AppUtils.showToast;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         profileViewModel.getData().observe(getViewLifecycleOwner(), result -> {
             profile = result;
 
-            loadImageFromUrl(imgPhoto, profile.getPhoto());
+            loadProfilePicFromUrl(imgPhoto, profile.getPhoto());
             tvName.setText(profile.getName());
             tvEmail.setText(profile.getEmail());
 

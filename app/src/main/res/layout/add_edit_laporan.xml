@@ -12,7 +12,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="32dp"
         android:hint="Judul laporan"
-        android:layout_below="@+id/toolbartambahLaporan"
+        android:layout_below="@+id/toolbar"
         android:paddingHorizontal="8dp"
         android:inputType="textCapWords"/>
 

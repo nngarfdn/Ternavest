@@ -88,7 +88,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_proyek)
 
-        setSupportActionBar(toolbartambahpproyek)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -183,6 +183,7 @@ class TambahProyekActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         }
 
         txtDeskripsiProyek.setOnTouchListener { v, event ->
+            @Suppress("DEPRECATED_IDENTITY_EQUALS")
             v.parent.requestDisallowInterceptTouchEvent(!(event.action and MotionEvent.ACTION_MASK === MotionEvent.ACTION_UP))
             false }
     }

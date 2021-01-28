@@ -39,7 +39,7 @@
                     android:id="@+id/img_photo_settings"
                     android:layout_width="128dp"
                     android:layout_height="128dp"
-                    android:src="@drawable/upload"/>
+                    android:src="@drawable/ic_no_profile_pic"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_photo_settings"
